@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1001,
+    "cardName": "farm1",
+    "age": 1,
+    "cost": {
+      "science": 2
+    },
+    "income": {
+      "food": 1
+    }
+  }
+]
