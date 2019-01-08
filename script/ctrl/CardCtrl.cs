@@ -9,8 +9,5 @@ namespace testCC.Assets.script {
             card.view ();
         }
 
-        public void destroy () {
-            Object.Destroy (this.gameObject);
-        }
     }
 }

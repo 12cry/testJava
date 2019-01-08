@@ -1,7 +1,10 @@
 using System;
+using testCC.Assets.script.ctrl;
 
 namespace testCC.Assets.script.model {
-    public class Resource {
+    public class ResourceUI {
+        public ResourceUICtrl ctrl;
+
         public int food;
         public int foodIncrement;
         public int capacity;
@@ -14,24 +17,40 @@ namespace testCC.Assets.script.model {
         public int civ;
         public int civRemainder;
 
-        public event Action updateFoodIncrementDisplay;
-        public event Action updateCapacityIncrementDisplay;
-        public event Action updateScienceIncrementDisplay;
-        public event Action updateCultureIncrementDisplay;
+        public void updateFoodIncrementDisplay () {
+            ctrl.foodIncrementText.text = this.foodIncrement.ToString ();
+        }
+        public void updateCapacityIncrementDisplay () {
+            ctrl.capacityIncrementText.text = this.capacityIncrement.ToString ();
+        }
+        public void updateScienceIncrementDisplay () {
+            ctrl.scienceIncrementText.text = this.scienceIncrement.ToString ();
+        }
+        public void updateCultureIncrementDisplay () {
+            ctrl.cultureIncrementText.text = this.cultureIncrement.ToString ();
+        }
 
-        public event Action updateScienceDisplay;
-        public event Action updateRemainderDisplay;
-        public event Action updateAllDisplay;
+        public void updateScienceDisplay () {
+            ctrl.scienceText.text = this.science.ToString ();
+        }
+        public void updateCivDisplay () {
+            ctrl.civText.text = this.civ.ToString ();
+            ctrl.civTextRemainder.text = this.civRemainder.ToString ();
+        }
 
-        public event Action updateCivDisplay;
-
-        public void updateCiv (int value) {
-            if (value == 0) {
-                return;
-            }
-
-            this.civRemainder -= value;
+        public void updateAllDisplay () {
+            this.updateRemainderDisplay ();
+            this.updateFoodIncrementDisplay ();
+            this.updateCapacityIncrementDisplay ();
+            this.updateScienceIncrementDisplay ();
+            this.updateCultureIncrementDisplay ();
             this.updateCivDisplay ();
+        }
+        public void updateRemainderDisplay () {
+            ctrl.foodText.text = this.food.ToString ();
+            ctrl.capacityText.text = this.capacity.ToString ();
+            ctrl.scienceText.text = this.science.ToString ();
+            ctrl.cultureText.text = this.culture.ToString ();
         }
 
         public void init () {
@@ -95,5 +114,14 @@ namespace testCC.Assets.script.model {
             culture += cultureIncrement;
             updateRemainderDisplay ();
         }
+        public void updateCiv (int value) {
+            if (value == 0) {
+                return;
+            }
+
+            this.civRemainder -= value;
+            this.updateCivDisplay ();
+        }
+
     }
 }

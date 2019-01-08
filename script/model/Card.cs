@@ -1,14 +1,13 @@
-using System;
-using System.IO;
 using DG.Tweening;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
 using testCC.Assets.script.model;
+using testJava.script.model;
 using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class Card {
-    public CardCtrl cardCtrl;
+    public CardCtrl ctrl;
 
     public int id;
     public string cardName;
@@ -22,50 +21,45 @@ public abstract class Card {
     public int takeCiv = 1;
 
     Tweener cardTween;
-    UICtrl uiCtrl = UICtrl.instance;
-
+    UI ui = Utils.ui;
     public void view () {
-        uiCtrl.mask (new Transform[] { this.cardCtrl.transform, uiCtrl.viewPanel.transform });
         Utils.currentCard = this;
 
-        cardTween = cardCtrl.transform.DOMove (new Vector3 (Screen.width / 2, Screen.height / 2, 0), Utils.cardMoveSpeed).SetAutoKill (false);
+        cardTween = ctrl.transform.DOMove (new Vector3 (Screen.width / 2, Screen.height / 2, 0), Utils.cardMoveSpeed).SetAutoKill (false);
 
-        uiCtrl.showView ();
-        uiCtrl.bCloseCard.gameObject.SetActive (true);
-        uiCtrl.bTakeCard.gameObject.SetActive (takeable);
-        uiCtrl.bActionCard.gameObject.SetActive (actionable);
+        ui.cardViewUI.buttonAble (takeable, actionable);
+        ui.cardViewUI.showView ();
     }
     public void closeView () {
         if (cardTween.IsActive ()) {
             cardTween.Rewind ();
             cardTween.Kill ();
         }
-        uiCtrl.hideView ();
+        ui.cardViewUI.hideView ();
     }
     public void take () {
-        cardCtrl.transform.DOMove (new Vector3 (Utils.cardWidth / 2 + Utils.takedCardCtrls.Count * 20, Utils.cardWidth / 2, 0 + Utils.takedCardCtrls.Count), Utils.cardMoveSpeed);
+        ctrl.transform.DOMove (new Vector3 (Utils.cardWidth / 2 + Utils.handCardCtrls.Count * 20, Utils.cardWidth / 2, 0 + Utils.handCardCtrls.Count), Utils.cardMoveSpeed);
         actionable = true;
         takeable = false;
         taked = true;
-        Utils.takedCardCtrls.Add (cardCtrl);
-        Utils.resource.updateCiv (this.takeCiv);
+        Utils.handCardCtrls.Add (ctrl);
+        ui.resourceUI.updateCiv (this.takeCiv);
 
-        uiCtrl.hideView ();
+        ui.cardViewUI.hideView ();
     }
     public void updateResource () {
-        Utils.resource.updateScience (-cost.science);
-
-        Utils.resource.updateFoodIncrement (income.food);
-        Utils.resource.updateCapacityIncrement (income.capacity);
+        ui.resourceUI.updateScience (-cost.science);
+        ui.resourceUI.updateFoodIncrement (income.food);
+        ui.resourceUI.updateCapacityIncrement (income.capacity);
         // Utils.resource.updateScienceIncrement (output[2]);
         // Utils.resource.updateCultureIncrement (output[3]);
     }
 
     public void afterAction () {
-        Utils.resource.updateCiv (1);
-        uiCtrl.hideView ();
-        Utils.takedCardCtrls.Remove (this.cardCtrl);
-        this.cardCtrl.destroy ();
+        ui.resourceUI.updateCiv (1);
+        ui.cardViewUI.hideView ();
+        Utils.handCardCtrls.Remove (this.ctrl);
+        Object.Destroy (this.ctrl.gameObject);
     }
     public abstract void action ();
 }

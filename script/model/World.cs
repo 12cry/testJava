@@ -9,13 +9,13 @@ namespace testCC.Assets.script.model {
         Dictionary<int, Builder> builderDic = new Dictionary<int, Builder> ();
         public void build (int cardId) {
             if (cardId == 1001) {
-                GameObject go = Object.Instantiate<GameObject> (ctrl.farmPrefab, ctrl.transform);
-                go.transform.localPosition = new Vector3 (0, 0, 0);
-                TextMesh[] tt = go.GetComponentsInChildren<TextMesh> ();
-                tt[0].text = "0";
+                GameObject gameObject = Object.Instantiate<GameObject> (ctrl.farmPrefab, ctrl.transform);
+                gameObject.transform.localPosition = new Vector3 (0, 0, 0);
 
                 Builder builder = new Builder ();
-                // builder.go = go;
+                builder.gameObject = gameObject;
+                builder.init ();
+
                 builderDic.Add (cardId, builder);
             }
 

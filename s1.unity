@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 16265959}
   - component: {fileID: 16265958}
   - component: {fileID: 16265957}
+  - component: {fileID: 16265961}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -212,6 +213,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &16265961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 16265956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103bff84f1632034fa4cea7df4b5ea51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceUICtrl: {fileID: 27890719}
+  cardViewUICtrl: {fileID: 684505479}
+  maskImage: {fileID: 1831784472}
 --- !u!1 &27890714
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +339,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 27890714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2aee7650df68b24a9e6c15e484a3aa3, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c21abe49babea242a11e284a0ebaa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   foodText: {fileID: 622151887}
@@ -709,7 +724,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 541808013}
+      - m_Target: {fileID: 684505479}
         m_MethodName: actionCard
         m_Mode: 1
         m_Arguments:
@@ -831,7 +846,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 541808013}
+      - m_Target: {fileID: 684505479}
         m_MethodName: takeCard
         m_Mode: 1
         m_Arguments:
@@ -1097,56 +1112,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
---- !u!1 &541808012
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 541808014}
-  - component: {fileID: 541808013}
-  m_Layer: 5
-  m_Name: UICtrl
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &541808013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 541808012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103bff84f1632034fa4cea7df4b5ea51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewPanel: {fileID: 684505478}
-  bTakeCard: {fileID: 413917339}
-  bActionCard: {fileID: 324776481}
-  bCloseCard: {fileID: 1719949856}
-  maskImage: {fileID: 1831784472}
---- !u!224 &541808014
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 541808012}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 349}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 764, y: 428.2}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &610004445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1447,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &684505475
 GameObject:
@@ -1494,8 +1459,9 @@ GameObject:
   - component: {fileID: 684505476}
   - component: {fileID: 684505477}
   - component: {fileID: 684505478}
+  - component: {fileID: 684505479}
   m_Layer: 5
-  m_Name: viewPanel
+  m_Name: cardView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1555,6 +1521,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &684505479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 684505475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aabf440e541be9145ae3d156547c967e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bTakeCard: {fileID: 413917339}
+  bActionCard: {fileID: 324776481}
 --- !u!1 &708726214
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,7 +1755,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2270,7 +2249,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 541808013}
+      - m_Target: {fileID: 0}
         m_MethodName: closeCard
         m_Mode: 1
         m_Arguments:
@@ -2515,7 +2494,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4634499823559704, guid: cbfb9039cab51804f9f928aedbd3bbb2, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.7
+      value: -8.67
       objectReference: {fileID: 0}
     - target: {fileID: 4634499823559704, guid: cbfb9039cab51804f9f928aedbd3bbb2, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2523,7 +2502,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4634499823559704, guid: cbfb9039cab51804f9f928aedbd3bbb2, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1.93
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4634499823559704, guid: cbfb9039cab51804f9f928aedbd3bbb2, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2543,7 +2522,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4634499823559704, guid: cbfb9039cab51804f9f928aedbd3bbb2, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cbfb9039cab51804f9f928aedbd3bbb2, type: 2}
@@ -2576,7 +2555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardCtrlPrefab: {fileID: 1973119376}
-  rowCardCtrls: []
 --- !u!4 &1913048376
 Transform:
   m_ObjectHideFlags: 0
@@ -2855,5 +2833,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
