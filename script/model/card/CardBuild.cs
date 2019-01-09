@@ -6,7 +6,7 @@ public class CardBuild : Card {
     public override void action () {
         Debug.Log ("action---");
         this.updateResource ();
-        Utils.world.build (this.id);
+        Utils.world.build (this);
         this.afterAction ();
     }
 }

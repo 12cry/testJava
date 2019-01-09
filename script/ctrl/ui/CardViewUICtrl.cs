@@ -7,6 +7,7 @@ namespace testJava.script.ctrl.ui {
     public class CardViewUICtrl : MonoBehaviour {
         public CardViewUI ui = new CardViewUI ();
 
+        public Text desc;
         public Button bTakeCard;
         public Button bActionCard;
 

@@ -6,19 +6,27 @@ using UnityEngine.UI;
 namespace testCC.Assets.script.model {
     public class World {
         public WorldCtrl ctrl;
-        Dictionary<int, Builder> builderDic = new Dictionary<int, Builder> ();
-        public void build (int cardId) {
-            if (cardId == 1001) {
+        List<Building> buildings = new List<Building> ();
+        public void build (Card card) {
+            if (card.id == 1001) {
                 GameObject gameObject = Object.Instantiate<GameObject> (ctrl.farmPrefab, ctrl.transform);
                 gameObject.transform.localPosition = new Vector3 (0, 0, 0);
 
-                Builder builder = new Builder ();
-                builder.gameObject = gameObject;
-                builder.init ();
+                Building building = new Building ();
+                building.card = card;
+                building.gameObject = gameObject;
+                building.worker = 2;
+                building.init ();
 
-                builderDic.Add (cardId, builder);
+                buildings.Add (building);
             }
 
+        }
+        public void viewBuilding () {
+            for (int i = 0; i < buildings.Count; i++) {
+                Building building = buildings[i];
+                building.card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100, 0, 0);
+            }
         }
     }
 }

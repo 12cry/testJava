@@ -42,14 +42,7 @@ namespace testJava.script.model {
                 return null;
             }
             CardCtrl cardCtrl = civilCardCtrls.Dequeue ();
-            Card card = cardCtrl.card;
-            Text[] texts = cardCtrl.GetComponentsInChildren<Text> ();
-            Dictionary<string, Text> textDic = texts.ToDictionary (key => key.name, text => text);
-            textDic["cardName"].text = card.cardName;
-            if (card is CardBuild) {
-                CardBuild cb = (CardBuild) card;
-                textDic["costScience"].text = cb.cost.science.ToString ();
-            }
+            cardCtrl.card.init ();
             return cardCtrl;
         }
         public void computeCurrentCards () {
@@ -90,8 +83,6 @@ namespace testJava.script.model {
                 if (rowCardCtrls[i] == null) {
                     break;
                 }
-                rowCardCtrls[i].card.actionable = false;
-                rowCardCtrls[i].card.takeable = true;
                 rowCardCtrls[i].transform.DOMove (new Vector3 (Utils.cardWidth / 2 + i * Utils.cardWidth, Screen.height - Utils.cardWidth / 2, 0), Utils.cardMoveSpeed);
 
                 rowCardCtrls[i].card.takeCiv = 1 + i / 5;

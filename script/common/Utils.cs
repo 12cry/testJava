@@ -14,6 +14,7 @@ namespace testCC.Assets.script {
         public static Card currentCard;
 
         public static List<CardCtrl> handCardCtrls = new List<CardCtrl> ();
+        public static List<CardCtrl> passCardCtrls = new List<CardCtrl> ();
 
     }
 }

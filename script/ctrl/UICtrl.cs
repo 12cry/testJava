@@ -23,5 +23,9 @@ namespace testCC.Assets.script.ctrl {
             Utils.ui = ui;
         }
 
+        public void click () {
+            Debug.Log ("cccc");
+        }
+
     }
 }

@@ -1,16 +1,17 @@
 using UnityEngine;
 
 namespace testCC.Assets.script.model {
-    public class Builder {
+    public class Building {
         public GameObject gameObject;
-        public int peopleNum = 0;
+        public Card card;
+        public int worker = 0;
 
         public void init () {
-            this.getText ().text = peopleNum.ToString ();
+            this.getText ().text = worker.ToString ();
         }
 
-        public void addPeople (int value) {
-            this.getText ().text = (peopleNum += value).ToString ();
+        public void addAWorker () {
+            this.getText ().text = (worker += 1).ToString ();
         }
 
         public TextMesh getText () {

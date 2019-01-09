@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
@@ -12,22 +14,29 @@ public abstract class Card {
     public int id;
     public string cardName;
     public int age;
+    public string desc;
     public Cost cost;
     public Income income;
 
-    public bool takeable;
-    public bool actionable;
     public bool taked = false;
+    public bool actioned = false;
     public int takeCiv = 1;
 
     Tweener cardTween;
     UI ui = Utils.ui;
+
+    public void init () {
+        Text[] texts = ctrl.GetComponentsInChildren<Text> ();
+        Dictionary<string, Text> textDic = texts.ToDictionary (key => key.name, text => text);
+        textDic["cardName"].text = cardName;
+        if (cost.science != 0)
+            textDic["costScience"].text = cost.science.ToString ();
+    }
     public void view () {
         Utils.currentCard = this;
 
         cardTween = ctrl.transform.DOMove (new Vector3 (Screen.width / 2, Screen.height / 2, 0), Utils.cardMoveSpeed).SetAutoKill (false);
 
-        ui.cardViewUI.buttonAble (takeable, actionable);
         ui.cardViewUI.showView ();
     }
     public void closeView () {
@@ -39,8 +48,6 @@ public abstract class Card {
     }
     public void take () {
         ctrl.transform.DOMove (new Vector3 (Utils.cardWidth / 2 + Utils.handCardCtrls.Count * 20, Utils.cardWidth / 2, 0 + Utils.handCardCtrls.Count), Utils.cardMoveSpeed);
-        actionable = true;
-        takeable = false;
         taked = true;
         Utils.handCardCtrls.Add (ctrl);
         ui.resourceUI.updateCiv (this.takeCiv);
@@ -56,10 +63,12 @@ public abstract class Card {
     }
 
     public void afterAction () {
+        actioned = true;
         ui.resourceUI.updateCiv (1);
         ui.cardViewUI.hideView ();
         Utils.handCardCtrls.Remove (this.ctrl);
-        Object.Destroy (this.ctrl.gameObject);
+        Utils.passCardCtrls.Remove (this.ctrl);
+        this.ctrl.gameObject.transform.localPosition = new Vector3 (-100, 0, 0);
     }
     public abstract void action ();
 }
