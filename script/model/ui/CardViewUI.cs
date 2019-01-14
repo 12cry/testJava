@@ -5,6 +5,7 @@ using testCC.Assets.script.model;
 using testJava.script.constant;
 using testJava.script.ctrl.ui;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -15,7 +16,12 @@ namespace testJava.script.model.ui {
         void showAButton (Button b, int index) {
             b.transform.localPosition = new Vector3 (0, 30 * index, 0);
         }
-
+        void addAButton (int index, string text, UnityAction call) {
+            Button b = ctrl.buttons[index];
+            b.GetComponentInChildren<Text> ().text = text;
+            b.onClick.AddListener (call);
+            showAButton (b, index++);
+        }
         public void displayActionButtons () {
             Card card = Utils.currentCard;
 
@@ -23,25 +29,24 @@ namespace testJava.script.model.ui {
 
             if (card.levelType == CardLevelType.FARM) {
 
-                List<Building> buildings = Utils.world.farmBuilding;
-                foreach (Building building in buildings) {
-
-                    Button b0 = ctrl.buttons[0];
-                    b0.GetComponentInChildren<Text> ().text = "add a worker to farm1";
-                    b0.onClick.AddListener (delegate { building.addAWorker (); });
-                    showAButton (b0, index++);
-
-                    Button b1 = ctrl.buttons[1];
-                    b1.GetComponentInChildren<Text> ().text = "remove a worker from farm1";
-                    b1.onClick.AddListener (delegate { building.removeWorker (); });
-                    showAButton (b1, index++);
-
-                    if (Utils.ui.populationUI.workerNum == 0) {
-                        b0.interactable = false;
+                Building[] buildings = Utils.world.farmBuildings;
+                for (int i = 0; i < buildings.Length; i++) {
+                    Building building = buildings[i];
+                    if (building == null) {
+                        continue;
+                    }
+                    if (Utils.ui.populationUI.workerNum > 0 && Utils.ui.resourceUI.capacity >= building.card.buildCost.capacity) {
+                        addAButton (index++, "add a worker to farm1", delegate { building.addAWorker (); });
+                    }
+                    if (building.workerNum > 0) {
+                        addAButton (index++, "remove a worker from farm1", delegate { building.removeWorker (); });
                     }
 
-                    if (building.workerNum == 0) {
-                        b1.interactable = false;
+                    for (int j = building.level + 1; j < buildings.Length; j++) {
+                        if (buildings[j] == null) {
+                            continue;
+                        }
+                        addAButton (index++, "updrage a worker from farm1", delegate { building.upgradeWorker (building); });
                     }
 
                 }
@@ -75,12 +80,6 @@ namespace testJava.script.model.ui {
         public void hideView () {
             ctrl.gameObject.SetActive (false);
             Utils.ui.unMask ();
-        }
-
-        public void buttonAble (bool takeable, bool actionable) {
-            ctrl.bTakeCard.gameObject.SetActive (takeable);
-            ctrl.bActionCard.gameObject.SetActive (actionable);
-
         }
 
     }

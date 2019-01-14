@@ -5,32 +5,16 @@
     "age": 1,
     "desc": "tttt",
     "buildType": "FARM",
-    "cost": {
+    "actionCost": {
       "science": 2
     },
-    "income": {
+    "actionIncome": {
       "food": 1
-    }
-  },
-  {
-    "id": 1001,
-    "cardName": "farm1",
-    "age": 1,
-    "cost": {
-      "science": 2
     },
-    "income": {
-      "food": 1
-    }
-  },
-  {
-    "id": 1002,
-    "cardName": "farm2",
-    "age": 1,
-    "cost": {
-      "science": 3
+    "buildCost": {
+      "capacity": 2
     },
-    "income": {
+    "buildIncome": {
       "food": 1
     }
   }

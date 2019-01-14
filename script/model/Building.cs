@@ -17,10 +17,28 @@ namespace testCC.Assets.script.model {
             this.getText ().text = workerNum.ToString ();
         }
 
+        public void upgradeWorker (Building building) {
+            RawImage worker = workers.Dequeue ();
+            workerNum--;
+            building.workers.Enqueue (worker);
+            building.workerNum++;
+
+            this.getText ().text = (workerNum -= 1).ToString ();
+            building.getText ().text = (workerNum += 1).ToString ();
+
+            Utils.ui.resourceUI.reduceIncome (card.buildIncome);
+            Utils.ui.resourceUI.addIncome (building.card.buildIncome);
+        }
         public void removeWorker () {
             RawImage worker = workers.Dequeue ();
             workerNum--;
 
+            worker.transform.parent = Utils.ui.populationUI.ctrl.gameObject.transform;
+            worker.transform.DOMove (new Vector3 (0, 0, 0), Utils.cardMoveSpeed);
+
+            this.getText ().text = (workerNum -= 1).ToString ();
+
+            Utils.ui.resourceUI.reduceIncome (card.buildIncome);
         }
         public void addAWorker () {
             RawImage worker = Utils.ui.populationUI.getAWorker ();
@@ -31,7 +49,9 @@ namespace testCC.Assets.script.model {
             worker.transform.DOMove (new Vector3 (0, 0, 0), Utils.cardMoveSpeed);
 
             this.getText ().text = (workerNum += 1).ToString ();
-            Utils.ui.resourceUI.updateIncome (card.income);
+
+            Utils.ui.resourceUI.updateCost (card.buildCost);
+            Utils.ui.resourceUI.addIncome (card.buildIncome);
         }
 
         public TextMesh getText () {

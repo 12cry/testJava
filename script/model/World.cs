@@ -9,8 +9,7 @@ namespace testCC.Assets.script.model {
     public class World {
         public WorldCtrl ctrl;
         List<Building> buildings = new List<Building> ();
-        // Dictionary<int, Building> buildingDic = new Dictionary<int, Building> ();
-        public List<Building> farmBuilding = new List<Building> ();
+        public Building[] farmBuildings = new Building[4];
 
         public void build (Card card) {
             if (card.id == CardId.FARM1) {
@@ -19,23 +18,24 @@ namespace testCC.Assets.script.model {
 
                 Building building = new Building ();
                 building.id = card.id;
-                building.level = 1;
+                building.level = 0;
                 building.card = card;
                 building.gameObject = gameObject;
                 building.workerNum = 0;
                 building.init ();
 
                 buildings.Add (building);
-                farmBuilding.Add (building);
-                // buildingDic.Add (building.id, building);
+                farmBuildings[building.level] = building;
             }
-            Utils.ui.resourceUI.updateCost (card.cost);
+            Utils.ui.resourceUI.updateCost (card.actionCost);
 
         }
         public void viewBuilding () {
+            Utils.ui.mask (new Transform[] { });
             for (int i = 0; i < buildings.Count; i++) {
                 Building building = buildings[i];
                 building.card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100, 0, 0);
+                building.card.ctrl.gameObject.transform.SetAsLastSibling ();
             }
         }
 

@@ -24,9 +24,7 @@ namespace testCC.Assets.script {
 		}
 
 		public void run () {
-			print ("---run");
 			if (g.over) {
-				print ("---over");
 				return;
 			}
 			g.computeCurrentCards ();
@@ -34,7 +32,6 @@ namespace testCC.Assets.script {
 
 		}
 		public void reset () {
-			print ("---reset");
 			g.over = false;
 			g.init ();
 		}

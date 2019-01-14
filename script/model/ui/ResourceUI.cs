@@ -17,8 +17,13 @@ namespace testCC.Assets.script.model {
         public int civ;
         public int civRemainder;
 
-        public void updateIncome (Income income) {
+        public void addIncome (Income income) {
             updateFoodIncrement (income.food);
+            updateFoodIncrement (income.capacity);
+        }
+        public void reduceIncome (Income income) {
+            updateFoodIncrement (-income.food);
+            updateFoodIncrement (-income.capacity);
         }
         public void updateCost (Cost cost) {
             updateScience (-cost.science);

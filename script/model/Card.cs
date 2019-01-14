@@ -16,8 +16,10 @@ public abstract class Card {
     public string cardName;
     public int age;
     public string desc;
-    public Cost cost;
-    public Income income;
+    public Cost actionCost;
+    public Income actionIncome;
+    public Cost buildCost;
+    public Income buildIncome;
     public CardLevelType levelType;
 
     public CardState state = CardState.READY;
@@ -30,8 +32,8 @@ public abstract class Card {
         Text[] texts = ctrl.GetComponentsInChildren<Text> ();
         Dictionary<string, Text> textDic = texts.ToDictionary (key => key.name, text => text);
         textDic["cardName"].text = cardName;
-        if (cost.science != 0)
-            textDic["costScience"].text = cost.science.ToString ();
+        if (actionCost.science != 0)
+            textDic["costScience"].text = actionCost.science.ToString ();
     }
     public void view () {
         Utils.currentCard = this;
@@ -55,14 +57,6 @@ public abstract class Card {
 
         ui.cardViewUI.hideView ();
     }
-    //evaluating
-    // public void updateResource () {
-    //     ui.resourceUI.updateScience (-cost.science);
-    //     ui.resourceUI.updateFoodIncrement (income.food);
-    //     ui.resourceUI.updateCapacityIncrement (income.capacity);
-    //     // Utils.resource.updateScienceIncrement (output[2]);
-    //     // Utils.resource.updateCultureIncrement (output[3]);
-    // }
 
     public virtual void action () {
         state = CardState.ACTINGED;
