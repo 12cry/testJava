@@ -4,6 +4,7 @@
     "cardName": "farm1",
     "age": 1,
     "desc": "tttt",
+    "buildType": "FARM",
     "cost": {
       "science": 2
     },

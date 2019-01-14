@@ -6,6 +6,7 @@ using DG.Tweening;
 using Newtonsoft.Json;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
+using testJava.script.constant;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -55,17 +56,18 @@ namespace testJava.script.model {
                 if (cardCtrl == null) {
                     continue;
                 }
-                if (cardCtrl.card.taked) {
-                    rowCardCtrls[i] = null;
+
+                rowCardCtrls[i] = null;
+                if (cardCtrl.card.state == CardState.TAKED) {
                     continue;
                 }
                 if (i < removeCardNum) {
-                    Object.Destroy (cardCtrl.gameObject);
-                } else {
-                    rowCardCtrls[index] = cardCtrl;
-                    rowCardCtrls[i] = null;
-                    index++;
+                    cardCtrl.card.hideCard ();
+                    continue;
                 }
+
+                rowCardCtrls[index] = cardCtrl;
+                index++;
             }
 
             for (int i = index; i < rowCardLimitNum; i++) {
@@ -86,6 +88,7 @@ namespace testJava.script.model {
                 rowCardCtrls[i].transform.DOMove (new Vector3 (Utils.cardWidth / 2 + i * Utils.cardWidth, Screen.height - Utils.cardWidth / 2, 0), Utils.cardMoveSpeed);
 
                 rowCardCtrls[i].card.takeCiv = 1 + i / 5;
+                rowCardCtrls[i].card.state = CardState.SHOWING;
             }
         }
 

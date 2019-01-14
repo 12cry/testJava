@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using testCC.Assets.script;
 using testJava.script.model.ui;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace testJava.script.ctrl.ui {
         public Text desc;
         public Button bTakeCard;
         public Button bActionCard;
+        public List<Button> buttons;
 
         void Start () {
             Debug.Log ("cardView");

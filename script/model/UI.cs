@@ -10,6 +10,7 @@ namespace testJava.script.model {
 
         public ResourceUI resourceUI;
         public CardViewUI cardViewUI;
+        public PopulationUI populationUI;
 
         public void mask (Transform[] transforms) {
             ctrl.maskImage.gameObject.SetActive (true);

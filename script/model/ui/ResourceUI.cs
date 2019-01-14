@@ -17,6 +17,13 @@ namespace testCC.Assets.script.model {
         public int civ;
         public int civRemainder;
 
+        public void updateIncome (Income income) {
+            updateFoodIncrement (income.food);
+        }
+        public void updateCost (Cost cost) {
+            updateScience (-cost.science);
+        }
+
         public void updateFoodIncrementDisplay () {
             ctrl.foodIncrementText.text = this.foodIncrement.ToString ();
         }

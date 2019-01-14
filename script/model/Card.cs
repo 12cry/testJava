@@ -4,6 +4,7 @@ using DG.Tweening;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
 using testCC.Assets.script.model;
+using testJava.script.constant;
 using testJava.script.model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,9 +18,9 @@ public abstract class Card {
     public string desc;
     public Cost cost;
     public Income income;
+    public CardLevelType levelType;
 
-    public bool taked = false;
-    public bool actioned = false;
+    public CardState state = CardState.READY;
     public int takeCiv = 1;
 
     Tweener cardTween;
@@ -48,27 +49,32 @@ public abstract class Card {
     }
     public void take () {
         ctrl.transform.DOMove (new Vector3 (Utils.cardWidth / 2 + Utils.handCardCtrls.Count * 20, Utils.cardWidth / 2, 0 + Utils.handCardCtrls.Count), Utils.cardMoveSpeed);
-        taked = true;
+        state = CardState.TAKED;
         Utils.handCardCtrls.Add (ctrl);
         ui.resourceUI.updateCiv (this.takeCiv);
 
         ui.cardViewUI.hideView ();
     }
-    public void updateResource () {
-        ui.resourceUI.updateScience (-cost.science);
-        ui.resourceUI.updateFoodIncrement (income.food);
-        ui.resourceUI.updateCapacityIncrement (income.capacity);
-        // Utils.resource.updateScienceIncrement (output[2]);
-        // Utils.resource.updateCultureIncrement (output[3]);
-    }
+    //evaluating
+    // public void updateResource () {
+    //     ui.resourceUI.updateScience (-cost.science);
+    //     ui.resourceUI.updateFoodIncrement (income.food);
+    //     ui.resourceUI.updateCapacityIncrement (income.capacity);
+    //     // Utils.resource.updateScienceIncrement (output[2]);
+    //     // Utils.resource.updateCultureIncrement (output[3]);
+    // }
 
-    public void afterAction () {
-        actioned = true;
+    public virtual void action () {
+        state = CardState.ACTINGED;
         ui.resourceUI.updateCiv (1);
         ui.cardViewUI.hideView ();
         Utils.handCardCtrls.Remove (this.ctrl);
-        Utils.passCardCtrls.Remove (this.ctrl);
-        this.ctrl.gameObject.transform.localPosition = new Vector3 (-100, 0, 0);
+        Utils.passCardCtrls.Add (this.ctrl);
+        this.hideCard ();
     }
-    public abstract void action ();
+
+    public void hideCard () {
+        this.ctrl.gameObject.transform.localPosition = new Vector3 (-1000, 0, 0);
+    }
+    // public abstract void action ();
 }

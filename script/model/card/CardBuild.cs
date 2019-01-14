@@ -1,12 +1,11 @@
 using testCC.Assets.script;
+using testJava.script.constant;
 using UnityEngine;
 
 public class CardBuild : Card {
 
     public override void action () {
-        Debug.Log ("action---");
-        this.updateResource ();
+        base.action ();
         Utils.world.build (this);
-        this.afterAction ();
     }
 }

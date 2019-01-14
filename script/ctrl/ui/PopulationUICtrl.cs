@@ -15,8 +15,8 @@ namespace testJava.script.ctrl.ui {
             ui.init ();
         }
 
-        public void addWorker () {
-            ui.addWorker ();
+        public void idleToWorker () {
+            ui.idleToWorker ();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace testCC.Assets.script.ctrl {
 
         public ResourceUICtrl resourceUICtrl;
         public CardViewUICtrl cardViewUICtrl;
+        public PopulationUICtrl populationUICtrl;
 
         public Image maskImage;
 
@@ -19,6 +20,7 @@ namespace testCC.Assets.script.ctrl {
             ui.ctrl = this;
             ui.resourceUI = this.resourceUICtrl.ui;
             ui.cardViewUI = this.cardViewUICtrl.ui;
+            ui.populationUI = this.populationUICtrl.ui;
 
             Utils.ui = ui;
         }
