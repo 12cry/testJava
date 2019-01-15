@@ -62,7 +62,7 @@ namespace testJava.script.model {
                     continue;
                 }
                 if (i < removeCardNum) {
-                    cardCtrl.card.hideCard ();
+                    Utils.hideCard (cardCtrl);
                     continue;
                 }
 

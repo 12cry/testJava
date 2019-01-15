@@ -27,6 +27,7 @@ namespace testCC.Assets.script.model {
         }
         public void updateCost (Cost cost) {
             updateScience (-cost.science);
+            updateCapacity (-cost.capacity);
         }
 
         public void updateFoodIncrementDisplay () {
@@ -44,6 +45,10 @@ namespace testCC.Assets.script.model {
 
         public void updateScienceDisplay () {
             ctrl.scienceText.text = this.science.ToString ();
+        }
+
+        public void updateCapacityDisplay () {
+            ctrl.capacityText.text = this.capacity.ToString ();
         }
         public void updateCivDisplay () {
             ctrl.civText.text = this.civ.ToString ();
@@ -66,12 +71,12 @@ namespace testCC.Assets.script.model {
         }
 
         public void init () {
-            this.food = 0;
-            this.foodIncrement = 2;
-            this.capacity = 0;
-            this.capacityIncrement = 2;
+            this.food = 2;
+            this.foodIncrement = 0;
+            this.capacity = 2;
+            this.capacityIncrement = 0;
             this.science = 0;
-            this.scienceIncrement = 2;
+            this.scienceIncrement = 0;
             this.culture = 0;
             this.cultureIncrement = 0;
             this.civ = 4;
@@ -116,6 +121,15 @@ namespace testCC.Assets.script.model {
             }
             this.science += value;
             this.updateScienceDisplay ();
+
+        }
+
+        public void updateCapacity (int value) {
+            if (value == 0) {
+                return;
+            }
+            this.capacity += value;
+            this.updateCapacityDisplay ();
 
         }
 

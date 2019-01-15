@@ -19,6 +19,7 @@ namespace testJava.script.model.ui {
         void addAButton (int index, string text, UnityAction call) {
             Button b = ctrl.buttons[index];
             b.GetComponentInChildren<Text> ().text = text;
+            b.onClick.RemoveAllListeners ();
             b.onClick.AddListener (call);
             showAButton (b, index++);
         }
@@ -30,36 +31,30 @@ namespace testJava.script.model.ui {
             if (card.levelType == CardLevelType.FARM) {
 
                 Building[] buildings = Utils.world.farmBuildings;
-                for (int i = 0; i < buildings.Length; i++) {
-                    Building building = buildings[i];
-                    if (building == null) {
-                        continue;
-                    }
-                    if (Utils.ui.populationUI.workerNum > 0 && Utils.ui.resourceUI.capacity >= building.card.buildCost.capacity) {
-                        addAButton (index++, "add a worker to farm1", delegate { building.addAWorker (); });
-                    }
-                    if (building.workerNum > 0) {
-                        addAButton (index++, "remove a worker from farm1", delegate { building.removeWorker (); });
-                    }
-
-                    for (int j = building.level + 1; j < buildings.Length; j++) {
-                        if (buildings[j] == null) {
-                            continue;
-                        }
-                        addAButton (index++, "updrage a worker from farm1", delegate { building.upgradeWorker (building); });
-                    }
-
+                Building building = Utils.world.cardIdBuildingDic[card.id];
+                // Debug.Log (Utils.ui.populationUI.workerNum);
+                // Debug.Log (Utils.ui.resourceUI.capacity);
+                // Debug.Log (building.card.buildCost.capacity);
+                if (Utils.ui.populationUI.workerNum > 0 && Utils.ui.resourceUI.capacity >= building.card.buildCost.capacity) {
+                    addAButton (index++, "add a worker to farm1", delegate { building.addAWorker (); });
+                }
+                if (building.workerNum > 0) {
+                    addAButton (index++, "remove a worker from farm1", delegate { building.removeWorker (); });
                 }
 
+                for (int j = building.level + 1; j < buildings.Length; j++) {
+                    if (buildings[j] == null) {
+                        continue;
+                    }
+                    addAButton (index++, "updrage a worker from farm1", delegate { building.upgradeWorker (building); });
+                }
             }
-
         }
-        public void showView () {
+        public void view () {
             Card card = Utils.currentCard;
             ctrl.desc.text = card.desc;
             int index = 0;
 
-            hideAllButton ();
             if (card.state == CardState.SHOWING) {
                 showAButton (ctrl.bTakeCard, index++);
             } else if (card.state == CardState.TAKED) {
@@ -68,8 +63,11 @@ namespace testJava.script.model.ui {
                 displayActionButtons ();
             }
 
+            ctrl.maskCardImage.gameObject.SetActive (true);
+            ctrl.maskCardImage.transform.SetAsLastSibling ();
             ctrl.gameObject.SetActive (true);
-            Utils.ui.mask (new Transform[] { Utils.currentCard.ctrl.transform, ctrl.transform });
+            ctrl.transform.SetAsLastSibling ();
+            Utils.currentCard.ctrl.transform.SetAsLastSibling ();
         }
         public void hideAllButton () {
             Button[] bb = ctrl.GetComponentsInChildren<Button> ();
@@ -77,9 +75,34 @@ namespace testJava.script.model.ui {
                 b.transform.localPosition = new Vector3 (1000, 0, 0);
             });
         }
-        public void hideView () {
+        public void closeView () {
             ctrl.gameObject.SetActive (false);
-            Utils.ui.unMask ();
+            ctrl.maskCardImage.gameObject.SetActive (false);
+            hideAllButton ();
+        }
+
+        public void viewBuilding () {
+            ctrl.maskBuildingImage.gameObject.SetActive (true);
+            ctrl.maskBuildingImage.transform.SetAsLastSibling ();
+            List<Building> buildings = Utils.world.buildings;
+            for (int i = 0; i < buildings.Count; i++) {
+                Building building = buildings[i];
+                building.card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
+                building.card.ctrl.gameObject.transform.SetAsLastSibling ();
+            }
+        }
+
+        public void closeViewBuilding () {
+            ctrl.maskBuildingImage.gameObject.SetActive (false);
+            List<Building> buildings = Utils.world.buildings;
+            for (int i = 0; i < buildings.Count; i++) {
+                Building building = buildings[i];
+                Utils.hideCard (building.card.ctrl);
+            }
+        }
+        public void closeAllView () {
+            closeView ();
+            closeViewBuilding ();
         }
 
     }

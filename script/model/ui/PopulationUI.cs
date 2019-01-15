@@ -34,8 +34,6 @@ namespace testJava.script.model.ui {
             worker.transform.parent = this.ctrl.workerArea.transform;
             Vector3 v = ctrl.workerArea.transform.position;
             worker.transform.DOMove (new Vector3 (v.x + workerNum / 2 * 40, v.y - workerNum % 2 * 40, 0), Utils.cardMoveSpeed);
-            // worker.transform.localPosition = new Vector3 (workerNum / 2 * 40, -workerNum % 2 * 40, 0);
-
         }
 
         public RawImage getAWorker () {

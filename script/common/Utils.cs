@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
 using testJava.script.model;
+using UnityEngine;
 
 namespace testCC.Assets.script {
     public class Utils {
@@ -16,5 +17,8 @@ namespace testCC.Assets.script {
         public static List<CardCtrl> handCardCtrls = new List<CardCtrl> ();
         public static List<CardCtrl> passCardCtrls = new List<CardCtrl> ();
 
+        public static void hideCard (CardCtrl ctrl) {
+            ctrl.gameObject.transform.localPosition = new Vector3 (-1000, 0, 0);
+        }
     }
 }

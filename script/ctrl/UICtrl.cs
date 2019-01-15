@@ -13,10 +13,7 @@ namespace testCC.Assets.script.ctrl {
         public CardViewUICtrl cardViewUICtrl;
         public PopulationUICtrl populationUICtrl;
 
-        public Image maskImage;
-
         void Start () {
-            Debug.Log ("ui");
             ui.ctrl = this;
             ui.resourceUI = this.resourceUICtrl.ui;
             ui.cardViewUI = this.cardViewUICtrl.ui;

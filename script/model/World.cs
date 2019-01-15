@@ -8,8 +8,9 @@ using UnityEngine.UI;
 namespace testCC.Assets.script.model {
     public class World {
         public WorldCtrl ctrl;
-        List<Building> buildings = new List<Building> ();
+        public List<Building> buildings = new List<Building> ();
         public Building[] farmBuildings = new Building[4];
+        public Dictionary<int, Building> cardIdBuildingDic = new Dictionary<int, Building> ();
 
         public void build (Card card) {
             if (card.id == CardId.FARM1) {
@@ -26,19 +27,11 @@ namespace testCC.Assets.script.model {
 
                 buildings.Add (building);
                 farmBuildings[building.level] = building;
+                cardIdBuildingDic.Add (card.id, building);
             }
             Utils.ui.resourceUI.updateCost (card.actionCost);
 
         }
-        public void viewBuilding () {
-            Utils.ui.mask (new Transform[] { });
-            for (int i = 0; i < buildings.Count; i++) {
-                Building building = buildings[i];
-                building.card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100, 0, 0);
-                building.card.ctrl.gameObject.transform.SetAsLastSibling ();
-            }
-        }
-
         // public void workerToBuilding (int buildingId) {
         //     Building building = buildingDic[buildingId];
         //     RawImage worker = Utils.ui.populationUI.getAWorker ();

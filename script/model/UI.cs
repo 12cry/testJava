@@ -12,15 +12,5 @@ namespace testJava.script.model {
         public CardViewUI cardViewUI;
         public PopulationUI populationUI;
 
-        public void mask (Transform[] transforms) {
-            ctrl.maskImage.gameObject.SetActive (true);
-            ctrl.maskImage.transform.SetAsLastSibling ();
-            foreach (Transform t in transforms) {
-                t.SetAsLastSibling ();
-            }
-        }
-        public void unMask () {
-            ctrl.maskImage.gameObject.SetActive (false);
-        }
     }
 }

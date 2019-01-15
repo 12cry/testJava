@@ -33,12 +33,12 @@ namespace testCC.Assets.script.model {
             RawImage worker = workers.Dequeue ();
             workerNum--;
 
-            worker.transform.parent = Utils.ui.populationUI.ctrl.gameObject.transform;
-            worker.transform.DOMove (new Vector3 (0, 0, 0), Utils.cardMoveSpeed);
+            Utils.ui.populationUI.addWorker (worker);
 
-            this.getText ().text = (workerNum -= 1).ToString ();
+            this.getText ().text = workerNum.ToString ();
 
             Utils.ui.resourceUI.reduceIncome (card.buildIncome);
+            Utils.ui.cardViewUI.closeAllView ();
         }
         public void addAWorker () {
             RawImage worker = Utils.ui.populationUI.getAWorker ();
@@ -48,10 +48,11 @@ namespace testCC.Assets.script.model {
             worker.transform.parent = this.gameObject.transform;
             worker.transform.DOMove (new Vector3 (0, 0, 0), Utils.cardMoveSpeed);
 
-            this.getText ().text = (workerNum += 1).ToString ();
+            this.getText ().text = workerNum.ToString ();
 
             Utils.ui.resourceUI.updateCost (card.buildCost);
             Utils.ui.resourceUI.addIncome (card.buildIncome);
+            Utils.ui.cardViewUI.closeAllView ();
         }
 
         public TextMesh getText () {

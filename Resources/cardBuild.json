@@ -3,7 +3,7 @@
     "id": 1001,
     "cardName": "farm1",
     "age": 1,
-    "desc": "tttt",
+    "desc": "tttt1",
     "buildType": "FARM",
     "actionCost": {
       "science": 2

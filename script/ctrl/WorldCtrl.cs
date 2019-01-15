@@ -1,5 +1,6 @@
 using testCC.Assets.script.model;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace testCC.Assets.script.ctrl {
     public class WorldCtrl : MonoBehaviour {
@@ -10,9 +11,6 @@ namespace testCC.Assets.script.ctrl {
             world.ctrl = this;
             Utils.world = world;
 
-        }
-        public void viewBuilding () {
-            world.viewBuilding ();
         }
     }
 }

@@ -40,35 +40,28 @@ public abstract class Card {
 
         cardTween = ctrl.transform.DOMove (new Vector3 (Screen.width / 2, Screen.height / 2, 0), Utils.cardMoveSpeed).SetAutoKill (false);
 
-        ui.cardViewUI.showView ();
+        ui.cardViewUI.view ();
     }
     public void closeView () {
         if (cardTween.IsActive ()) {
             cardTween.Rewind ();
             cardTween.Kill ();
         }
-        ui.cardViewUI.hideView ();
     }
     public void take () {
         ctrl.transform.DOMove (new Vector3 (Utils.cardWidth / 2 + Utils.handCardCtrls.Count * 20, Utils.cardWidth / 2, 0 + Utils.handCardCtrls.Count), Utils.cardMoveSpeed);
         state = CardState.TAKED;
         Utils.handCardCtrls.Add (ctrl);
         ui.resourceUI.updateCiv (this.takeCiv);
-
-        ui.cardViewUI.hideView ();
     }
 
     public virtual void action () {
         state = CardState.ACTINGED;
         ui.resourceUI.updateCiv (1);
-        ui.cardViewUI.hideView ();
         Utils.handCardCtrls.Remove (this.ctrl);
         Utils.passCardCtrls.Add (this.ctrl);
-        this.hideCard ();
+        Utils.hideCard (this.ctrl);
     }
 
-    public void hideCard () {
-        this.ctrl.gameObject.transform.localPosition = new Vector3 (-1000, 0, 0);
-    }
     // public abstract void action ();
 }
