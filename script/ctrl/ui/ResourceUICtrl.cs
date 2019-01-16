@@ -16,13 +16,8 @@ namespace testCC.Assets.script.ctrl {
         public Text cultureText;
         public Text cultureIncrementText;
 
-        public Text civText;
-        public Text civTextRemainder;
-
         void Start () {
-            Debug.Log ("src");
             ui.ctrl = this;
-
             ui.init ();
         }
 

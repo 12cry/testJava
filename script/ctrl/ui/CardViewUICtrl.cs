@@ -16,9 +16,8 @@ namespace testJava.script.ctrl.ui {
         public Image maskBuildingImage;
 
         void Start () {
-            Debug.Log ("cardView");
             ui.ctrl = this;
-            ui.closeView ();
+            ui.init ();
         }
 
         public void takeCard () {

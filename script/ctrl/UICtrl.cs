@@ -12,18 +12,16 @@ namespace testCC.Assets.script.ctrl {
         public ResourceUICtrl resourceUICtrl;
         public CardViewUICtrl cardViewUICtrl;
         public PopulationUICtrl populationUICtrl;
+        public ActionUICtrl actionUICtrl;
 
         void Start () {
             ui.ctrl = this;
             ui.resourceUI = this.resourceUICtrl.ui;
             ui.cardViewUI = this.cardViewUICtrl.ui;
             ui.populationUI = this.populationUICtrl.ui;
+            ui.actionUI = this.actionUICtrl.ui;
 
             Utils.ui = ui;
-        }
-
-        public void click () {
-            Debug.Log ("cccc");
         }
 
     }

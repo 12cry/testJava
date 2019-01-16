@@ -23,11 +23,12 @@ namespace testCC.Assets.script.model {
             building.workers.Enqueue (worker);
             building.workerNum++;
 
-            this.getText ().text = (workerNum -= 1).ToString ();
-            building.getText ().text = (workerNum += 1).ToString ();
+            this.getText ().text = workerNum.ToString ();
+            building.getText ().text = workerNum.ToString ();
 
             Utils.ui.resourceUI.reduceIncome (card.buildIncome);
             Utils.ui.resourceUI.addIncome (building.card.buildIncome);
+            Utils.ui.actionUI.updateCivilRemainder (-1);
         }
         public void removeWorker () {
             RawImage worker = workers.Dequeue ();
@@ -39,6 +40,7 @@ namespace testCC.Assets.script.model {
 
             Utils.ui.resourceUI.reduceIncome (card.buildIncome);
             Utils.ui.cardViewUI.closeAllView ();
+            Utils.ui.actionUI.updateCivilRemainder (-1);
         }
         public void addAWorker () {
             RawImage worker = Utils.ui.populationUI.getAWorker ();
@@ -53,6 +55,7 @@ namespace testCC.Assets.script.model {
             Utils.ui.resourceUI.updateCost (card.buildCost);
             Utils.ui.resourceUI.addIncome (card.buildIncome);
             Utils.ui.cardViewUI.closeAllView ();
+            Utils.ui.actionUI.updateCivilRemainder (-1);
         }
 
         public TextMesh getText () {

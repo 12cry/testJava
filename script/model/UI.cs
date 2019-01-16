@@ -11,6 +11,7 @@ namespace testJava.script.model {
         public ResourceUI resourceUI;
         public CardViewUI cardViewUI;
         public PopulationUI populationUI;
+        public ActionUI actionUI;
 
     }
 }

@@ -23,9 +23,10 @@ public abstract class Card {
     public CardLevelType levelType;
 
     public CardState state = CardState.READY;
-    public int takeCiv = 1;
+    public int takeCivil = 1;
 
-    Tweener cardTween;
+    Vector3 cardPositionTemp;
+
     UI ui = Utils.ui;
 
     public void init () {
@@ -36,32 +37,34 @@ public abstract class Card {
             textDic["costScience"].text = actionCost.science.ToString ();
     }
     public void view () {
-        Utils.currentCard = this;
+        Vector3 cardViewPosition = new Vector3 (0, 0, 0);
+        if (cardViewPosition == ctrl.transform.localPosition) {
+            return;
+        }
 
-        cardTween = ctrl.transform.DOMove (new Vector3 (Screen.width / 2, Screen.height / 2, 0), Utils.cardMoveSpeed).SetAutoKill (false);
+        Utils.currentCard = this;
+        cardPositionTemp = ctrl.transform.localPosition;
+        ctrl.transform.DOLocalMove (cardViewPosition, Utils.cardMoveSpeed);
 
         ui.cardViewUI.view ();
     }
     public void closeView () {
-        if (cardTween.IsActive ()) {
-            cardTween.Rewind ();
-            cardTween.Kill ();
-        }
+        ctrl.transform.DOLocalMove (cardPositionTemp, Utils.cardMoveSpeed);
     }
     public void take () {
-        ctrl.transform.DOMove (new Vector3 (Utils.cardWidth / 2 + Utils.handCardCtrls.Count * 20, Utils.cardWidth / 2, 0 + Utils.handCardCtrls.Count), Utils.cardMoveSpeed);
-        state = CardState.TAKED;
+        ctrl.transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 - Screen.width / 2 + Utils.handCardCtrls.Count * 20, Utils.cardWidth / 2 - Screen.height / 2, 0 + Utils.handCardCtrls.Count), Utils.cardMoveSpeed);
         Utils.handCardCtrls.Add (ctrl);
-        ui.resourceUI.updateCiv (this.takeCiv);
+
+        state = CardState.TAKED;
+        ui.actionUI.updateCivilRemainder (-this.takeCivil);
     }
 
     public virtual void action () {
-        state = CardState.ACTINGED;
-        ui.resourceUI.updateCiv (1);
         Utils.handCardCtrls.Remove (this.ctrl);
         Utils.passCardCtrls.Add (this.ctrl);
         Utils.hideCard (this.ctrl);
-    }
 
-    // public abstract void action ();
+        state = CardState.ACTINGED;
+        ui.actionUI.updateCivilRemainder (-1);
+    }
 }

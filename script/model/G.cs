@@ -85,9 +85,8 @@ namespace testJava.script.model {
                 if (rowCardCtrls[i] == null) {
                     break;
                 }
-                rowCardCtrls[i].transform.DOMove (new Vector3 (Utils.cardWidth / 2 + i * Utils.cardWidth, Screen.height - Utils.cardWidth / 2, 0), Utils.cardMoveSpeed);
-
-                rowCardCtrls[i].card.takeCiv = 1 + i / 5;
+                rowCardCtrls[i].transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 + i * Utils.cardWidth - Screen.width / 2, Screen.height / 2 - Utils.cardWidth / 2, 0), Utils.cardMoveSpeed);
+                rowCardCtrls[i].card.takeCivil = 1 + i / 5;
                 rowCardCtrls[i].card.state = CardState.SHOWING;
             }
         }
