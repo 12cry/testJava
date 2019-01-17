@@ -1,5 +1,8 @@
 namespace testCC.Assets.script.model.card {
     public class CardLeader : Card {
-        public override void action () { }
+        public string leaderImage;
+        public override void action () {
+            Utils.ui.leaderUI.appoint (this);
+        }
     }
 }

@@ -6,6 +6,7 @@ using DG.Tweening;
 using Newtonsoft.Json;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
+using testCC.Assets.script.model.card;
 using testJava.script.constant;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,10 +24,19 @@ namespace testJava.script.model {
         public void init () {
             string json = File.ReadAllText ("./Assets/data/cardBuild.json", Encoding.UTF8);
             List<CardBuild> cardBuildList = JsonConvert.DeserializeObject<List<CardBuild>> (json);
+            List<CardLeader> cardLeaderList = JsonConvert.DeserializeObject<List<CardLeader>> (File.ReadAllText ("./Assets/data/cardLeader.json", Encoding.UTF8));
+
+            List<Card> allCardList = new List<Card> ();
+            for (int i = 0; i < cardBuildList.Count; i++) {
+                allCardList.Add (cardBuildList[i]);
+            }
+            for (int i = 0; i < cardLeaderList.Count; i++) {
+                allCardList.Add (cardLeaderList[i]);
+            }
 
             List<Card> cardList = new List<Card> ();
-            for (int i = 0; i < cardBuildList.Count; i++) {
-                cardList.Insert (Random.Range (i, i + 1), cardBuildList[i]);
+            for (int i = 0; i < allCardList.Count; i++) {
+                cardList.Insert (Random.Range (0, i + 1), allCardList[i]);
             }
 
             civilCardCtrls = new Queue<CardCtrl> ();
@@ -56,7 +66,6 @@ namespace testJava.script.model {
                 return null;
             }
             CardCtrl cardCtrl = civilCardCtrls.Dequeue ();
-            cardCtrl.card.init ();
             return cardCtrl;
         }
         public void computeCurrentCards () {
@@ -91,12 +100,14 @@ namespace testJava.script.model {
         }
         public void showCurrentCards () {
             for (int i = 0; i < rowCardCtrls.Length; i++) {
-                if (rowCardCtrls[i] == null) {
+                CardCtrl cardCtrl = rowCardCtrls[i];
+                if (cardCtrl == null) {
                     break;
                 }
-                rowCardCtrls[i].transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 + i * Utils.cardWidth - Screen.width / 2, Screen.height / 2 - Utils.cardWidth / 2, 0), Utils.cardMoveSpeed);
-                rowCardCtrls[i].card.takeCivil = 1 + i / 5;
-                rowCardCtrls[i].card.state = CardState.SHOWING;
+                cardCtrl.transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 + i * Utils.cardWidth - Screen.width / 2, Screen.height / 2 - Utils.cardWidth / 2, 0), Utils.cardMoveSpeed);
+                cardCtrl.card.takeCivil = 1 + i / 5;
+                cardCtrl.card.show ();
+
             }
         }
 

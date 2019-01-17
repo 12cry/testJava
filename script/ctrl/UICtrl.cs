@@ -13,6 +13,7 @@ namespace testCC.Assets.script.ctrl {
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
         public WarehouseUICtrl warrehouseUICtrl;
+        public LeaderUICtrl leaderUICtrl;
 
         void Start () {
             ui.ctrl = this;
@@ -21,6 +22,7 @@ namespace testCC.Assets.script.ctrl {
             ui.populationUI = this.populationUICtrl.ui;
             ui.actionUI = this.actionUICtrl.ui;
             ui.warehouseUI = this.warrehouseUICtrl.ui;
+            ui.leaderUI = this.leaderUICtrl.ui;
 
             Utils.ui = ui;
         }

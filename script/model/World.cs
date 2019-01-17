@@ -14,7 +14,6 @@ namespace testCC.Assets.script.model {
 
         public void build (Card card) {
             Building building = buildABuilding (card);
-            building.init ();
 
             buildings.Add (building);
             farmBuildings[building.level] = building;
@@ -40,6 +39,8 @@ namespace testCC.Assets.script.model {
             building.level = level;
             building.card = card;
             building.gameObject = gameObject;
+            building.init ();
+
             return building;
         }
 

@@ -29,12 +29,15 @@ public abstract class Card {
 
     UI ui = Utils.ui;
 
-    public void init () {
+    public void show () {
         Text[] texts = ctrl.GetComponentsInChildren<Text> ();
         Dictionary<string, Text> textDic = texts.ToDictionary (key => key.name, text => text);
         textDic["cardName"].text = cardName;
-        if (actionCost.science != 0)
+        if (actionCost != null && actionCost.science != 0) {
             textDic["costScience"].text = actionCost.science.ToString ();
+        }
+
+        state = CardState.SHOWING;
     }
     public void view () {
         Vector3 cardViewPosition = new Vector3 (0, 0, 0);

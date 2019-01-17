@@ -13,6 +13,7 @@ namespace testJava.script.model {
         public PopulationUI populationUI;
         public ActionUI actionUI;
         public WarehouseUI warehouseUI;
+        public LeaderUI leaderUI;
 
     }
 }

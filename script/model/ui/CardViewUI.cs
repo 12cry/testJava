@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
+using testCC.Assets.script.model.card;
 using testJava.script.constant;
 using testJava.script.ctrl.ui;
 using UnityEngine;
@@ -76,13 +77,20 @@ namespace testJava.script.model.ui {
                     showAButton (ctrl.bTakeCard, index++);
                 }
             } else if (card.state == CardState.TAKED) {
-                if (Utils.ui.resourceUI.enough (card.actionCost)) {
+                if (actionCardAble (card)) {
                     showAButton (ctrl.bActionCard, index++);
                 }
             } else if (card.state == CardState.ACTINGED) {
                 displayActionButtons ();
             }
-
+        }
+        bool actionCardAble (Card card) {
+            CardLeader card2 = (CardLeader) card;
+            Debug.Log (card2.leaderImage);
+            if (Utils.ui.resourceUI.enough (card.actionCost)) {
+                return true;
+            }
+            return false;
         }
         public void hideAllButton () {
             Button[] bb = ctrl.GetComponentsInChildren<Button> ();

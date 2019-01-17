@@ -14,6 +14,7 @@ namespace testCC.Assets.script {
         public static World world;
         public static UI ui;
         public static Card currentCard;
+        public static int currentLeader;
 
         public static void hideCard (CardCtrl ctrl) {
             ctrl.gameObject.transform.localPosition = new Vector3 (-1000, 0, 0);
