@@ -1,4 +1,3 @@
-using Cry.Common;
 using testCC.Assets.script.model;
 using testJava.script.ctrl.ui;
 using testJava.script.model;
@@ -13,6 +12,7 @@ namespace testCC.Assets.script.ctrl {
         public CardViewUICtrl cardViewUICtrl;
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
+        public WarehouseUICtrl warrehouseUICtrl;
 
         void Start () {
             ui.ctrl = this;
@@ -20,6 +20,7 @@ namespace testCC.Assets.script.ctrl {
             ui.cardViewUI = this.cardViewUICtrl.ui;
             ui.populationUI = this.populationUICtrl.ui;
             ui.actionUI = this.actionUICtrl.ui;
+            ui.warehouseUI = this.warrehouseUICtrl.ui;
 
             Utils.ui = ui;
         }

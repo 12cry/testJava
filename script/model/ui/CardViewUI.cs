@@ -20,10 +20,14 @@ namespace testJava.script.model.ui {
             b.transform.localPosition = new Vector3 (0, 30 * index, 0);
         }
         void addAButton (int index, string text, UnityAction call) {
+            addAButton (index, text, call, true);
+        }
+        void addAButton (int index, string text, UnityAction call, bool interactable) {
             Button b = ctrl.buttons[index];
             b.GetComponentInChildren<Text> ().text = text;
             b.onClick.RemoveAllListeners ();
             b.onClick.AddListener (call);
+            b.interactable = interactable;
             showAButton (b, index++);
         }
         public void displayActionButtons () {
@@ -35,24 +39,19 @@ namespace testJava.script.model.ui {
 
                 Building[] buildings = Utils.world.farmBuildings;
                 Building building = Utils.world.cardIdBuildingDic[card.id];
-                Debug.Log (Utils.ui.populationUI.workerNum);
-                Debug.Log (resourceUI.capacity);
-                Debug.Log (building.card.buildCost.capacity);
-                if (Utils.ui.populationUI.workerNum > 0 && resourceUI.capacity >= building.card.buildCost.capacity) {
-                    addAButton (index++, "add a worker to farm1", delegate { building.addAWorker (); });
-                }
-                if (building.workerNum > 0) {
-                    addAButton (index++, "remove a worker from farm1", delegate { building.removeWorker (); });
-                }
+
+                addAButton (index++, "add a worker to farm1", delegate { building.addAWorker (); },
+                    Utils.ui.populationUI.workerNum > 0 && resourceUI.capacity >= building.card.buildCost.capacity);
+                addAButton (index++, "remove a worker from farm1", delegate { building.removeWorker (); }, building.workerNum > 0);
 
                 for (int i = building.level + 1; i < buildings.Length; i++) {
-                    if (buildings[i] == null) {
+                    Building upgradeBuilding = buildings[i];
+                    if (upgradeBuilding == null) {
                         continue;
                     }
-                    Building upgradeBuilding = buildings[i];
-                    if (resourceUI.enough (upgradeBuilding.card.buildCost.minus (building.card.buildCost))) {
-                        addAButton (index++, "upgrade a worker from farm1", delegate { building.upgradeWorker (building); });
-                    }
+                    Cost cost = upgradeBuilding.card.buildCost.minus (building.card.buildCost);
+                    addAButton (index++, string.Format ("upgrade farm{0} to farm{1}", building.level, upgradeBuilding.level),
+                        delegate { building.upgradeWorker (upgradeBuilding); }, resourceUI.enough (cost) && building.workerNum > 0);
                 }
             }
         }

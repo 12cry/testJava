@@ -16,10 +16,12 @@ namespace testJava.script.model {
 
         public Queue<CardCtrl> civilCardCtrls;
         public CardCtrl[] rowCardCtrls;
+        public List<CardCtrl> handCardCtrls = new List<CardCtrl> ();
+        public List<CardCtrl> passCardCtrls = new List<CardCtrl> ();
         int rowCardLimitNum = 3;
         public bool over = false;
         public void init () {
-            string json = File.ReadAllText ("./Assets/testJava/Resources/cardBuild.json", Encoding.UTF8);
+            string json = File.ReadAllText ("./Assets/data/cardBuild.json", Encoding.UTF8);
             List<CardBuild> cardBuildList = JsonConvert.DeserializeObject<List<CardBuild>> (json);
 
             List<Card> cardList = new List<Card> ();
@@ -37,7 +39,18 @@ namespace testJava.script.model {
 
             rowCardCtrls = new CardCtrl[rowCardLimitNum];
         }
-
+        public void deal () {
+            computeCurrentCards ();
+            showCurrentCards ();
+        }
+        public void removeARowCardCtrl (CardCtrl cardCtrl) {
+            for (int i = 0; i < rowCardCtrls.Length; i++) {
+                if (rowCardCtrls[i] == cardCtrl) {
+                    rowCardCtrls[i] = null;
+                    break;
+                }
+            }
+        }
         CardCtrl getANewCard () {
             if (civilCardCtrls.Count == 0) {
                 return null;
@@ -56,18 +69,14 @@ namespace testJava.script.model {
                 if (cardCtrl == null) {
                     continue;
                 }
-
                 rowCardCtrls[i] = null;
-                if (cardCtrl.card.state == CardState.TAKED) {
-                    continue;
-                }
+
                 if (i < removeCardNum) {
                     Utils.hideCard (cardCtrl);
                     continue;
                 }
 
-                rowCardCtrls[index] = cardCtrl;
-                index++;
+                rowCardCtrls[index++] = cardCtrl;
             }
 
             for (int i = index; i < rowCardLimitNum; i++) {

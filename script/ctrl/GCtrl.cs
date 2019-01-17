@@ -20,6 +20,8 @@ namespace testCC.Assets.script {
 			g = new G ();
 			g.ctrl = this;
 			g.init ();
+
+			Utils.g = g;
 			this.run ();
 		}
 
@@ -27,8 +29,7 @@ namespace testCC.Assets.script {
 			if (g.over) {
 				return;
 			}
-			g.computeCurrentCards ();
-			g.showCurrentCards ();
+			g.deal ();
 
 		}
 		public void reset () {

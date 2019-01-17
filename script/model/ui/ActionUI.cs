@@ -8,10 +8,14 @@ namespace testJava.script.model.ui {
         public int civilRemainder;
 
         public void init () {
-            updateCivilRemainder (4);
-            updateCivil (4);
+            updateCivilRemainder (8);
+            updateCivil (8);
         }
 
+        public void reset () {
+            this.civilRemainder = this.civil;
+            ctrl.civilRemainderText.text = this.civilRemainder.ToString ();
+        }
         public void updateCivilRemainder (int value) {
             this.civilRemainder += value;
             ctrl.civilRemainderText.text = this.civilRemainder.ToString ();

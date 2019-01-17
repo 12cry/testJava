@@ -1,4 +1,3 @@
-using Cry.Common;
 using testCC.Assets.script.model;
 using UnityEngine;
 using UnityEngine.UI;

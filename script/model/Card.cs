@@ -51,20 +51,23 @@ public abstract class Card {
     public void closeView () {
         ctrl.transform.DOLocalMove (cardPositionTemp, Utils.cardMoveSpeed);
     }
+
     public void take () {
-        ctrl.transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 - Screen.width / 2 + Utils.handCardCtrls.Count * 20, Utils.cardWidth / 2 - Screen.height / 2, 0 + Utils.handCardCtrls.Count), Utils.cardMoveSpeed);
-        Utils.handCardCtrls.Add (ctrl);
+        Utils.g.removeARowCardCtrl (ctrl);
+        Utils.g.handCardCtrls.Add (ctrl);
+        ctrl.transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 - Screen.width / 2 + Utils.g.handCardCtrls.Count * 20, Utils.cardWidth / 2 - Screen.height / 2, 0), Utils.cardMoveSpeed);
 
         state = CardState.TAKED;
         ui.actionUI.updateCivilRemainder (-this.takeCivil);
     }
 
     public virtual void action () {
-        Utils.handCardCtrls.Remove (this.ctrl);
-        Utils.passCardCtrls.Add (this.ctrl);
+        Utils.g.handCardCtrls.Remove (this.ctrl);
+        Utils.g.passCardCtrls.Add (this.ctrl);
         Utils.hideCard (this.ctrl);
 
         state = CardState.ACTINGED;
+        ui.resourceUI.updateCost (actionCost);
         ui.actionUI.updateCivilRemainder (-1);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using DG.Tweening;
 using testCC.Assets.script;
+using testCC.Assets.script.model;
 using testJava.script.ctrl.ui;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,16 +25,19 @@ namespace testJava.script.model.ui {
         }
 
         public void idleToWorker () {
+            int foodCost = 3 - (idleNum - 1) / 4;
+            if (!Utils.ui.resourceUI.updateFood (-foodCost)) {
+                return;
+            }
             RawImage idle = idles.Pop ();
             idleNum -= 1;
             addWorker (idle);
         }
         public void addWorker (RawImage worker) {
             workers.Push (worker);
-            workerNum += 1;
             worker.transform.parent = this.ctrl.workerArea.transform;
-            Vector3 v = ctrl.workerArea.transform.position;
-            worker.transform.DOMove (new Vector3 (v.x + workerNum / 2 * 40, v.y - workerNum % 2 * 40, 0), Utils.cardMoveSpeed);
+            worker.transform.DOLocalMove (new Vector3 (workerNum / 2 * 40, -workerNum % 2 * 40, 0), Utils.cardMoveSpeed);
+            workerNum++;
         }
 
         public RawImage getAWorker () {

@@ -13,31 +13,35 @@ namespace testCC.Assets.script.model {
         public Dictionary<int, Building> cardIdBuildingDic = new Dictionary<int, Building> ();
 
         public void build (Card card) {
-            if (card.id == CardId.FARM1) {
-                GameObject gameObject = Object.Instantiate<GameObject> (ctrl.farmPrefab, ctrl.transform);
-                gameObject.transform.localPosition = new Vector3 (-1, 0, 0);
+            Building building = buildABuilding (card);
+            building.init ();
 
-                Building building = new Building ();
-                building.id = card.id;
-                building.level = 0;
-                building.card = card;
-                building.gameObject = gameObject;
-                building.workerNum = 0;
-                building.init ();
-
-                buildings.Add (building);
-                farmBuildings[building.level] = building;
-                cardIdBuildingDic.Add (card.id, building);
-            }
-            Utils.ui.resourceUI.updateCost (card.actionCost);
-
+            buildings.Add (building);
+            farmBuildings[building.level] = building;
+            cardIdBuildingDic.Add (card.id, building);
         }
-        // public void workerToBuilding (int buildingId) {
-        //     Building building = buildingDic[buildingId];
-        //     RawImage worker = Utils.ui.populationUI.getAWorker ();
-        //     building.addAWorker (worker);
+        Building buildABuilding (Card card) {
 
-        // }
+            Vector3 position = new Vector3 (0, 0, 0);
+            int level = 0;
+            if (card.id == CardId.FARM0) {
+                position = new Vector3 (-1, 0, 0);
+                level = 0;
+            } else if (card.id == CardId.FARM1) {
+                position = new Vector3 (-1, 2, 2);
+                level = 1;
+            }
+
+            GameObject gameObject = Object.Instantiate<GameObject> (ctrl.farmPrefab, ctrl.transform);
+            gameObject.transform.localPosition = position;
+
+            Building building = new Building ();
+            building.id = card.id;
+            building.level = level;
+            building.card = card;
+            building.gameObject = gameObject;
+            return building;
+        }
 
     }
 }
