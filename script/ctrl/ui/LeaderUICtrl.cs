@@ -7,7 +7,7 @@ namespace testJava.script.ctrl.ui {
         public LeaderUI ui;
         public RawImage image;
 
-        void Start () {
+        public void init () {
             ui = new LeaderUI ();
             ui.ctrl = this;
         }

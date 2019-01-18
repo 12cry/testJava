@@ -12,14 +12,14 @@ namespace testCC.Assets.script.model {
         public Building[] farmBuildings = new Building[4];
         public Dictionary<int, Building> cardIdBuildingDic = new Dictionary<int, Building> ();
 
-        public void build (Card card) {
+        public void build (CardBuild card) {
             Building building = buildABuilding (card);
 
             buildings.Add (building);
             farmBuildings[building.level] = building;
             cardIdBuildingDic.Add (card.id, building);
         }
-        Building buildABuilding (Card card) {
+        Building buildABuilding (CardBuild card) {
 
             Vector3 position = new Vector3 (0, 0, 0);
             int level = 0;

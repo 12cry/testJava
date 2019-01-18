@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace testJava.script.ctrl.ui {
     public class CardViewUICtrl : MonoBehaviour {
-        public CardViewUI ui = new CardViewUI ();
+        public CardViewUI ui;
 
         public Text desc;
         public Button bTakeCard;
@@ -15,21 +15,22 @@ namespace testJava.script.ctrl.ui {
         public Image maskCardImage;
         public Image maskBuildingImage;
 
-        void Start () {
+        public void init () {
+            ui = new CardViewUI ();
             ui.ctrl = this;
             ui.init ();
         }
 
         public void takeCard () {
-            Utils.currentCard.take ();
+            U.currentCard.take ();
             ui.closeView ();
         }
         public void actionCard () {
-            Utils.currentCard.action ();
+            U.currentCard.action ();
             ui.closeView ();
         }
         public void closeCard () {
-            Utils.currentCard.closeView ();
+            U.currentCard.closeView ();
             ui.closeView ();
         }
         public void closeViewBuilding () {

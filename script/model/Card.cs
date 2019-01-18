@@ -16,28 +16,19 @@ public abstract class Card {
     public string cardName;
     public int age;
     public string desc;
-    public Cost actionCost;
-    public Income actionIncome;
-    public Cost buildCost;
-    public Income buildIncome;
-    public CardLevelType levelType;
+    public CardType type;
 
     public CardState state = CardState.READY;
     public int takeCivil = 1;
 
     Vector3 cardPositionTemp;
+    public Dictionary<string, Text> textDic;
 
-    UI ui = Utils.ui;
+    UI ui = U.ui;
 
-    public void show () {
+    public void init () {
         Text[] texts = ctrl.GetComponentsInChildren<Text> ();
-        Dictionary<string, Text> textDic = texts.ToDictionary (key => key.name, text => text);
-        textDic["cardName"].text = cardName;
-        if (actionCost != null && actionCost.science != 0) {
-            textDic["costScience"].text = actionCost.science.ToString ();
-        }
-
-        state = CardState.SHOWING;
+        textDic = texts.ToDictionary (key => key.name, text => text);
     }
     public void view () {
         Vector3 cardViewPosition = new Vector3 (0, 0, 0);
@@ -45,32 +36,59 @@ public abstract class Card {
             return;
         }
 
-        Utils.currentCard = this;
+        U.currentCard = this;
         cardPositionTemp = ctrl.transform.localPosition;
-        ctrl.transform.DOLocalMove (cardViewPosition, Utils.cardMoveSpeed);
+        ctrl.transform.DOLocalMove (cardViewPosition, U.cardMoveSpeed);
 
         ui.cardViewUI.view ();
+        showViewButton ();
+    }
+
+    public void showViewButton () {
+        int civilRemainder = U.ui.actionUI.civilRemainder;
+        if (civilRemainder == 0) {
+            return;
+        }
+        int index = 0;
+        if (state == CardState.SHOWING) {
+            if (civilRemainder >= takeCivil) {
+                U.showAButton (U.ui.cardViewUI.ctrl.bTakeCard, index++);
+            }
+        } else if (state == CardState.TAKED) {
+            if (actionAble ()) {
+                U.showAButton (U.ui.cardViewUI.ctrl.bActionCard, index++);
+            }
+        } else if (state == CardState.ACTINGED) {
+            displayActionButtons ();
+        }
     }
     public void closeView () {
-        ctrl.transform.DOLocalMove (cardPositionTemp, Utils.cardMoveSpeed);
+        ctrl.transform.DOLocalMove (cardPositionTemp, U.cardMoveSpeed);
     }
 
     public void take () {
-        Utils.g.removeARowCardCtrl (ctrl);
-        Utils.g.handCardCtrls.Add (ctrl);
-        ctrl.transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 - Screen.width / 2 + Utils.g.handCardCtrls.Count * 20, Utils.cardWidth / 2 - Screen.height / 2, 0), Utils.cardMoveSpeed);
+        U.g.removeARowCardCtrl (ctrl);
+        U.g.handCardCtrls.Add (ctrl);
+        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
 
         state = CardState.TAKED;
         ui.actionUI.updateCivilRemainder (-this.takeCivil);
     }
-
     public virtual void action () {
-        Utils.g.handCardCtrls.Remove (this.ctrl);
-        Utils.g.passCardCtrls.Add (this.ctrl);
-        Utils.hideCard (this.ctrl);
+        U.g.handCardCtrls.Remove (this.ctrl);
+        U.g.passCardCtrls.Add (this.ctrl);
+        U.hideCard (this.ctrl);
 
         state = CardState.ACTINGED;
-        ui.resourceUI.updateCost (actionCost);
         ui.actionUI.updateCivilRemainder (-1);
+    }
+    public virtual void show () {
+        textDic["cardName"].text = cardName;
+
+        state = CardState.SHOWING;
+    }
+    public virtual void displayActionButtons () { }
+    public virtual bool actionAble () {
+        return true;
     }
 }

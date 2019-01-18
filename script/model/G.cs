@@ -66,6 +66,7 @@ namespace testJava.script.model {
                 return null;
             }
             CardCtrl cardCtrl = civilCardCtrls.Dequeue ();
+            cardCtrl.card.init ();
             return cardCtrl;
         }
         public void computeCurrentCards () {
@@ -81,7 +82,7 @@ namespace testJava.script.model {
                 rowCardCtrls[i] = null;
 
                 if (i < removeCardNum) {
-                    Utils.hideCard (cardCtrl);
+                    U.hideCard (cardCtrl);
                     continue;
                 }
 
@@ -104,7 +105,7 @@ namespace testJava.script.model {
                 if (cardCtrl == null) {
                     break;
                 }
-                cardCtrl.transform.DOLocalMove (new Vector3 (Utils.cardWidth / 2 + i * Utils.cardWidth - Screen.width / 2, Screen.height / 2 - Utils.cardWidth / 2, 0), Utils.cardMoveSpeed);
+                cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
                 cardCtrl.card.takeCivil = 1 + i / 5;
                 cardCtrl.card.show ();
 

@@ -8,7 +8,7 @@ namespace testJava.script.model.ui {
         public LeaderUICtrl ctrl;
 
         public void appoint (CardLeader card) {
-            Utils.currentLeader = card.id;
+            U.currentLeader = card.id;
         }
     }
 }

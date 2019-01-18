@@ -55,7 +55,7 @@ namespace testCC.Assets.script.model {
             if (food + value < 0) {
                 return false;
             }
-            WarehouseUI warehouseUI = Utils.ui.warehouseUI;
+            WarehouseUI warehouseUI = U.ui.warehouseUI;
             if (warehouseUI.warehouseNum < value) {
                 value = warehouseUI.warehouseNum;
             }

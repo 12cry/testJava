@@ -15,7 +15,7 @@ namespace testCC.Assets.script.ctrl {
         public Text cultureText;
         public Text cultureIncrementText;
 
-        void Start () {
+        public void init () {
             ui.ctrl = this;
             ui.init ();
         }

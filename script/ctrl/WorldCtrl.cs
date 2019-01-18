@@ -9,7 +9,7 @@ namespace testCC.Assets.script.ctrl {
 
         void Start () {
             world.ctrl = this;
-            Utils.world = world;
+            U.world = world;
 
         }
     }

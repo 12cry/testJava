@@ -1,7 +1,10 @@
 namespace testJava.script.constant {
-    public class CardType { }
+    public enum CardType {
+        Buliding,
+    }
     public enum CardLevelType {
         FARM,
+        MINE,
 
     }
 }

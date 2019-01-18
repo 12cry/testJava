@@ -26,7 +26,7 @@ namespace testJava.script.model.ui {
 
         public void idleToWorker () {
             int foodCost = 3 - (idleNum - 1) / 4;
-            if (!Utils.ui.resourceUI.updateFood (-foodCost)) {
+            if (!U.ui.resourceUI.updateFood (-foodCost)) {
                 return;
             }
             RawImage idle = idles.Pop ();
@@ -36,7 +36,7 @@ namespace testJava.script.model.ui {
         public void addWorker (RawImage worker) {
             workers.Push (worker);
             worker.transform.parent = this.ctrl.workerArea.transform;
-            worker.transform.DOLocalMove (new Vector3 (workerNum / 2 * 40, -workerNum % 2 * 40, 0), Utils.cardMoveSpeed);
+            worker.transform.DOLocalMove (new Vector3 (workerNum / 2 * 40, -workerNum % 2 * 40, 0), U.cardMoveSpeed);
             workerNum++;
         }
 

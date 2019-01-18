@@ -6,18 +6,19 @@ using UnityEngine.UI;
 
 namespace testJava.script.ctrl.ui {
     public class ActionUICtrl : MonoBehaviour {
-        public ActionUI ui = new ActionUI ();
+        public ActionUI ui;
 
         public Text civilText;
         public Text civilRemainderText;
 
-        void Start () {
+        public void init () {
+            ui = new ActionUI ();
             ui.ctrl = this;
             ui.init ();
         }
 
         public void pass () {
-            G g = Utils.g;
+            G g = U.g;
             if (g.over) {
                 return;
             }
@@ -26,7 +27,7 @@ namespace testJava.script.ctrl.ui {
 
             ui.reset ();
 
-            Utils.ui.resourceUI.evaluating ();
+            U.ui.resourceUI.evaluating ();
 
         }
     }

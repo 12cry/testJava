@@ -10,7 +10,7 @@ namespace testCC.Assets.script.model {
         public int id;
         public int level;
 
-        public Card card;
+        public CardBuild card;
         public int workerNum = 0;
 
         public void init () {
@@ -24,33 +24,33 @@ namespace testCC.Assets.script.model {
             this.updateWorkerNum (-1);
             building.updateWorkerNum (1);
 
-            Utils.ui.resourceUI.reduceIncome (card.buildIncome);
-            Utils.ui.resourceUI.addIncome (building.card.buildIncome);
-            Utils.ui.actionUI.updateCivilRemainder (-1);
+            U.ui.resourceUI.reduceIncome (card.buildIncome);
+            U.ui.resourceUI.addIncome (building.card.buildIncome);
+            U.ui.actionUI.updateCivilRemainder (-1);
         }
         public void removeWorker () {
             RawImage worker = workers.Dequeue ();
-            Utils.ui.populationUI.addWorker (worker);
+            U.ui.populationUI.addWorker (worker);
 
             this.updateWorkerNum (-1);
 
-            Utils.ui.resourceUI.reduceIncome (card.buildIncome);
-            Utils.ui.cardViewUI.closeAllView ();
-            Utils.ui.actionUI.updateCivilRemainder (-1);
+            U.ui.resourceUI.reduceIncome (card.buildIncome);
+            U.ui.cardViewUI.closeAllView ();
+            U.ui.actionUI.updateCivilRemainder (-1);
         }
         public void addAWorker () {
-            RawImage worker = Utils.ui.populationUI.getAWorker ();
+            RawImage worker = U.ui.populationUI.getAWorker ();
             workers.Enqueue (worker);
 
             worker.transform.parent = this.gameObject.transform;
-            worker.transform.DOMove (new Vector3 (0, 0, 0), Utils.cardMoveSpeed);
+            worker.transform.DOMove (new Vector3 (0, 0, 0), U.cardMoveSpeed);
 
             this.updateWorkerNum (1);
 
-            Utils.ui.resourceUI.updateCost (card.buildCost);
-            Utils.ui.resourceUI.addIncome (card.buildIncome);
-            Utils.ui.cardViewUI.closeAllView ();
-            Utils.ui.actionUI.updateCivilRemainder (-1);
+            U.ui.resourceUI.updateCost (card.buildCost);
+            U.ui.resourceUI.addIncome (card.buildIncome);
+            U.ui.cardViewUI.closeAllView ();
+            U.ui.actionUI.updateCivilRemainder (-1);
         }
         public void updateWorkerNum (int value) {
             workerNum += value;

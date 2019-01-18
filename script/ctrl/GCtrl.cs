@@ -21,7 +21,7 @@ namespace testCC.Assets.script {
 			g.ctrl = this;
 			g.init ();
 
-			Utils.g = g;
+			U.g = g;
 			this.run ();
 		}
 
