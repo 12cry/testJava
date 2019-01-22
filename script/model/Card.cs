@@ -4,6 +4,7 @@ using DG.Tweening;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
 using testCC.Assets.script.model;
+using testJava.script.command;
 using testJava.script.constant;
 using testJava.script.model;
 using UnityEngine;
@@ -16,12 +17,13 @@ public abstract class Card {
     public string cardName;
     public int age;
     public string desc;
-    public CardType type;
+    public CardType cardType;
 
     public CardState state = CardState.READY;
     public int takeCivil = 1;
+    public int showIndex;
 
-    Vector3 cardPositionTemp;
+    public Vector3 beforViewPosition;
     public Dictionary<string, Text> textDic;
 
     UI ui = U.ui;
@@ -35,9 +37,8 @@ public abstract class Card {
         if (cardViewPosition == ctrl.transform.localPosition) {
             return;
         }
-
+        beforViewPosition = ctrl.transform.localPosition;
         U.currentCard = this;
-        cardPositionTemp = ctrl.transform.localPosition;
         ctrl.transform.DOLocalMove (cardViewPosition, U.cardMoveSpeed);
 
         ui.cardViewUI.view ();
@@ -63,17 +64,24 @@ public abstract class Card {
         }
     }
     public void closeView () {
-        ctrl.transform.DOLocalMove (cardPositionTemp, U.cardMoveSpeed);
+        ctrl.transform.DOLocalMove (beforViewPosition, U.cardMoveSpeed);
     }
 
     public void take () {
-        U.g.removeARowCardCtrl (ctrl);
         U.g.handCardCtrls.Add (ctrl);
         ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
 
         state = CardState.TAKED;
         ui.actionUI.updateCivilRemainder (-this.takeCivil);
     }
+    public virtual void undoAction () {
+        U.g.handCardCtrls.Add (ctrl);
+        U.g.passCardCtrls.Remove (ctrl);
+        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
+        state = CardState.ACTINGED;
+        U.ui.actionUI.updateCivilRemainder (1);
+    }
+
     public virtual void action () {
         U.g.handCardCtrls.Remove (this.ctrl);
         U.g.passCardCtrls.Add (this.ctrl);
@@ -84,7 +92,6 @@ public abstract class Card {
     }
     public virtual void show () {
         textDic["cardName"].text = cardName;
-
         state = CardState.SHOWING;
     }
     public virtual void displayActionButtons () { }

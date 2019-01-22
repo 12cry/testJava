@@ -14,6 +14,7 @@ namespace testJava.script.model.ui {
     public class CardViewUI {
         public CardViewUICtrl ctrl;
 
+        CardType cardType;
         public void init () {
             closeView ();
         }
@@ -41,10 +42,12 @@ namespace testJava.script.model.ui {
             hideAllButton ();
         }
 
-        public void viewBuilding () {
+        public void viewBuilding (CardType cardType) {
+            this.cardType = cardType;
+
             ctrl.maskBuildingImage.gameObject.SetActive (true);
             ctrl.maskBuildingImage.transform.SetAsLastSibling ();
-            List<Building> buildings = U.world.buildings;
+            List<Building> buildings = U.world.getBuildings (cardType);
             for (int i = 0; i < buildings.Count; i++) {
                 Building building = buildings[i];
                 building.card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
@@ -54,7 +57,7 @@ namespace testJava.script.model.ui {
 
         public void closeViewBuilding () {
             ctrl.maskBuildingImage.gameObject.SetActive (false);
-            List<Building> buildings = U.world.buildings;
+            List<Building> buildings = U.world.getBuildings (cardType);
             for (int i = 0; i < buildings.Count; i++) {
                 Building building = buildings[i];
                 U.hideCard (building.card.ctrl);

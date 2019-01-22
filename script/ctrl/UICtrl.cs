@@ -15,6 +15,7 @@ namespace testCC.Assets.script.ctrl {
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
         public LeaderUICtrl leaderUICtrl;
+        public MilitaryUICtrl militaryUICtrl;
 
         void Start () {
             ui.ctrl = this;
@@ -37,6 +38,9 @@ namespace testCC.Assets.script.ctrl {
 
             cardViewUICtrl.init ();
             ui.cardViewUI = cardViewUICtrl.ui;
+
+            militaryUICtrl.init ();
+            ui.militaryUI = militaryUICtrl.ui;
 
         }
 

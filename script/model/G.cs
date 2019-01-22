@@ -53,14 +53,14 @@ namespace testJava.script.model {
             computeCurrentCards ();
             showCurrentCards ();
         }
-        public void removeARowCardCtrl (CardCtrl cardCtrl) {
-            for (int i = 0; i < rowCardCtrls.Length; i++) {
-                if (rowCardCtrls[i] == cardCtrl) {
-                    rowCardCtrls[i] = null;
-                    break;
-                }
-            }
-        }
+        // public void removeARowCardCtrl (CardCtrl cardCtrl) {
+        //     for (int i = 0; i < rowCardCtrls.Length; i++) {
+        //         if (rowCardCtrls[i] == cardCtrl) {
+        //             rowCardCtrls[i] = null;
+        //             break;
+        //         }
+        //     }
+        // }
         CardCtrl getANewCard () {
             if (civilCardCtrls.Count == 0) {
                 return null;
@@ -80,6 +80,9 @@ namespace testJava.script.model {
                     continue;
                 }
                 rowCardCtrls[i] = null;
+                if (cardCtrl.card.state == CardState.TAKED) {
+                    continue;
+                }
 
                 if (i < removeCardNum) {
                     U.hideCard (cardCtrl);
@@ -106,11 +109,16 @@ namespace testJava.script.model {
                     break;
                 }
                 cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
+                // .OnComplete (() => onCompleteShow (cardCtrl));
                 cardCtrl.card.takeCivil = 1 + i / 5;
+                cardCtrl.card.showIndex = i;
                 cardCtrl.card.show ();
 
             }
         }
+        // void onCompleteShow (CardCtrl cardCtrl) {
+        //     cardCtrl.card.showingPosition = cardCtrl.transform.localPosition;
+        // }
 
     }
 }

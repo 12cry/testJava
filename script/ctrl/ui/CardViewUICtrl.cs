@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using testCC.Assets.script;
+using testJava.script.command;
+using testJava.script.constant;
 using testJava.script.model.ui;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,10 +26,14 @@ namespace testJava.script.ctrl.ui {
         public void takeCard () {
             U.currentCard.take ();
             ui.closeView ();
+
+            CommandCtrl.instant.addCommand (new CardTakeCommand (U.currentCard));
         }
         public void actionCard () {
             U.currentCard.action ();
             ui.closeView ();
+
+            CommandCtrl.instant.addCommand (new CardActionCommand (U.currentCard));
         }
         public void closeCard () {
             U.currentCard.closeView ();
@@ -36,8 +42,8 @@ namespace testJava.script.ctrl.ui {
         public void closeViewBuilding () {
             ui.closeViewBuilding ();
         }
-        public void viewBuilding () {
-            ui.viewBuilding ();
+        public void viewBuilding (CardType cardType) {
+            ui.viewBuilding (cardType);
         }
     }
 }

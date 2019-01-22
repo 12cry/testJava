@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace testCC.Assets.script.model {
+
     public class Building {
         public GameObject gameObject;
         Queue<RawImage> workers = new Queue<RawImage> ();
@@ -47,7 +48,7 @@ namespace testCC.Assets.script.model {
 
             this.updateWorkerNum (1);
 
-            U.ui.resourceUI.updateCost (card.buildCost);
+            U.ui.resourceUI.reduceCost (card.buildCost);
             U.ui.resourceUI.addIncome (card.buildIncome);
             U.ui.cardViewUI.closeAllView ();
             U.ui.actionUI.updateCivilRemainder (-1);

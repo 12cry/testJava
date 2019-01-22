@@ -40,7 +40,11 @@ namespace testCC.Assets.script.model {
             updateFoodIncrement (-income.food);
             updateFoodIncrement (-income.capacity);
         }
-        public void updateCost (Cost cost) {
+        public void addCost (Cost cost) {
+            updateScience (cost.science);
+            updateCapacity (cost.capacity);
+        }
+        public void reduceCost (Cost cost) {
             updateScience (-cost.science);
             updateCapacity (-cost.capacity);
         }

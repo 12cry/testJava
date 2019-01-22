@@ -14,6 +14,7 @@ namespace testJava.script.model {
         public ActionUI actionUI;
         public WarehouseUI warehouseUI;
         public LeaderUI leaderUI;
+        public MilitaryUI militaryUI;
 
     }
 }
