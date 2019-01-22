@@ -4,11 +4,11 @@ namespace testJava.script.model.ui {
     public class MilitaryUI {
         public MilitaryUICtrl ctrl;
 
-        public int strength;
+        public int attack;
 
-        public void updateStrength (int value) {
-            this.strength += value;
-            ctrl.strengthText.text = this.strength.ToString ();
+        public void updateAttack (int value) {
+            this.attack += value;
+            ctrl.attackText.text = this.attack.ToString ();
         }
     }
 }
