@@ -14,6 +14,8 @@ namespace testCC.Assets.script.ctrl {
         public Text scienceIncrementText;
         public Text cultureText;
         public Text cultureIncrementText;
+        public Text attackText;
+        public Text defenseText;
 
         public void init () {
             ui.ctrl = this;

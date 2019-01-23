@@ -14,7 +14,7 @@ public abstract class Card {
     public CardCtrl ctrl;
 
     public int id;
-    public string cardName;
+    public string name;
     public int age;
     public string desc;
     public CardType cardType;
@@ -74,14 +74,6 @@ public abstract class Card {
         state = CardState.TAKED;
         ui.actionUI.updateCivilRemainder (-this.takeCivil);
     }
-    public virtual void undoAction () {
-        U.g.handCardCtrls.Add (ctrl);
-        U.g.passCardCtrls.Remove (ctrl);
-        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
-        state = CardState.ACTINGED;
-        U.ui.actionUI.updateCivilRemainder (1);
-    }
-
     public virtual void action () {
         U.g.handCardCtrls.Remove (this.ctrl);
         U.g.passCardCtrls.Add (this.ctrl);
@@ -91,11 +83,19 @@ public abstract class Card {
         ui.actionUI.updateCivilRemainder (-1);
     }
     public virtual void show () {
-        textDic["cardName"].text = cardName;
+        textDic["name"].text = name;
         state = CardState.SHOWING;
     }
     public virtual void displayActionButtons () { }
     public virtual bool actionAble () {
         return true;
     }
+    public virtual void undoAction () {
+        U.g.handCardCtrls.Add (ctrl);
+        U.g.passCardCtrls.Remove (ctrl);
+        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
+        state = CardState.ACTINGED;
+        U.ui.actionUI.updateCivilRemainder (1);
+    }
+
 }

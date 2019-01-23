@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
 using testCC.Assets.script.model;
+using testJava.script.constant;
 using testJava.script.model.ui;
 using UnityEngine;
 
@@ -16,5 +18,31 @@ namespace testJava.script.model {
         public LeaderUI leaderUI;
         public MilitaryUI militaryUI;
 
+        CardType cardType;
+        public void viewBuilding (CardType cardType) {
+            this.cardType = cardType;
+
+            ctrl.maskBuildingImage.gameObject.SetActive (true);
+            ctrl.maskBuildingImage.transform.SetAsLastSibling ();
+            List<Building> buildings = U.world.getBuildings (cardType);
+            for (int i = 0; i < buildings.Count; i++) {
+                Building building = buildings[i];
+                building.card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
+                building.card.ctrl.gameObject.transform.SetAsLastSibling ();
+            }
+        }
+
+        public void closeViewBuilding () {
+            ctrl.maskBuildingImage.gameObject.SetActive (false);
+            List<Building> buildings = U.world.getBuildings (cardType);
+            for (int i = 0; i < buildings.Count; i++) {
+                Building building = buildings[i];
+                U.hideCard (building.card.ctrl);
+            }
+        }
+        public void closeAllView () {
+            cardViewUI.closeView ();
+            closeViewBuilding ();
+        }
     }
 }

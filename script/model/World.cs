@@ -22,12 +22,6 @@ namespace testCC.Assets.script.model {
             }
             return buildings;
         }
-        public void undoBuild (CardBuild card) {
-            Building building = card.building;
-            Object.Destroy (building.gameObject);
-
-            getBuildings (card.cardType).Remove (building);
-        }
         // public void build (CardBuild card) {
         //     card.build ();
         //     getBuildings (card.cardType).Add (building);

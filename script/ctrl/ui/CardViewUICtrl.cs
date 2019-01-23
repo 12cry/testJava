@@ -15,7 +15,6 @@ namespace testJava.script.ctrl.ui {
         public Button bActionCard;
         public List<Button> buttons;
         public Image maskCardImage;
-        public Image maskBuildingImage;
 
         public void init () {
             ui = new CardViewUI ();
@@ -35,15 +34,9 @@ namespace testJava.script.ctrl.ui {
 
             CommandCtrl.instant.addCommand (new CardActionCommand (U.currentCard));
         }
-        public void closeCard () {
+        public void closeViewCard () {
             U.currentCard.closeView ();
             ui.closeView ();
-        }
-        public void closeViewBuilding () {
-            ui.closeViewBuilding ();
-        }
-        public void viewBuilding (CardType cardType) {
-            ui.viewBuilding (cardType);
         }
     }
 }

@@ -14,13 +14,14 @@ namespace testCC.Assets.script.model {
         public int scienceIncrement;
         public int culture;
         public int cultureIncrement;
+        public int attack;
 
         public void init () {
             this.updateFood (10);
             this.updateFoodIncrement (0);
             this.updateCapacity (8);
             this.updateCapacityIncrement (0);
-            this.updateScience (5);
+            this.updateScience (15);
             this.updateScienceIncrement (0);
             this.updateCulture (0);
             this.updateCultureIncrement (0);
@@ -35,10 +36,12 @@ namespace testCC.Assets.script.model {
         public void addIncome (Income income) {
             updateFoodIncrement (income.food);
             updateFoodIncrement (income.capacity);
+            updateAttack (income.attack);
         }
         public void reduceIncome (Income income) {
             updateFoodIncrement (-income.food);
             updateFoodIncrement (-income.capacity);
+            updateAttack (-income.attack);
         }
         public void addCost (Cost cost) {
             updateScience (cost.science);
@@ -102,6 +105,10 @@ namespace testCC.Assets.script.model {
         public void updateCultureIncrement (int value) {
             this.cultureIncrement += value;
             ctrl.cultureIncrementText.text = this.cultureIncrement.ToString ();
+        }
+        public void updateAttack (int value) {
+            this.attack += value;
+            ctrl.attackText.text = this.attack.ToString ();
         }
 
     }

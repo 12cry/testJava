@@ -23,7 +23,7 @@ namespace testJava.script.model {
         public bool over = false;
         public void init () {
             string json = File.ReadAllText ("./Assets/data/cardBuild.json", Encoding.UTF8);
-            List<CardBuild> cardBuildList = JsonConvert.DeserializeObject<List<CardBuild>> (json);
+            List<ResourceBuildingCard> cardBuildList = JsonConvert.DeserializeObject<List<ResourceBuildingCard>> (json);
             List<CardLeader> cardLeaderList = JsonConvert.DeserializeObject<List<CardLeader>> (File.ReadAllText ("./Assets/data/cardLeader.json", Encoding.UTF8));
 
             List<Card> allCardList = new List<Card> ();

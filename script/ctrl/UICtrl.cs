@@ -1,4 +1,5 @@
 using testCC.Assets.script.model;
+using testJava.script.constant;
 using testJava.script.ctrl.ui;
 using testJava.script.model;
 using testJava.script.model.ui;
@@ -8,6 +9,8 @@ using UnityEngine.UI;
 namespace testCC.Assets.script.ctrl {
     public class UICtrl : MonoBehaviour {
         public UI ui = new UI ();
+
+        public Image maskBuildingImage;
 
         public WarehouseUICtrl warehouseUICtrl;
         public ResourceUICtrl resourceUICtrl;
@@ -42,6 +45,16 @@ namespace testCC.Assets.script.ctrl {
             militaryUICtrl.init ();
             ui.militaryUI = militaryUICtrl.ui;
 
+        }
+
+        public void viewResourceBuliding () {
+            ui.viewBuilding (CardType.ResourceBuliding);
+        }
+        public void viewMilitaryBuliding () {
+            ui.viewBuilding (CardType.MilitaryBuliding);
+        }
+        public void closeViewBuilding () {
+            ui.closeViewBuilding ();
         }
 
     }
