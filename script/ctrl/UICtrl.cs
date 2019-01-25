@@ -48,10 +48,10 @@ namespace testCC.Assets.script.ctrl {
         }
 
         public void viewResourceBuliding () {
-            ui.viewBuilding (CardType.ResourceBuliding);
+            ui.viewBuilding (CardType.RESOURCE_BULIDING);
         }
         public void viewMilitaryBuliding () {
-            ui.viewBuilding (CardType.MilitaryBuliding);
+            ui.viewBuilding (CardType.MILITARY_UNIT);
         }
         public void closeViewBuilding () {
             ui.closeViewBuilding ();

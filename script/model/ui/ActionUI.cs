@@ -13,7 +13,7 @@ namespace testJava.script.model.ui {
 
         public void init () {
             updateCivilRemainder (8);
-            updateCivil (8);
+            setCivil (8);
         }
         public void setUndoButtonAble (bool able) {
             ctrl.undoButton.interactable = able;
@@ -34,7 +34,7 @@ namespace testJava.script.model.ui {
             this.civilRemainder += value;
             ctrl.civilRemainderText.text = this.civilRemainder.ToString ();
         }
-        public void updateCivil (int value) {
+        public void setCivil (int value) {
             this.civil += value;
             ctrl.civilText.text = this.civil.ToString ();
         }

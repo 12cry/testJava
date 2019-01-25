@@ -72,9 +72,19 @@ namespace testCC.Assets.script.model {
             return true;
         }
 
-        public void updateCapacity (int value) {
+        public bool updateCapacity (int value) {
+            if (capacity + value < 0) {
+                return false;
+            }
+            WarehouseUI warehouseUI = U.ui.warehouseUI;
+            if (warehouseUI.warehouseNum < value) {
+                value = warehouseUI.warehouseNum;
+            }
+            warehouseUI.updateWarehouse (-value);
+
             this.capacity += value;
             ctrl.capacityText.text = this.capacity.ToString ();
+            return true;
         }
 
         public void updateScience (int value) {
@@ -107,6 +117,9 @@ namespace testCC.Assets.script.model {
             ctrl.cultureIncrementText.text = this.cultureIncrement.ToString ();
         }
         public void updateAttack (int value) {
+            if (value == 0) {
+                return;
+            }
             this.attack += value;
             ctrl.attackText.text = this.attack.ToString ();
         }

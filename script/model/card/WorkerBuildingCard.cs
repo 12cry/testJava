@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class WorkerBuildingCard : BuildingCard {
-    public BuildingType buildingType;
+    public int buildingType;
 
     public Cost buildCost;
     public Income buildIncome;
@@ -22,7 +22,7 @@ public class WorkerBuildingCard : BuildingCard {
 
         foreach (Building upgradeBuilding in U.world.getBuildings (cardType)) {
             WorkerBuildingCard upgradeCard = ((WorkerBuildingCard) upgradeBuilding.card);
-            if (upgradeCard.buildingType != buildingType && upgradeBuilding.level <= building.level) {
+            if (upgradeCard.buildingType != buildingType || upgradeBuilding.level <= building.level) {
                 continue;
             }
             U.addAButton (index++, string.Format ("upgrade {0} to {1}", building.name, upgradeBuilding.name),

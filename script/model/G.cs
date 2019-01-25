@@ -19,21 +19,28 @@ namespace testJava.script.model {
         public CardCtrl[] rowCardCtrls;
         public List<CardCtrl> handCardCtrls = new List<CardCtrl> ();
         public List<CardCtrl> passCardCtrls = new List<CardCtrl> ();
+
+        List<Card> allCardList = new List<Card> ();
+        public GState state;
         int rowCardLimitNum = 3;
-        public bool over = false;
+
         public void init () {
             string json = File.ReadAllText ("./Assets/data/cardBuild.json", Encoding.UTF8);
             List<ResourceBuildingCard> cardBuildList = JsonConvert.DeserializeObject<List<ResourceBuildingCard>> (json);
-            List<CardLeader> cardLeaderList = JsonConvert.DeserializeObject<List<CardLeader>> (File.ReadAllText ("./Assets/data/cardLeader.json", Encoding.UTF8));
+            List<LeaderCard> cardLeaderList = JsonConvert.DeserializeObject<List<LeaderCard>> (File.ReadAllText ("./Assets/data/cardLeader.json", Encoding.UTF8));
 
-            List<Card> allCardList = new List<Card> ();
             for (int i = 0; i < cardBuildList.Count; i++) {
                 allCardList.Add (cardBuildList[i]);
             }
             for (int i = 0; i < cardLeaderList.Count; i++) {
                 allCardList.Add (cardLeaderList[i]);
             }
-
+        }
+        public void play () {
+            playInit ();
+            deal ();
+        }
+        public void playInit () {
             List<Card> cardList = new List<Card> ();
             for (int i = 0; i < allCardList.Count; i++) {
                 cardList.Insert (Random.Range (0, i + 1), allCardList[i]);
@@ -48,19 +55,13 @@ namespace testJava.script.model {
             });
 
             rowCardCtrls = new CardCtrl[rowCardLimitNum];
+
         }
         public void deal () {
+
             computeCurrentCards ();
             showCurrentCards ();
         }
-        // public void removeARowCardCtrl (CardCtrl cardCtrl) {
-        //     for (int i = 0; i < rowCardCtrls.Length; i++) {
-        //         if (rowCardCtrls[i] == cardCtrl) {
-        //             rowCardCtrls[i] = null;
-        //             break;
-        //         }
-        //     }
-        // }
         CardCtrl getANewCard () {
             if (civilCardCtrls.Count == 0) {
                 return null;
@@ -95,7 +96,7 @@ namespace testJava.script.model {
             for (int i = index; i < rowCardLimitNum; i++) {
                 cardCtrl = getANewCard ();
                 if (cardCtrl == null) {
-                    over = true;
+                    state = GState.OVER;
                     break;
                 }
                 rowCardCtrls[i] = cardCtrl;
@@ -108,17 +109,19 @@ namespace testJava.script.model {
                 if (cardCtrl == null) {
                     break;
                 }
-                cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
-                // .OnComplete (() => onCompleteShow (cardCtrl));
+                Tweener tweener = cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
+                if (i == rowCardCtrls.Length - 1) {
+                    tweener.OnComplete (() => onCompleteShow (cardCtrl));
+                }
                 cardCtrl.card.takeCivil = 1 + i / 5;
                 cardCtrl.card.showIndex = i;
                 cardCtrl.card.show ();
 
             }
         }
-        // void onCompleteShow (CardCtrl cardCtrl) {
-        //     cardCtrl.card.showingPosition = cardCtrl.transform.localPosition;
-        // }
+        void onCompleteShow (CardCtrl cardCtrl) {
+
+        }
 
     }
 }

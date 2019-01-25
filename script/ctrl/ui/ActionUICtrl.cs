@@ -1,5 +1,6 @@
 using testCC.Assets.script;
 using testJava.script.command;
+using testJava.script.constant;
 using testJava.script.model;
 using testJava.script.model.ui;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace testJava.script.ctrl.ui {
 
         public void pass () {
             G g = U.g;
-            if (g.over) {
+            if (g.state == GState.OVER) {
                 return;
             }
 

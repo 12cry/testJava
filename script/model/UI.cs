@@ -18,8 +18,8 @@ namespace testJava.script.model {
         public LeaderUI leaderUI;
         public MilitaryUI militaryUI;
 
-        CardType cardType;
-        public void viewBuilding (CardType cardType) {
+        int cardType;
+        public void viewBuilding (int cardType) {
             this.cardType = cardType;
 
             ctrl.maskBuildingImage.gameObject.SetActive (true);

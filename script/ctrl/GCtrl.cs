@@ -7,6 +7,7 @@ using DG.Tweening;
 using Newtonsoft.Json;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
+using testJava.script.constant;
 using testJava.script.model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,20 +23,16 @@ namespace testCC.Assets.script {
 			g.init ();
 
 			U.g = g;
-			this.run ();
+			play ();
 		}
 
-		public void run () {
-			if (g.over) {
-				return;
-			}
-			g.deal ();
-
+		public void play () {
+			g.play ();
 		}
-		public void reset () {
-			g.over = false;
-			g.init ();
-		}
+		// public void reset () {
+		// 	g.over = false;
+		// 	g.init ();
+		// }
 
 		public void test1 () {
 			print ("---test1");

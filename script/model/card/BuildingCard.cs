@@ -7,10 +7,10 @@ using UnityEngine;
 public class BuildingCard : Card {
 
     public Cost actionCost;
-    public Building building;
     public Vector3 position;
     public int level;
 
+    public Building building;
     public override void action () {
         build ();
         U.ui.resourceUI.reduceCost (actionCost);

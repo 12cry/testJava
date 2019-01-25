@@ -7,7 +7,7 @@ namespace testJava.script.model.ui {
     public class LeaderUI {
         public LeaderUICtrl ctrl;
 
-        public void appoint (CardLeader card) {
+        public void appoint (LeaderCard card) {
             U.currentLeader = card.id;
         }
     }
