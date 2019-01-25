@@ -2,14 +2,15 @@ using System.Collections.Generic;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
 using testJava.script.constant;
+using testJava.script.model;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WorkerBuildingCard : BuildingCard {
     public int buildingType;
 
-    public Cost buildCost;
-    public Income buildIncome;
+    public Statistic buildCost;
+    public Statistic buildIncome;
 
     public override void displayActionButtons () {
 
@@ -38,8 +39,8 @@ public class WorkerBuildingCard : BuildingCard {
         this.building.updateWorkerNum (-1);
         building.updateWorkerNum (1);
 
-        U.ui.resourceUI.reduceIncome (buildIncome);
-        U.ui.resourceUI.addIncome (((ResourceBuildingCard) building.card).buildIncome);
+        U.ui.reduce (buildIncome);
+        U.ui.add (((WorkerBuildingCard) building.card).buildIncome);
         U.ui.actionUI.updateCivilRemainder (-1);
     }
     public void removeWorker () {
@@ -48,7 +49,7 @@ public class WorkerBuildingCard : BuildingCard {
 
         this.building.updateWorkerNum (-1);
 
-        U.ui.resourceUI.reduceIncome (buildIncome);
+        U.ui.reduce (buildIncome);
         U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);
     }
@@ -58,8 +59,8 @@ public class WorkerBuildingCard : BuildingCard {
 
         this.building.updateWorkerNum (1);
 
-        U.ui.resourceUI.reduceCost (buildCost);
-        U.ui.resourceUI.addIncome (buildIncome);
+        U.ui.reduce (buildCost);
+        U.ui.add (buildIncome);
         U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);
     }

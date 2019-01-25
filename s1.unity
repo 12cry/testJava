@@ -355,13 +355,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodText: {fileID: 622151887}
-  foodIncrementText: {fileID: 990483013}
+  foodRaiseText: {fileID: 990483013}
   capacityText: {fileID: 708726216}
-  capacityIncrementText: {fileID: 1199934213}
+  capacityRaiseText: {fileID: 1199934213}
   scienceText: {fileID: 1157324594}
-  scienceIncrementText: {fileID: 155393200}
+  scienceRaiseText: {fileID: 155393200}
   cultureText: {fileID: 1926492335}
-  cultureIncrementText: {fileID: 221370783}
+  cultureRaiseText: {fileID: 221370783}
 --- !u!1 &40973433
 GameObject:
   m_ObjectHideFlags: 0

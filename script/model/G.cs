@@ -25,8 +25,8 @@ namespace testJava.script.model {
         int rowCardLimitNum = 3;
 
         public void init () {
-            string json = File.ReadAllText ("./Assets/data/cardBuild.json", Encoding.UTF8);
-            List<ResourceBuildingCard> cardBuildList = JsonConvert.DeserializeObject<List<ResourceBuildingCard>> (json);
+            string json = File.ReadAllText ("./Assets/data/resourceBuilding.json", Encoding.UTF8);
+            List<WorkerBuildingCard> cardBuildList = JsonConvert.DeserializeObject<List<WorkerBuildingCard>> (json);
             List<LeaderCard> cardLeaderList = JsonConvert.DeserializeObject<List<LeaderCard>> (File.ReadAllText ("./Assets/data/cardLeader.json", Encoding.UTF8));
 
             for (int i = 0; i < cardBuildList.Count; i++) {

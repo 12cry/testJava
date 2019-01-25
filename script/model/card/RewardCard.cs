@@ -1,10 +1,12 @@
+using testJava.script.model;
+
 namespace testCC.Assets.script.model.card {
     public class RewardCard : Card {
-        public Income actionIncome;
+        public Statistic actionIncome;
         public bool _actionAble = false;
 
         public override void action () {
-            U.ui.resourceUI.addIncome (actionIncome);
+            U.ui.reduce (actionIncome);
             base.action ();
         }
         public override bool actionAble () {

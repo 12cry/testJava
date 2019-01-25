@@ -7,13 +7,13 @@ namespace testCC.Assets.script.ctrl {
         public ResourceUI ui = new ResourceUI ();
 
         public Text foodText;
-        public Text foodIncrementText;
+        public Text foodRaiseText;
         public Text capacityText;
-        public Text capacityIncrementText;
+        public Text capacityRaiseText;
         public Text scienceText;
-        public Text scienceIncrementText;
+        public Text scienceRaiseText;
         public Text cultureText;
-        public Text cultureIncrementText;
+        public Text cultureRaiseText;
         public Text attackText;
         public Text defenseText;
 

@@ -19,6 +19,14 @@ namespace testJava.script.model {
         public MilitaryUI militaryUI;
 
         int cardType;
+
+        public void reduce (Statistic statistic) {
+            resourceUI.reduce (statistic);
+        }
+
+        public void add (Statistic statistic) {
+            resourceUI.add (statistic);
+        }
         public void viewBuilding (int cardType) {
             this.cardType = cardType;
 

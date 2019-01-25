@@ -2,18 +2,19 @@ using System.Collections.Generic;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
 using testJava.script.constant;
+using testJava.script.model;
 using UnityEngine;
 
 public class BuildingCard : Card {
 
-    public Cost actionCost;
+    public Statistic actionCost;
     public Vector3 position;
     public int level;
 
     public Building building;
     public override void action () {
         build ();
-        U.ui.resourceUI.reduceCost (actionCost);
+        U.ui.reduce (actionCost);
         base.action ();
     }
     public override void show () {
@@ -44,30 +45,6 @@ public class BuildingCard : Card {
         this.building = building;
         U.world.getBuildings (cardType).Add (building);
     }
-    // int getBuildingLevel () {
-    //     int level = 0;
-    //     if (id == CardId.FARM0) {
-    //         level = 0;
-    //     } else if (id == CardId.FARM1) {
-    //         level = 1;
-    //     }
-    //     return level;
-    // }
-
-    // Vector3 getBuildingPosition () {
-    //     Vector3 position = Vector3.zero;
-    //     if (id == CardId.FARM0) {
-    //         position = new Vector3 (-1, 0, 0);
-    //     } else if (id == CardId.FARM1) {
-    //         position = new Vector3 (-1, 2, 2);
-    //     } else if (id == CardId.MINE0) {
-    //         position = new Vector3 (1, 2, 2);
-    //     } else if (id == CardId.WARRIOR) {
-    //         position = new Vector3 (-2, 2, 2);
-    //     }
-    //     return position;
-    // }
-
     // public override void undoAction () {
     //     base.undoAction ();
     //     undoBuild ();

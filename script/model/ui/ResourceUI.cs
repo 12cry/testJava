@@ -1,5 +1,6 @@
 using System;
 using testCC.Assets.script.ctrl;
+using testJava.script.model;
 using testJava.script.model.ui;
 
 namespace testCC.Assets.script.model {
@@ -7,52 +8,48 @@ namespace testCC.Assets.script.model {
         public ResourceUICtrl ctrl;
 
         public int food;
-        public int foodIncrement;
+        public int foodRaise;
         public int capacity;
-        public int capacityIncrement;
+        public int capacityRaise;
         public int science;
-        public int scienceIncrement;
+        public int scienceRaise;
         public int culture;
-        public int cultureIncrement;
+        public int cultureRaise;
         public int attack;
 
         public void init () {
             this.updateFood (10);
-            this.updateFoodIncrement (0);
+            this.updateFoodRaise (0);
             this.updateCapacity (8);
-            this.updateCapacityIncrement (0);
+            this.updateCapacityRaise (0);
             this.updateScience (15);
-            this.updateScienceIncrement (0);
+            this.updateScienceRaise (0);
             this.updateCulture (0);
-            this.updateCultureIncrement (0);
+            this.updateCultureRaise (0);
         }
 
         public void evaluating () {
-            this.updateFood (foodIncrement);
-            this.updateCapacity (capacityIncrement);
-            this.updateScience (scienceIncrement);
-            this.updateCulture (cultureIncrement);
+            this.updateFood (foodRaise);
+            this.updateCapacity (capacityRaise);
+            this.updateScience (scienceRaise);
+            this.updateCulture (cultureRaise);
         }
-        public void addIncome (Income income) {
-            updateFoodIncrement (income.food);
-            updateFoodIncrement (income.capacity);
-            updateAttack (income.attack);
+        public void reduce (Statistic statistic) {
+            updateFoodRaise (-statistic.food);
+            updateFoodRaise (-statistic.capacity);
+            updateScience (-statistic.science);
+            updateCapacity (-statistic.capacity);
+            updateAttack (-statistic.attack);
         }
-        public void reduceIncome (Income income) {
-            updateFoodIncrement (-income.food);
-            updateFoodIncrement (-income.capacity);
-            updateAttack (-income.attack);
+        public void add (Statistic statistic) {
+            updateFoodRaise (statistic.food);
+            updateFoodRaise (statistic.capacity);
+            updateScience (statistic.science);
+            updateCapacity (statistic.capacity);
+            updateAttack (statistic.attack);
         }
-        public void addCost (Cost cost) {
-            updateScience (cost.science);
-            updateCapacity (cost.capacity);
-        }
-        public void reduceCost (Cost cost) {
-            updateScience (-cost.science);
-            updateCapacity (-cost.capacity);
-        }
-        public bool enough (Cost cost) {
-            if (cost.science > this.science || cost.capacity > this.capacity) {
+        public bool enough (Statistic statistic) {
+            if (statistic.science > this.science || statistic.capacity > this.capacity) {
                 return false;
             }
             return true;
@@ -97,24 +94,24 @@ namespace testCC.Assets.script.model {
             ctrl.cultureText.text = this.culture.ToString ();
         }
 
-        public void updateFoodIncrement (int value) {
-            this.foodIncrement += value;
-            ctrl.foodIncrementText.text = this.foodIncrement.ToString ();
+        public void updateFoodRaise (int value) {
+            this.foodRaise += value;
+            ctrl.foodRaiseText.text = this.foodRaise.ToString ();
         }
 
-        public void updateCapacityIncrement (int value) {
-            this.capacityIncrement += value;
-            ctrl.capacityIncrementText.text = this.capacityIncrement.ToString ();
+        public void updateCapacityRaise (int value) {
+            this.capacityRaise += value;
+            ctrl.capacityRaiseText.text = this.capacityRaise.ToString ();
         }
 
-        public void updateScienceIncrement (int value) {
-            this.scienceIncrement += value;
-            ctrl.scienceIncrementText.text = this.scienceIncrement.ToString ();
+        public void updateScienceRaise (int value) {
+            this.scienceRaise += value;
+            ctrl.scienceRaiseText.text = this.scienceRaise.ToString ();
         }
 
-        public void updateCultureIncrement (int value) {
-            this.cultureIncrement += value;
-            ctrl.cultureIncrementText.text = this.cultureIncrement.ToString ();
+        public void updateCultureRaise (int value) {
+            this.cultureRaise += value;
+            ctrl.cultureRaiseText.text = this.cultureRaise.ToString ();
         }
         public void updateAttack (int value) {
             if (value == 0) {

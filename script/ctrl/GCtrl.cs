@@ -29,14 +29,6 @@ namespace testCC.Assets.script {
 		public void play () {
 			g.play ();
 		}
-		// public void reset () {
-		// 	g.over = false;
-		// 	g.init ();
-		// }
-
-		public void test1 () {
-			print ("---test1");
-		}
 
 	}
 }
