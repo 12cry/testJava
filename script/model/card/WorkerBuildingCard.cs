@@ -21,7 +21,7 @@ public class WorkerBuildingCard : BuildingCard {
             U.ui.populationUI.workerNum > 0 && resourceUI.enough (buildCost));
         U.addAButton (index++, string.Format ("remove a worker from {0}", building.name), delegate { removeWorker (); }, building.workerNum > 0);
 
-        foreach (Building upgradeBuilding in U.world.getBuildings (cardType)) {
+        foreach (Building upgradeBuilding in U.world.getBuildings (type)) {
             WorkerBuildingCard upgradeCard = ((WorkerBuildingCard) upgradeBuilding.card);
             if (upgradeCard.buildingType != buildingType || upgradeBuilding.level <= building.level) {
                 continue;

@@ -43,7 +43,7 @@ public class BuildingCard : Card {
         building.init ();
 
         this.building = building;
-        U.world.getBuildings (cardType).Add (building);
+        U.world.getBuildings (type).Add (building);
     }
     // public override void undoAction () {
     //     base.undoAction ();

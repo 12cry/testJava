@@ -354,14 +354,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c21abe49babea242a11e284a0ebaa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodText: {fileID: 622151887}
-  foodRaiseText: {fileID: 990483013}
-  capacityText: {fileID: 708726216}
-  capacityRaiseText: {fileID: 1199934213}
-  scienceText: {fileID: 1157324594}
-  scienceRaiseText: {fileID: 155393200}
-  cultureText: {fileID: 1926492335}
-  cultureRaiseText: {fileID: 221370783}
+  fText: {fileID: 622151887}
+  fRText: {fileID: 990483013}
+  cText: {fileID: 708726216}
+  cRText: {fileID: 1199934213}
+  sText: {fileID: 1157324594}
+  sRText: {fileID: 155393200}
+  ctText: {fileID: 1926492335}
+  ctRText: {fileID: 221370783}
+  attackText: {fileID: 0}
+  defenseText: {fileID: 0}
 --- !u!1 &40973433
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +671,7 @@ GameObject:
   - component: {fileID: 155393201}
   - component: {fileID: 155393200}
   m_Layer: 5
-  m_Name: Text (5)
+  m_Name: sR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -817,7 +819,7 @@ GameObject:
   - component: {fileID: 221370784}
   - component: {fileID: 221370783}
   m_Layer: 5
-  m_Name: Text (7)
+  m_Name: ctR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1479,7 +1481,7 @@ GameObject:
   - component: {fileID: 622151888}
   - component: {fileID: 622151887}
   m_Layer: 5
-  m_Name: food
+  m_Name: f
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1535,7 +1537,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: f
 --- !u!222 &622151888
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1837,7 +1839,7 @@ GameObject:
   - component: {fileID: 708726217}
   - component: {fileID: 708726216}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2483,7 +2485,7 @@ GameObject:
   - component: {fileID: 990483014}
   - component: {fileID: 990483013}
   m_Layer: 5
-  m_Name: foodI
+  m_Name: fR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2850,7 +2852,7 @@ GameObject:
   - component: {fileID: 1157324595}
   - component: {fileID: 1157324594}
   m_Layer: 5
-  m_Name: Text (4)
+  m_Name: s
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2986,7 +2988,7 @@ GameObject:
   - component: {fileID: 1199934214}
   - component: {fileID: 1199934213}
   m_Layer: 5
-  m_Name: Text (3)
+  m_Name: cR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4376,7 +4378,7 @@ GameObject:
   - component: {fileID: 1926492336}
   - component: {fileID: 1926492335}
   m_Layer: 5
-  m_Name: Text (6)
+  m_Name: ct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4935,8 +4937,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3158751553d4d2246b28bcf9911a7917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackText: {fileID: 0}
-  defenseText: {fileID: 0}
 --- !u!114 &2037216854
 MonoBehaviour:
   m_ObjectHideFlags: 0

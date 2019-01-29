@@ -16,6 +16,9 @@ namespace testCC.Assets.script {
 	public class GCtrl : MonoBehaviour {
 
 		public CardCtrl cardCtrlPrefab;
+
+		public int rowCardLimitNum = 5;
+		public int removeCardNum = 2;
 		public G g;
 		void Start () {
 			g = new G ();

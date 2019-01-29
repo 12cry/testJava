@@ -17,7 +17,7 @@ public abstract class Card {
     public string name;
     public int age;
     public string desc;
-    public int cardType;
+    public int type;
 
     public CardState state = CardState.READY;
     public int takeCivil = 1;

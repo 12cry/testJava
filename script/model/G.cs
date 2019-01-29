@@ -22,7 +22,6 @@ namespace testJava.script.model {
 
         List<Card> allCardList = new List<Card> ();
         public GState state;
-        int rowCardLimitNum = 3;
 
         public void init () {
             string json = File.ReadAllText ("./Assets/data/resourceBuilding.json", Encoding.UTF8);
@@ -54,7 +53,7 @@ namespace testJava.script.model {
                 civilCardCtrls.Enqueue (newCtrdCtrl);
             });
 
-            rowCardCtrls = new CardCtrl[rowCardLimitNum];
+            rowCardCtrls = new CardCtrl[ctrl.rowCardLimitNum];
 
         }
         public void deal () {
@@ -72,10 +71,10 @@ namespace testJava.script.model {
         }
         public void computeCurrentCards () {
             CardCtrl cardCtrl;
-            int removeCardNum = 1;
+
             int index = 0;
 
-            for (int i = 0; i < rowCardLimitNum; i++) {
+            for (int i = 0; i < ctrl.rowCardLimitNum; i++) {
                 cardCtrl = rowCardCtrls[i];
                 if (cardCtrl == null) {
                     continue;
@@ -85,7 +84,7 @@ namespace testJava.script.model {
                     continue;
                 }
 
-                if (i < removeCardNum) {
+                if (i < ctrl.removeCardNum) {
                     U.hideCard (cardCtrl);
                     continue;
                 }
@@ -93,7 +92,7 @@ namespace testJava.script.model {
                 rowCardCtrls[index++] = cardCtrl;
             }
 
-            for (int i = index; i < rowCardLimitNum; i++) {
+            for (int i = index; i < ctrl.rowCardLimitNum; i++) {
                 cardCtrl = getANewCard ();
                 if (cardCtrl == null) {
                     state = GState.OVER;
