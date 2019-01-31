@@ -1,16 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Reflection;
 using System.Text;
 using DG.Tweening;
 using Newtonsoft.Json;
 using testCC.Assets.script;
-using testCC.Assets.script.ctrl;
 using testCC.Assets.script.model.card;
 using testJava.script.constant;
+using testJava.script.model.card;
 using UnityEngine;
-using UnityEngine.UI;
-
 namespace testJava.script.model {
     public class G {
         public GCtrl ctrl;
@@ -20,44 +19,59 @@ namespace testJava.script.model {
         public List<CardCtrl> handCardCtrls = new List<CardCtrl> ();
         public List<CardCtrl> passCardCtrls = new List<CardCtrl> ();
 
-        List<Card> allCardList = new List<Card> ();
+        List<Card> allCards = new List<Card> ();
         public GState state;
 
-        public void init () {
-            string json = File.ReadAllText ("./Assets/data/resourceBuilding.json", Encoding.UTF8);
-            List<WorkerBuildingCard> cardBuildList = JsonConvert.DeserializeObject<List<WorkerBuildingCard>> (json);
-            List<LeaderCard> cardLeaderList = JsonConvert.DeserializeObject<List<LeaderCard>> (File.ReadAllText ("./Assets/data/cardLeader.json", Encoding.UTF8));
+        public List<T> addCards<T> (string fileName) where T : Card {
+            List<T> t = new List<T> ();
+            string dir = "./Assets/data/";
+            List<T> cards = JsonConvert.DeserializeObject<List<T>> (File.ReadAllText (dir + fileName + ".json", Encoding.UTF8));
+            for (int i = 0; i < cards.Count; i++) {
+                allCards.Add (cards[i]);
+            }
 
-            for (int i = 0; i < cardBuildList.Count; i++) {
-                allCardList.Add (cardBuildList[i]);
+            return t;
+        }
+        public void initCards () {
+            Type g = Type.GetType ("testJava.script.model.G");
+            MethodInfo mi = g.GetMethod ("addCards");
+
+            string ns = "testJava.script.model.card.civil.";
+            string path = "Assets/data";
+            DirectoryInfo dir = new DirectoryInfo (path);
+            FileInfo[] fis = dir.GetFiles ("*.json");
+            foreach (FileInfo fi in fis) {
+                string cardName = fi.Name.Substring (0, fi.Name.IndexOf ("."));
+                Type c = Type.GetType (ns + cardName);
+                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
-            for (int i = 0; i < cardLeaderList.Count; i++) {
-                allCardList.Add (cardLeaderList[i]);
-            }
+        }
+        public void init () {
+            rowCardCtrls = new CardCtrl[ctrl.rowCardLimitNum];
+
+            initCards ();
         }
         public void play () {
             playInit ();
             deal ();
         }
         public void playInit () {
-            List<Card> cardList = new List<Card> ();
-            for (int i = 0; i < allCardList.Count; i++) {
-                cardList.Insert (Random.Range (0, i + 1), allCardList[i]);
+            List<Card> cards = new List<Card> ();
+            for (int i = 0; i < allCards.Count; i++) {
+                cards.Insert (UnityEngine.Random.Range (0, i + 1), allCards[i]);
             }
 
             civilCardCtrls = new Queue<CardCtrl> ();
-            cardList.ForEach (card => {
-                CardCtrl newCtrdCtrl = Object.Instantiate<CardCtrl> (ctrl.cardCtrlPrefab, ctrl.cardCtrlPrefab.transform.parent);
+            cards.ForEach (card => {
+                CardCtrl newCtrdCtrl = UnityEngine.Object.Instantiate<CardCtrl> (U.ui.ctrl.cardCtrlPrefab, U.ui.ctrl.cardCtrlPrefab.transform.parent);
                 newCtrdCtrl.card = card;
                 card.ctrl = newCtrdCtrl;
                 civilCardCtrls.Enqueue (newCtrdCtrl);
             });
 
-            rowCardCtrls = new CardCtrl[ctrl.rowCardLimitNum];
-
+            U.ui.ctrl.cardCtrlBackgroud.transform.SetAsLastSibling ();
         }
         public void deal () {
-
             computeCurrentCards ();
             showCurrentCards ();
         }
@@ -119,7 +133,7 @@ namespace testJava.script.model {
             }
         }
         void onCompleteShow (CardCtrl cardCtrl) {
-
+            U.ui.ctrl.cardNumText.text = civilCardCtrls.Count.ToString ();
         }
 
     }

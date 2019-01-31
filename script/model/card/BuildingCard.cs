@@ -17,9 +17,9 @@ public class BuildingCard : Card {
         U.ui.reduce (actionCost);
         base.action ();
     }
-    public override void show () {
-        base.show ();
-        if (actionCost != null && actionCost.science != 0) {
+    public override void render () {
+        base.render ();
+        if (actionCost != null) {
             textDic["costScience"].text = actionCost.science.ToString ();
         }
     }

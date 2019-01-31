@@ -13,6 +13,7 @@ namespace testCC.Assets.script.model {
 
         public List<Building> getBuildings (int cardType) {
             List<Building> buildings = null;
+
             if (cardType == CardType.RESOURCE_BULIDING) {
                 buildings = resourceBuildings;
             } else if (cardType == CardType.MILITARY_UNIT) {

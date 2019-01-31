@@ -5,6 +5,7 @@ using testCC.Assets.script.model;
 using testJava.script.constant;
 using testJava.script.model.ui;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace testJava.script.model {
     public class UI {
@@ -15,7 +16,7 @@ namespace testJava.script.model {
         public PopulationUI populationUI;
         public ActionUI actionUI;
         public WarehouseUI warehouseUI;
-        public LeaderUI leaderUI;
+        public OrgUI orgUI;
         public MilitaryUI militaryUI;
 
         int cardType;

@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace testJava.script.ctrl.ui {
-    public class LeaderUICtrl : MonoBehaviour {
-        public LeaderUI ui;
-        public RawImage image;
+    public class OrgUICtrl : MonoBehaviour {
+        public OrgUI ui;
+        public RawImage governmentImage;
 
         public void init () {
-            ui = new LeaderUI ();
+            ui = new OrgUI ();
             ui.ctrl = this;
         }
 

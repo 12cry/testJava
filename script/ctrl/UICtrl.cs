@@ -12,12 +12,16 @@ namespace testCC.Assets.script.ctrl {
 
         public Image maskBuildingImage;
 
+        public CardCtrl cardCtrlPrefab;
+        public CardCtrl cardCtrlBackgroud;
+        public Text cardNumText;
+
         public WarehouseUICtrl warehouseUICtrl;
         public ResourceUICtrl resourceUICtrl;
         public CardViewUICtrl cardViewUICtrl;
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
-        public LeaderUICtrl leaderUICtrl;
+        public OrgUICtrl orgUICtrl;
         public MilitaryUICtrl militaryUICtrl;
 
         void Start () {
@@ -36,8 +40,8 @@ namespace testCC.Assets.script.ctrl {
             actionUICtrl.init ();
             ui.actionUI = actionUICtrl.ui;
 
-            leaderUICtrl.init ();
-            ui.leaderUI = leaderUICtrl.ui;
+            orgUICtrl.init ();
+            ui.orgUI = orgUICtrl.ui;
 
             cardViewUICtrl.init ();
             ui.cardViewUI = cardViewUICtrl.ui;

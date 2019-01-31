@@ -82,9 +82,12 @@ public abstract class Card {
         state = CardState.ACTINGED;
         ui.actionUI.updateCivilRemainder (-1);
     }
-    public virtual void show () {
-        textDic["name"].text = name;
+    public void show () {
         state = CardState.SHOWING;
+        render ();
+    }
+    public virtual void render () {
+        textDic["name"].text = name;
     }
     public virtual void displayActionButtons () { }
     public virtual bool actionAble () {
