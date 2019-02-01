@@ -136,7 +136,6 @@ namespace testJava.script.model {
             tweener.OnComplete (() => onCompleteShow (cardCtrl));
         }
         void onCompleteShow (CardCtrl cardCtrl) {
-            Debug.Log ("oncomplete");
             U.ui.ctrl.cardNumText.text = civilCardCtrls.Count.ToString ();
         }
 

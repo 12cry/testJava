@@ -49,6 +49,7 @@ namespace testCC.Assets.script.ctrl {
             militaryUICtrl.init ();
             ui.militaryUI = militaryUICtrl.ui;
 
+            ui.closeAllView ();
         }
 
         public void viewResourceBuliding () {

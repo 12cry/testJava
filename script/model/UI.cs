@@ -44,12 +44,12 @@ namespace testJava.script.model {
             resourceUI.add (statistic);
         }
         public void viewBuildingCard (int cardType) {
+
             this.cardType = cardType;
 
             ctrl.maskBuildingImage.gameObject.SetActive (true);
             ctrl.maskBuildingImage.transform.SetAsLastSibling ();
             List<BuildingCard> buildingCards = getBuildingCards (cardType);
-            Debug.Log (buildingCards.Count);
             for (int i = 0; i < buildingCards.Count; i++) {
                 BuildingCard card = buildingCards[i];
                 card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
@@ -60,6 +60,9 @@ namespace testJava.script.model {
         public void closeViewBuildingCard () {
             ctrl.maskBuildingImage.gameObject.SetActive (false);
             List<BuildingCard> buildingCards = getBuildingCards (cardType);
+            if (buildingCards == null) {
+                return;
+            }
             for (int i = 0; i < buildingCards.Count; i++) {
                 BuildingCard card = buildingCards[i];
                 U.hideCard (card.ctrl);

@@ -19,7 +19,6 @@ namespace testJava.script.ctrl.ui {
         public void init () {
             ui = new CardViewUI ();
             ui.ctrl = this;
-            ui.init ();
         }
 
         public void takeCard () {
