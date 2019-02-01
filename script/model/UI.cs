@@ -21,6 +21,21 @@ namespace testJava.script.model {
 
         int cardType;
 
+        public List<BuildingCard> resourceWorkerBuildingCards = new List<BuildingCard> ();
+        public List<BuildingCard> militaryWorkerBuildingCards = new List<BuildingCard> ();
+        public List<BuildingCard> wonderBuildingCards = new List<BuildingCard> ();
+
+        public List<BuildingCard> getBuildingCards (int cardType) {
+            List<BuildingCard> cards = null;
+            if (cardType == CardType.WONDER) {
+                cards = wonderBuildingCards;
+            } else if (cardType == CardType.RESOURCE_BULIDING) {
+                cards = resourceWorkerBuildingCards;
+            } else if (cardType == CardType.MILITARY_BUILDING) {
+                cards = militaryWorkerBuildingCards;
+            }
+            return cards;
+        }
         public void reduce (Statistic statistic) {
             resourceUI.reduce (statistic);
         }
@@ -28,30 +43,31 @@ namespace testJava.script.model {
         public void add (Statistic statistic) {
             resourceUI.add (statistic);
         }
-        public void viewBuilding (int cardType) {
+        public void viewBuildingCard (int cardType) {
             this.cardType = cardType;
 
             ctrl.maskBuildingImage.gameObject.SetActive (true);
             ctrl.maskBuildingImage.transform.SetAsLastSibling ();
-            List<Building> buildings = U.world.getBuildings (cardType);
-            for (int i = 0; i < buildings.Count; i++) {
-                Building building = buildings[i];
-                building.card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
-                building.card.ctrl.gameObject.transform.SetAsLastSibling ();
+            List<BuildingCard> buildingCards = getBuildingCards (cardType);
+            Debug.Log (buildingCards.Count);
+            for (int i = 0; i < buildingCards.Count; i++) {
+                BuildingCard card = buildingCards[i];
+                card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
+                card.ctrl.gameObject.transform.SetAsLastSibling ();
             }
         }
 
-        public void closeViewBuilding () {
+        public void closeViewBuildingCard () {
             ctrl.maskBuildingImage.gameObject.SetActive (false);
-            List<Building> buildings = U.world.getBuildings (cardType);
-            for (int i = 0; i < buildings.Count; i++) {
-                Building building = buildings[i];
-                U.hideCard (building.card.ctrl);
+            List<BuildingCard> buildingCards = getBuildingCards (cardType);
+            for (int i = 0; i < buildingCards.Count; i++) {
+                BuildingCard card = buildingCards[i];
+                U.hideCard (card.ctrl);
             }
         }
         public void closeAllView () {
             cardViewUI.closeView ();
-            closeViewBuilding ();
+            closeViewBuildingCard ();
         }
     }
 }

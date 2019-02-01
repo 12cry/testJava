@@ -10,6 +10,7 @@ namespace testJava.script.model {
         public int culture;
         public int cultureRaise;
         public int attack;
+        public int defense;
 
         public Statistic minus (Statistic statistic) {
             Statistic result = new Statistic ();

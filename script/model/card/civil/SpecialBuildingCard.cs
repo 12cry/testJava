@@ -8,5 +8,6 @@ namespace testJava.script.model.card {
             U.ui.add (actionIncome);
             base.action ();
         }
+
     }
 }

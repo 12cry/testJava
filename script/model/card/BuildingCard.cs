@@ -8,12 +8,9 @@ using UnityEngine;
 public class BuildingCard : Card {
 
     public Statistic actionCost;
-    public Vector3 position;
-    public int level;
+    public GameObject gameObject;
 
-    public Building building;
     public override void action () {
-        build ();
         U.ui.reduce (actionCost);
         base.action ();
     }
@@ -29,22 +26,21 @@ public class BuildingCard : Card {
         }
         return false;
     }
+    // public abstract void build ();
+    // public void build () {
+    //     GameObject gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
+    //     gameObject.transform.localPosition = position;
 
-    public void build () {
-        GameObject gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
-        gameObject.transform.localPosition = position;
+    //     Building building = new Building ();
+    //     building.id = id;
+    //     building.card = this;
+    //     building.name = name;
+    //     building.gameObject = gameObject;
+    //     building.init ();
 
-        Building building = new Building ();
-        building.id = id;
-        building.level = level;
-        building.card = this;
-        building.name = name;
-        building.gameObject = gameObject;
-        building.init ();
-
-        this.building = building;
-        U.world.getBuildings (type).Add (building);
-    }
+    //     this.building = building;
+    //     U.world.getBuildings (type).Add (building);
+    // }
     // public override void undoAction () {
     //     base.undoAction ();
     //     undoBuild ();

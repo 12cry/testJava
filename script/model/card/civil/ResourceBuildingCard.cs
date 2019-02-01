@@ -1,4 +1,4 @@
-namespace testJava.script.model.card.civil {
+namespace testJava.script.model.card {
     public class ResourceBuildingCard : WorkerBuildingCard {
 
     }

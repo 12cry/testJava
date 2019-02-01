@@ -52,13 +52,16 @@ namespace testCC.Assets.script.ctrl {
         }
 
         public void viewResourceBuliding () {
-            ui.viewBuilding (CardType.RESOURCE_BULIDING);
+            ui.viewBuildingCard (CardType.RESOURCE_BULIDING);
         }
         public void viewMilitaryBuliding () {
-            ui.viewBuilding (CardType.MILITARY_UNIT);
+            ui.viewBuildingCard (CardType.MILITARY_BUILDING);
+        }
+        public void viewWonderBuliding () {
+            ui.viewBuildingCard (CardType.WONDER);
         }
         public void closeViewBuilding () {
-            ui.closeViewBuilding ();
+            ui.closeViewBuildingCard ();
         }
 
     }

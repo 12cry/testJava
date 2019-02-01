@@ -7,6 +7,6 @@ namespace testJava.script.constant {
         public static int REWARD = 105;
         public static int LEADER = 106;
 
-        public static int MILITARY_UNIT = 201;
+        public static int MILITARY_BUILDING = 201;
     }
 }

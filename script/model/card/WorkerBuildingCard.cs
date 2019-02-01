@@ -8,46 +8,64 @@ using UnityEngine.UI;
 
 public class WorkerBuildingCard : BuildingCard {
     public int buildingType;
-
+    public int level;
+    public Vector3 position;
     public Statistic buildCost;
     public Statistic buildIncome;
+
+    int workerNum;
+
+    public Queue<RawImage> workers = new Queue<RawImage> ();
+
+    public override void action () {
+        gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
+        gameObject.transform.localPosition = position;
+        U.ui.getBuildingCards (type).Add (this);
+        this.updateWorkerNum (0);
+
+        base.action ();
+    }
 
     public override void displayActionButtons () {
 
         ResourceUI resourceUI = U.ui.resourceUI;
 
         int index = 0;
-        U.addAButton (index++, string.Format ("add a worker to {0}", building.name), delegate { addAWorker (); },
+        U.addAButton (index++, string.Format ("add a worker to {0}", name), delegate { addAWorker (); },
             U.ui.populationUI.workerNum > 0 && resourceUI.enough (buildCost));
-        U.addAButton (index++, string.Format ("remove a worker from {0}", building.name), delegate { removeWorker (); }, building.workerNum > 0);
+        U.addAButton (index++, string.Format ("remove a worker from {0}", name), delegate { removeWorker (); }, workerNum > 0);
 
-        foreach (Building upgradeBuilding in U.world.getBuildings (type)) {
-            WorkerBuildingCard upgradeCard = ((WorkerBuildingCard) upgradeBuilding.card);
-            if (upgradeCard.buildingType != buildingType || upgradeBuilding.level <= building.level) {
+        foreach (WorkerBuildingCard upgradeCard in U.ui.getBuildingCards (type)) {
+            if (upgradeCard.buildingType != buildingType || upgradeCard.level <= level) {
                 continue;
             }
-            U.addAButton (index++, string.Format ("upgrade {0} to {1}", building.name, upgradeBuilding.name),
-                delegate { upgradeWorker (upgradeBuilding); },
-                building.workerNum > 0 && resourceUI.enough (upgradeCard.buildCost.minus (buildCost)));
+            U.addAButton (index++, string.Format ("upgrade {0} to {1}", name, upgradeCard.name),
+                delegate { upgradeWorker (upgradeCard); },
+                workerNum > 0 && resourceUI.enough (upgradeCard.buildCost.minus (buildCost)));
         }
     }
 
-    public void upgradeWorker (Building building) {
-        RawImage worker = this.building.workers.Dequeue ();
-        building.workers.Enqueue (worker);
+    public void updateWorkerNum (int value) {
+        workerNum += value;
+        TextMesh[] t = gameObject.GetComponentsInChildren<TextMesh> ();
+        gameObject.GetComponentsInChildren<TextMesh> () [0].text = workerNum.ToString ();
+    }
+    public void upgradeWorker (WorkerBuildingCard card) {
+        RawImage worker = this.workers.Dequeue ();
+        workers.Enqueue (worker);
 
-        this.building.updateWorkerNum (-1);
-        building.updateWorkerNum (1);
+        this.updateWorkerNum (-1);
+        card.updateWorkerNum (1);
 
         U.ui.reduce (buildIncome);
-        U.ui.add (((WorkerBuildingCard) building.card).buildIncome);
+        U.ui.add (((WorkerBuildingCard) card).buildIncome);
         U.ui.actionUI.updateCivilRemainder (-1);
     }
     public void removeWorker () {
-        RawImage worker = this.building.workers.Dequeue ();
+        RawImage worker = this.workers.Dequeue ();
         U.ui.populationUI.addWorker (worker);
 
-        this.building.updateWorkerNum (-1);
+        this.updateWorkerNum (-1);
 
         U.ui.reduce (buildIncome);
         U.ui.closeAllView ();
@@ -55,9 +73,9 @@ public class WorkerBuildingCard : BuildingCard {
     }
     public void addAWorker () {
         RawImage worker = U.ui.populationUI.getAWorker ();
-        this.building.workers.Enqueue (worker);
+        this.workers.Enqueue (worker);
 
-        this.building.updateWorkerNum (1);
+        this.updateWorkerNum (1);
 
         U.ui.reduce (buildCost);
         U.ui.add (buildIncome);

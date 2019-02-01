@@ -31,6 +31,8 @@ public abstract class Card {
     public void init () {
         Text[] texts = ctrl.GetComponentsInChildren<Text> ();
         textDic = texts.ToDictionary (key => key.name, text => text);
+
+        render ();
     }
     public void view () {
         Vector3 cardViewPosition = new Vector3 (0, 0, 0);
@@ -84,7 +86,6 @@ public abstract class Card {
     }
     public void show () {
         state = CardState.SHOWING;
-        render ();
     }
     public virtual void render () {
         textDic["name"].text = name;

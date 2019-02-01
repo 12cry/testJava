@@ -16,6 +16,7 @@ namespace testCC.Assets.script.model {
         public int culture;
         public int cultureRaise;
         public int attack;
+        public int defense;
 
         public void init () {
             this.updateFood (10);
@@ -26,6 +27,8 @@ namespace testCC.Assets.script.model {
             this.updateScienceRaise (0);
             this.updateCulture (0);
             this.updateCultureRaise (0);
+            this.updateAttack (0);
+            this.updateDefense (0);
         }
 
         public void evaluating () {
@@ -36,17 +39,22 @@ namespace testCC.Assets.script.model {
         }
         public void reduce (Statistic statistic) {
             updateFoodRaise (-statistic.food);
-            updateFoodRaise (-statistic.capacity);
+            updateCapacityRaise (-statistic.capacity);
+            updateCultureRaise (-statistic.cultureRaise);
             updateScience (-statistic.science);
             updateCapacity (-statistic.capacity);
             updateAttack (-statistic.attack);
+            updateDefense (-statistic.defense);
         }
         public void add (Statistic statistic) {
             updateFoodRaise (statistic.food);
-            updateFoodRaise (statistic.capacity);
+            updateCapacityRaise (statistic.capacity);
+            updateCultureRaise (statistic.cultureRaise);
             updateScience (statistic.science);
             updateCapacity (statistic.capacity);
+
             updateAttack (statistic.attack);
+            updateDefense (statistic.defense);
         }
         public bool enough (Statistic statistic) {
             if (statistic.science > this.science || statistic.capacity > this.capacity) {
@@ -119,6 +127,14 @@ namespace testCC.Assets.script.model {
             }
             this.attack += value;
             ctrl.attackText.text = this.attack.ToString ();
+        }
+
+        public void updateDefense (int value) {
+            if (value == 0) {
+                return;
+            }
+            this.defense += value;
+            ctrl.defenseText.text = this.defense.ToString ();
         }
 
     }

@@ -1,6 +1,6 @@
 using testCC.Assets.script;
 
-namespace testJava.script.model.card.civil {
+namespace testJava.script.model.card {
     public class GovernmentCard : Card {
         public int civil;
         public int military;
@@ -13,6 +13,7 @@ namespace testJava.script.model.card.civil {
             U.ui.actionUI.updateCivilRemainder (civil > U.ui.actionUI.civil?(civil - U.ui.actionUI.civil) : 0);
             U.ui.add (actionIncome);
             U.ui.orgUI.setgovernment (iconPath);
+            U.ui.reduce (actionCost);
             base.action ();
         }
         public override void render () {

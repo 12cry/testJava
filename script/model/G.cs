@@ -36,7 +36,7 @@ namespace testJava.script.model {
             Type g = Type.GetType ("testJava.script.model.G");
             MethodInfo mi = g.GetMethod ("addCards");
 
-            string ns = "testJava.script.model.card.civil.";
+            string ns = "testJava.script.model.card.";
             string path = "Assets/data";
             DirectoryInfo dir = new DirectoryInfo (path);
             FileInfo[] fis = dir.GetFiles ("*.json");
@@ -94,7 +94,7 @@ namespace testJava.script.model {
                     continue;
                 }
                 rowCardCtrls[i] = null;
-                if (cardCtrl.card.state == CardState.TAKED) {
+                if (cardCtrl.card.state != CardState.SHOWING) {
                     continue;
                 }
 
@@ -117,22 +117,26 @@ namespace testJava.script.model {
 
         }
         public void showCurrentCards () {
+            Tween tweener = null;
+            CardCtrl cardCtrl = null;
             for (int i = 0; i < rowCardCtrls.Length; i++) {
-                CardCtrl cardCtrl = rowCardCtrls[i];
+                cardCtrl = rowCardCtrls[i];
                 if (cardCtrl == null) {
                     break;
                 }
-                Tweener tweener = cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
-                if (i == rowCardCtrls.Length - 1) {
-                    tweener.OnComplete (() => onCompleteShow (cardCtrl));
-                }
+                tweener = cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
                 cardCtrl.card.takeCivil = 1 + i / 5;
                 cardCtrl.card.showIndex = i;
                 cardCtrl.card.show ();
 
             }
+            if (tweener == null) {
+                return;
+            }
+            tweener.OnComplete (() => onCompleteShow (cardCtrl));
         }
         void onCompleteShow (CardCtrl cardCtrl) {
+            Debug.Log ("oncomplete");
             U.ui.ctrl.cardNumText.text = civilCardCtrls.Count.ToString ();
         }
 
