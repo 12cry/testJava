@@ -18,10 +18,14 @@ namespace testCC.Assets.script {
 		public int rowCardLimitNum = 5;
 		public int removeCardNum = 2;
 		public G g;
+		public UICtrl uICtrl;
+
 		void Start () {
 			g = new G ();
 			g.ctrl = this;
 			g.init ();
+
+			uICtrl.init ();
 
 			U.g = g;
 			play ();

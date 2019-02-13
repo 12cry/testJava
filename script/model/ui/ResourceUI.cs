@@ -19,6 +19,7 @@ namespace testCC.Assets.script.model {
         public int defense;
 
         public void init () {
+
             this.updateFood (10);
             this.updateFoodRaise (0);
             this.updateCapacity (8);
@@ -38,20 +39,29 @@ namespace testCC.Assets.script.model {
             this.updateCulture (cultureRaise);
         }
         public void reduce (Statistic statistic) {
-            updateFoodRaise (-statistic.food);
-            updateCapacityRaise (-statistic.capacity);
+            updateFoodRaise (-statistic.foodRaise);
+            updateCapacityRaise (-statistic.capacityRaise);
             updateCultureRaise (-statistic.cultureRaise);
-            updateScience (-statistic.science);
+            updateScienceRaise (-statistic.scienceRaise);
+
+            updateFood (-statistic.food);
             updateCapacity (-statistic.capacity);
+            updateScience (-statistic.science);
+            updateCulture (-statistic.culture);
+
             updateAttack (-statistic.attack);
             updateDefense (-statistic.defense);
         }
         public void add (Statistic statistic) {
-            updateFoodRaise (statistic.food);
-            updateCapacityRaise (statistic.capacity);
+            updateFoodRaise (statistic.foodRaise);
+            updateCapacityRaise (statistic.capacityRaise);
             updateCultureRaise (statistic.cultureRaise);
-            updateScience (statistic.science);
+            updateScienceRaise (statistic.scienceRaise);
+
+            updateFood (statistic.food);
             updateCapacity (statistic.capacity);
+            updateScience (statistic.science);
+            updateCulture (statistic.culture);
 
             updateAttack (statistic.attack);
             updateDefense (statistic.defense);

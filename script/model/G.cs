@@ -22,34 +22,38 @@ namespace testJava.script.model {
         List<Card> allCards = new List<Card> ();
         public GState state;
 
-        public List<T> addCards<T> (string fileName) where T : Card {
-            List<T> t = new List<T> ();
-            string dir = "./Assets/data/";
-            List<T> cards = JsonConvert.DeserializeObject<List<T>> (File.ReadAllText (dir + fileName + ".json", Encoding.UTF8));
+        string dir = "./Assets/data/";
+        string cardDir = "./Assets/data/card/";
+        public Dictionary<string, Dictionary<string, int>> conf;
+
+        public void addCards<T> (string fileName) where T : Card {
+            List<T> cards = JsonConvert.DeserializeObject<List<T>> (File.ReadAllText (cardDir + fileName + ".json", Encoding.UTF8));
             for (int i = 0; i < cards.Count; i++) {
                 allCards.Add (cards[i]);
             }
 
-            return t;
         }
         public void initCards () {
             Type g = Type.GetType ("testJava.script.model.G");
             MethodInfo mi = g.GetMethod ("addCards");
 
             string ns = "testJava.script.model.card.";
-            string path = "Assets/data";
-            DirectoryInfo dir = new DirectoryInfo (path);
-            FileInfo[] fis = dir.GetFiles ("*.json");
+            DirectoryInfo dirInfo = new DirectoryInfo (cardDir);
+            FileInfo[] fis = dirInfo.GetFiles ("*.json");
             foreach (FileInfo fi in fis) {
                 string cardName = fi.Name.Substring (0, fi.Name.IndexOf ("."));
                 Type c = Type.GetType (ns + cardName);
                 mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
         }
+        public void initConf () {
+            conf = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>> (File.ReadAllText (dir + "conf.json", Encoding.UTF8));
+        }
         public void init () {
             rowCardCtrls = new CardCtrl[ctrl.rowCardLimitNum];
 
             initCards ();
+            initConf ();
         }
         public void play () {
             playInit ();

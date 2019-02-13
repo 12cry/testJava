@@ -32,6 +32,7 @@ namespace testJava.script.model.ui {
             RawImage idle = idles.Pop ();
             idleNum -= 1;
             addWorker (idle);
+            U.ui.actionUI.updateCivilRemainder (-1);
         }
         public void addWorker (RawImage worker) {
             workers.Push (worker);

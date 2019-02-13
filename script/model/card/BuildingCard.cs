@@ -16,9 +16,10 @@ public class BuildingCard : Card {
     }
     public override void render () {
         base.render ();
-        if (actionCost != null) {
-            textDic["costScience"].text = actionCost.science.ToString ();
-        }
+        U.setActionCostText (textDic, actionCost);
+        // if (actionCost != null) {
+        //     textDic["actionCost.science"].text = actionCost.science.ToString ();
+        // }
     }
     public override bool actionAble () {
         if (U.ui.resourceUI.enough (actionCost)) {

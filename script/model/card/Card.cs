@@ -26,8 +26,6 @@ public abstract class Card {
     public Vector3 beforViewPosition;
     public Dictionary<string, Text> textDic;
 
-    UI ui = U.ui;
-
     public void init () {
         Text[] texts = ctrl.GetComponentsInChildren<Text> ();
         textDic = texts.ToDictionary (key => key.name, text => text);
@@ -35,15 +33,17 @@ public abstract class Card {
         render ();
     }
     public void view () {
-        Vector3 cardViewPosition = new Vector3 (0, 0, 0);
-        if (cardViewPosition == ctrl.transform.localPosition) {
+
+        if (U.ui.cardViewUI.state == ViewState.SHOW) {
             return;
         }
+
+        Vector3 cardViewPosition = new Vector3 (0, 0, 0);
         beforViewPosition = ctrl.transform.localPosition;
         U.currentCard = this;
         ctrl.transform.DOLocalMove (cardViewPosition, U.cardMoveSpeed);
 
-        ui.cardViewUI.view ();
+        U.ui.cardViewUI.view ();
         showViewButton ();
     }
 
@@ -65,7 +65,7 @@ public abstract class Card {
             displayActionButtons ();
         }
     }
-    public void closeView () {
+    public void resetPosition () {
         ctrl.transform.DOLocalMove (beforViewPosition, U.cardMoveSpeed);
     }
 
@@ -74,7 +74,7 @@ public abstract class Card {
         ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
 
         state = CardState.TAKED;
-        ui.actionUI.updateCivilRemainder (-this.takeCivil);
+        U.ui.actionUI.updateCivilRemainder (-this.takeCivil);
     }
     public virtual void action () {
         U.g.handCardCtrls.Remove (this.ctrl);
@@ -82,7 +82,7 @@ public abstract class Card {
         U.hideCard (this.ctrl);
 
         state = CardState.ACTINGED;
-        ui.actionUI.updateCivilRemainder (-1);
+        U.ui.actionUI.updateCivilRemainder (-1);
     }
     public void show () {
         state = CardState.SHOWING;
@@ -90,6 +90,7 @@ public abstract class Card {
     public virtual void render () {
         textDic["name"].text = name;
     }
+
     public virtual void displayActionButtons () { }
     public virtual bool actionAble () {
         return true;

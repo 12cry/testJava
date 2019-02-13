@@ -34,7 +34,7 @@ namespace testJava.script.ctrl.ui {
             CommandCtrl.instant.addCommand (new CardActionCommand (U.currentCard));
         }
         public void closeViewCard () {
-            U.currentCard.closeView ();
+            U.currentCard.resetPosition ();
             ui.closeView ();
         }
     }

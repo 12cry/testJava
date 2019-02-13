@@ -24,7 +24,7 @@ namespace testCC.Assets.script.ctrl {
         public OrgUICtrl orgUICtrl;
         public MilitaryUICtrl militaryUICtrl;
 
-        void Start () {
+        public void init () {
             ui.ctrl = this;
             U.ui = ui;
 

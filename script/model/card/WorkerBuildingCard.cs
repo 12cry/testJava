@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
 using testJava.script.constant;
@@ -24,6 +25,10 @@ public class WorkerBuildingCard : BuildingCard {
         this.updateWorkerNum (0);
 
         base.action ();
+    }
+    public override void render () {
+        base.render ();
+        U.setBuildCostText (textDic, buildCost);
     }
 
     public override void displayActionButtons () {
@@ -74,6 +79,8 @@ public class WorkerBuildingCard : BuildingCard {
     public void addAWorker () {
         RawImage worker = U.ui.populationUI.getAWorker ();
         this.workers.Enqueue (worker);
+        worker.transform.parent = this.ctrl.transform;
+        worker.transform.DOLocalMove (new Vector3 (0, 0, 0), U.cardMoveSpeed);
 
         this.updateWorkerNum (1);
 

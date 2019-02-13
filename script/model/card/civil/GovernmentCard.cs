@@ -18,9 +18,7 @@ namespace testJava.script.model.card {
         }
         public override void render () {
             base.render ();
-            if (actionCost != null) {
-                textDic["costScience"].text = actionCost.science.ToString ();
-            }
+            U.setActionCostText (textDic, actionCost);
         }
 
     }
