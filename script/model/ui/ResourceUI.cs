@@ -1,35 +1,48 @@
-using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
+using System.Threading;
 using testCC.Assets.script.ctrl;
 using testJava.script.model;
 using testJava.script.model.ui;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace testCC.Assets.script.model {
     public class ResourceUI {
         public ResourceUICtrl ctrl;
 
-        public int food;
-        public int foodRaise;
-        public int capacity;
-        public int capacityRaise;
-        public int science;
-        public int scienceRaise;
-        public int culture;
-        public int cultureRaise;
-        public int attack;
-        public int defense;
+        public int food { get; set; }
+        public int foodRaise { get; set; }
+        public int capacity { get; set; }
+        public int capacityRaise { get; set; }
+        public int science { get; set; }
+        public int scienceRaise { get; set; }
+        public int culture { get; set; }
+        public int cultureRaise { get; set; }
+        public int attack { get; set; }
+        public int defense { get; set; }
 
         public void init () {
+            Dictionary<string, int> dic = U.g.conf["resourceUI"];
 
-            this.updateFood (10);
-            this.updateFoodRaise (0);
-            this.updateCapacity (8);
-            this.updateCapacityRaise (0);
-            this.updateScience (15);
-            this.updateScienceRaise (0);
-            this.updateCulture (0);
-            this.updateCultureRaise (0);
-            this.updateAttack (0);
-            this.updateDefense (0);
+            foreach (var d in dic) {
+                this.GetType ().GetProperty (d.Key).SetValue (this, d.Value, null);
+            }
+
+            ctrl.foodText.text = this.food.ToString ();
+            ctrl.foodRaiseText.text = this.foodRaise.ToString ();
+            ctrl.capacityText.text = this.capacity.ToString ();
+            ctrl.capacityRaiseText.text = this.capacityRaise.ToString ();
+            ctrl.scienceText.text = this.science.ToString ();
+            ctrl.scienceRaiseText.text = this.scienceRaise.ToString ();
+            ctrl.cultureText.text = this.culture.ToString ();
+            ctrl.cultureRaiseText.text = this.cultureRaise.ToString ();
+            ctrl.attackText.text = this.attack.ToString ();
+            ctrl.defenseText.text = this.defense.ToString ();
+
+            U.ui.warehouseUI.removeWarehouse (this.food);
+            U.ui.warehouseUI.removeWarehouse (this.capacity);
         }
 
         public void evaluating () {

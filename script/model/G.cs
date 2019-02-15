@@ -128,7 +128,7 @@ namespace testJava.script.model {
                 if (cardCtrl == null) {
                     break;
                 }
-                tweener = cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
+                tweener = cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardHeight / 2, 0), U.cardMoveSpeed);
                 cardCtrl.card.takeCivil = 1 + i / 5;
                 cardCtrl.card.showIndex = i;
                 cardCtrl.card.show ();

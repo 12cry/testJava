@@ -34,7 +34,7 @@ namespace testJava.script.model.ui {
                 warehouseNum++;
             }
         }
-        void removeWarehouse (int value) {
+        public void removeWarehouse (int value) {
             for (int i = 0; i < value; i++) {
                 RawImage warehouse = warehouses.Pop ();
                 warehousesOut.Push (warehouse);

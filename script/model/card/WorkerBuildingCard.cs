@@ -28,7 +28,8 @@ public class WorkerBuildingCard : BuildingCard {
     }
     public override void render () {
         base.render ();
-        U.setBuildCostText (textDic, buildCost);
+        U.setBuildCostText (ctrl, buildCost);
+        U.setBuildIncomeText (ctrl, buildIncome);
     }
 
     public override void displayActionButtons () {
@@ -57,13 +58,16 @@ public class WorkerBuildingCard : BuildingCard {
     }
     public void upgradeWorker (WorkerBuildingCard card) {
         RawImage worker = this.workers.Dequeue ();
-        workers.Enqueue (worker);
-
         this.updateWorkerNum (-1);
+
+        card.workers.Enqueue (worker);
         card.updateWorkerNum (1);
 
+        U.ui.reduce (card.buildCost);
+        U.ui.add (buildCost);
         U.ui.reduce (buildIncome);
-        U.ui.add (((WorkerBuildingCard) card).buildIncome);
+        U.ui.add (card.buildIncome);
+        U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);
     }
     public void removeWorker () {
@@ -79,8 +83,8 @@ public class WorkerBuildingCard : BuildingCard {
     public void addAWorker () {
         RawImage worker = U.ui.populationUI.getAWorker ();
         this.workers.Enqueue (worker);
-        worker.transform.parent = this.ctrl.transform;
-        worker.transform.DOLocalMove (new Vector3 (0, 0, 0), U.cardMoveSpeed);
+        worker.transform.parent = worker.transform.parent.parent;
+        worker.transform.DOMove (U.g.ctrl.mainCamera.WorldToScreenPoint (gameObject.transform.position), U.cardMoveSpeed);
 
         this.updateWorkerNum (1);
 

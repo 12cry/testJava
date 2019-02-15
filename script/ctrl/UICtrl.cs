@@ -12,6 +12,7 @@ namespace testCC.Assets.script.ctrl {
 
         public Image maskBuildingImage;
 
+        public Text textPrefab;
         public CardCtrl cardCtrlPrefab;
         public CardCtrl cardCtrlBackgroud;
         public Text cardNumText;

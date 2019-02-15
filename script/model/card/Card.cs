@@ -24,12 +24,8 @@ public abstract class Card {
     public int showIndex;
 
     public Vector3 beforViewPosition;
-    public Dictionary<string, Text> textDic;
 
     public void init () {
-        Text[] texts = ctrl.GetComponentsInChildren<Text> ();
-        textDic = texts.ToDictionary (key => key.name, text => text);
-
         render ();
     }
     public void view () {
@@ -71,7 +67,7 @@ public abstract class Card {
 
     public void take () {
         U.g.handCardCtrls.Add (ctrl);
-        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
+        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardHeight / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
 
         state = CardState.TAKED;
         U.ui.actionUI.updateCivilRemainder (-this.takeCivil);
@@ -88,7 +84,7 @@ public abstract class Card {
         state = CardState.SHOWING;
     }
     public virtual void render () {
-        textDic["name"].text = name;
+        ctrl.cardNameText.text = name;
     }
 
     public virtual void displayActionButtons () { }

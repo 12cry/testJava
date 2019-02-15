@@ -16,10 +16,7 @@ public class BuildingCard : Card {
     }
     public override void render () {
         base.render ();
-        U.setActionCostText (textDic, actionCost);
-        // if (actionCost != null) {
-        //     textDic["actionCost.science"].text = actionCost.science.ToString ();
-        // }
+        U.setActionCostText (ctrl, actionCost);
     }
     public override bool actionAble () {
         if (U.ui.resourceUI.enough (actionCost)) {
@@ -27,26 +24,10 @@ public class BuildingCard : Card {
         }
         return false;
     }
-    // public abstract void build ();
-    // public void build () {
-    //     GameObject gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
-    //     gameObject.transform.localPosition = position;
-
-    //     Building building = new Building ();
-    //     building.id = id;
-    //     building.card = this;
-    //     building.name = name;
-    //     building.gameObject = gameObject;
-    //     building.init ();
-
-    //     this.building = building;
-    //     U.world.getBuildings (type).Add (building);
-    // }
     // public override void undoAction () {
     //     base.undoAction ();
     //     undoBuild ();
     //     U.ui.resourceUI.addCost (actionCost);
-
     // }
     // public void undoBuild () {
     //     Object.Destroy (building.gameObject);

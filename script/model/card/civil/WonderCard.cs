@@ -27,6 +27,11 @@ namespace testJava.script.model.card {
             base.action ();
 
         }
+        public override void render () {
+            base.render ();
+            U.setBuildCostText (ctrl, buildCosts);
+            U.setBuildIncomeText (ctrl, buildIncome);
+        }
 
         public override void displayActionButtons () {
 
@@ -56,6 +61,7 @@ namespace testJava.script.model.card {
             }
 
             U.ui.actionUI.updateCivilRemainder (-stageNum);
+            U.ui.closeAllView ();
         }
 
     }

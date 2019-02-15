@@ -15,6 +15,7 @@ using UnityEngine.UI;
 namespace testCC.Assets.script {
 	public class GCtrl : MonoBehaviour {
 
+		public Camera mainCamera;
 		public int rowCardLimitNum = 5;
 		public int removeCardNum = 2;
 		public G g;
@@ -24,10 +25,10 @@ namespace testCC.Assets.script {
 			g = new G ();
 			g.ctrl = this;
 			g.init ();
+			U.g = g;
 
 			uICtrl.init ();
 
-			U.g = g;
 			play ();
 		}
 

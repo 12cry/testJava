@@ -18,7 +18,7 @@ namespace testJava.script.model.card {
         }
         public override void render () {
             base.render ();
-            U.setActionCostText (textDic, actionCost);
+            // U.setActionCostText (textDic, actionCost);
         }
 
     }
