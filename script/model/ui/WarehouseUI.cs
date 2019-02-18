@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using testCC.Assets.script;
 using testJava.script.ctrl.ui;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ namespace testJava.script.model.ui {
         Stack<RawImage> warehousesOut = new Stack<RawImage> ();
 
         public void init () {
+            warehouseNum = U.g.conf["warehouseUI"]["warehouseNum"];
             for (int i = 0; i < warehouseNum; i++) {
                 RawImage warehouse = Object.Instantiate<RawImage> (ctrl.warehousePrefab, ctrl.transform);
                 warehouse.transform.localPosition = new Vector3 (i / 2 * 40, -i % 2 * 40, 0);

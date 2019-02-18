@@ -37,6 +37,7 @@ namespace testJava.script.ctrl.ui {
             g.deal ();
 
             ui.reset ();
+            ui.refreshCard ();
 
             U.ui.resourceUI.evaluating ();
 

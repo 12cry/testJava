@@ -1,5 +1,7 @@
+using testCC.Assets.script;
 using testJava.script.command;
 using testJava.script.ctrl.ui;
+using testJava.script.model.card;
 
 namespace testJava.script.model.ui {
     public class ActionUI {
@@ -20,6 +22,14 @@ namespace testJava.script.model.ui {
         }
         public void setRedoButtonAble (bool able) {
             ctrl.redoButton.interactable = able;
+        }
+        public void refreshCard () {
+            foreach (CardCtrl cardCtrl in U.g.handCardCtrls) {
+                Card card = cardCtrl.card;
+                if (card is BonusCard) {
+                    card.setActionAble (true);
+                }
+            }
         }
         public void reset () {
             this.civilRemainder = this.civil;

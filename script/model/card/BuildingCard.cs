@@ -18,7 +18,7 @@ public class BuildingCard : Card {
         base.render ();
         U.setActionCostText (ctrl, actionCost);
     }
-    public override bool actionAble () {
+    public override bool getActionAble () {
         if (U.ui.resourceUI.enough (actionCost)) {
             return true;
         }

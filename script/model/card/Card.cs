@@ -22,10 +22,11 @@ public abstract class Card {
     public CardState state = CardState.READY;
     public int takeCivil = 1;
     public int showIndex;
+    public bool actionAble = true;
 
     public Vector3 beforViewPosition;
 
-    public void init () {
+    public virtual void init () {
         render ();
     }
     public void view () {
@@ -54,7 +55,7 @@ public abstract class Card {
                 U.showAButton (U.ui.cardViewUI.ctrl.bTakeCard, index++);
             }
         } else if (state == CardState.TAKED) {
-            if (actionAble ()) {
+            if (getActionAble ()) {
                 U.showAButton (U.ui.cardViewUI.ctrl.bActionCard, index++);
             }
         } else if (state == CardState.ACTINGED) {
@@ -88,8 +89,11 @@ public abstract class Card {
     }
 
     public virtual void displayActionButtons () { }
-    public virtual bool actionAble () {
-        return true;
+    public virtual bool getActionAble () {
+        return actionAble;
+    }
+    public void setActionAble (bool actionAble) {
+        this.actionAble = actionAble;
     }
     public virtual void undoAction () {
         U.g.handCardCtrls.Add (ctrl);
