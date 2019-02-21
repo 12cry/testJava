@@ -24,8 +24,8 @@ namespace testJava.script.model {
         List<Card> allCards = new List<Card> ();
         public GState state;
 
-        string dir = "./Assets/data/";
-        string cardDir = "./Assets/data/card/";
+        // string dir = "./Assets/data/";
+        // string cardDir = "./Assets/data/card/";
         public Dictionary<string, Dictionary<string, int>> conf;
         public float cardWidth;
         public float cardHeight;
@@ -41,8 +41,8 @@ namespace testJava.script.model {
             cardHeight = ctrl.srcCardHeight * scale;
             cardWidthAndGap = (ctrl.srcCardWidth + ctrl.srcCardWidthGap) * scale;
 
-            initCards ();
             initConf ();
+            initCards ();
         }
 
         public void addCards<T> (string fileName) where T : Card {
@@ -68,9 +68,10 @@ namespace testJava.script.model {
             MethodInfo mi = g.GetMethod ("addCards");
             string ns = "testJava.script.model.card.";
 
-            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard" };
+            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard" };
             foreach (string cardName in cardNames) {
                 Type c = Type.GetType (ns + cardName);
+
                 mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
         }
@@ -151,7 +152,7 @@ namespace testJava.script.model {
                 if (cardCtrl == null) {
                     break;
                 }
-                tweener = cardCtrl.transform.DOMove (new Vector3 (cardWidth / 2 + i * cardWidthAndGap, Screen.height - cardHeight / 2, 0), U.cardMoveSpeed);
+                tweener = cardCtrl.transform.DOMove (new Vector3 (cardWidth / 2 + i * cardWidthAndGap, Screen.height - cardHeight / 2 - 30, 0), U.cardMoveSpeed);
                 // tweener = cardCtrl.transform.DOLocalMove (new Vector3 (cardWidth / 2 + cardWidth * i - Screen.width * scale / 2, Screen.height / 2 - cardHeight / 2, 0), 1);
                 cardCtrl.card.takeCivil = 1 + i / 5;
                 cardCtrl.card.showIndex = i;

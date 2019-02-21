@@ -40,7 +40,7 @@ namespace testJava.script.model.card {
                 capacity += buildCosts[stage + i].capacity;
                 int stageNum = i + 1;
                 U.addAButton (i, string.Format ("build {0} stage with {1} civli use {2} c", i + 1, i + 1, capacity), delegate { buildStage (stageNum); },
-                    U.ui.resourceUI.capacity >= capacity && U.ui.actionUI.civilRemainder > i);
+                    U.ui.statisticUI.capacity >= capacity && U.ui.actionUI.civilRemainder > i);
             }
 
         }
@@ -51,13 +51,16 @@ namespace testJava.script.model.card {
                 capacity += buildCosts[stage + i].capacity;
                 // stageImages.Dequeue ();
             }
-            U.ui.resourceUI.updateCapacity (-capacity);
+            // U.ui.statisticUI.updateCapacity (-capacity);
+            Statistic buildCost = new Statistic ();
+            buildCost.capacity = capacity;
+            U.ui.statisticUI.reduce (buildCost);
 
             stage += stageNum;
             U.ui.warehouseUI.updateWarehouse (-stageNum);
             if (stage == buildCosts.Length) {
                 U.ui.warehouseUI.updateWarehouse (stage);
-                U.ui.add (buildIncome);
+                U.ui.statisticUI.add (buildIncome);
             }
 
             U.ui.actionUI.updateCivilRemainder (-stageNum);

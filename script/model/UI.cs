@@ -11,7 +11,8 @@ namespace testJava.script.model {
     public class UI {
         public UICtrl ctrl;
 
-        public ResourceUI resourceUI;
+        // public ResourceUI resourceUI;
+        public StatisticUI statisticUI;
         public CardViewUI cardViewUI;
         public PopulationUI populationUI;
         public ActionUI actionUI;
@@ -36,13 +37,13 @@ namespace testJava.script.model {
             }
             return cards;
         }
-        public void reduce (Statistic statistic) {
-            resourceUI.reduce (statistic);
-        }
+        // public void reduce (Statistic statistic) {
+        //     statisticUI.reduce (statistic);
+        // }
 
-        public void add (Statistic statistic) {
-            resourceUI.add (statistic);
-        }
+        // public void add (Statistic statistic) {
+        //     statisticUI.add (statistic);
+        // }
         public void viewBuildingCard (int cardType) {
 
             this.cardType = cardType;

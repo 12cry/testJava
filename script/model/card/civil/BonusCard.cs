@@ -10,7 +10,7 @@ namespace testJava.script.model.card {
             setActionAble (false);
         }
         public override void action () {
-            U.ui.add (actionIncome);
+            U.ui.statisticUI.add (actionIncome);
             base.action ();
         }
         public override void render () {

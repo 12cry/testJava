@@ -26,7 +26,8 @@ namespace testJava.script.model.ui {
 
         public void idleToWorker () {
             int fCost = 3 - (idleNum - 1) / 4;
-            if (!U.ui.resourceUI.updateFood (-fCost)) {
+            // if (!U.ui.statisticUI.updateFood (-fCost)) {
+            if (U.ui.statisticUI.food < -fCost) {
                 return;
             }
             RawImage idle = idles.Pop ();

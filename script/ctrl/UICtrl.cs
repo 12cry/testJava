@@ -18,7 +18,8 @@ namespace testCC.Assets.script.ctrl {
         public Text cardNumText;
 
         public WarehouseUICtrl warehouseUICtrl;
-        public ResourceUICtrl resourceUICtrl;
+        // public ResourceUICtrl resourceUICtrl;
+        public StatisticUICtrl statisticUICtrl;
         public CardViewUICtrl cardViewUICtrl;
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
@@ -35,8 +36,11 @@ namespace testCC.Assets.script.ctrl {
             warehouseUICtrl.init ();
             ui.warehouseUI = warehouseUICtrl.ui;
 
-            resourceUICtrl.init ();
-            ui.resourceUI = resourceUICtrl.ui;
+            // resourceUICtrl.init ();
+            // ui.resourceUI = resourceUICtrl.ui;
+
+            statisticUICtrl.init ();
+            ui.statisticUI = statisticUICtrl.ui;
 
             actionUICtrl.init ();
             ui.actionUI = actionUICtrl.ui;

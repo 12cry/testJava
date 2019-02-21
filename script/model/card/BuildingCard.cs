@@ -11,7 +11,7 @@ public class BuildingCard : Card {
     public GameObject gameObject;
 
     public override void action () {
-        U.ui.reduce (actionCost);
+        U.ui.statisticUI.reduce (actionCost);
         base.action ();
     }
     public override void render () {
@@ -19,7 +19,7 @@ public class BuildingCard : Card {
         U.setActionCostText (ctrl, actionCost);
     }
     public override bool getActionAble () {
-        if (U.ui.resourceUI.enough (actionCost)) {
+        if (U.ui.statisticUI.enough (actionCost)) {
             return true;
         }
         return false;

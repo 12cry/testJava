@@ -11,9 +11,9 @@ namespace testJava.script.model.card {
         public override void action () {
             U.ui.actionUI.setCivil (civil);
             U.ui.actionUI.updateCivilRemainder (civil > U.ui.actionUI.civil?(civil - U.ui.actionUI.civil) : 0);
-            U.ui.add (actionIncome);
+            U.ui.statisticUI.add (actionIncome);
             U.ui.orgUI.setgovernment (iconPath);
-            U.ui.reduce (actionCost);
+            U.ui.statisticUI.reduce (actionCost);
             base.action ();
         }
         public override void render () {

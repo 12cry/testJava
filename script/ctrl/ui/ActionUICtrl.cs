@@ -30,9 +30,7 @@ namespace testJava.script.ctrl.ui {
         }
 
         public void pass () {
-
             Debug.Log ("pass---");
-            Console.WriteLine ("ppppp---");
             G g = U.g;
             if (g.state == GState.OVER) {
                 return;
@@ -43,7 +41,7 @@ namespace testJava.script.ctrl.ui {
             ui.reset ();
             ui.refreshCard ();
 
-            U.ui.resourceUI.evaluating ();
+            U.ui.statisticUI.evaluating ();
 
         }
     }

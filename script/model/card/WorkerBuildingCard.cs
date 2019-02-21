@@ -34,11 +34,9 @@ public class WorkerBuildingCard : BuildingCard {
 
     public override void displayActionButtons () {
 
-        ResourceUI resourceUI = U.ui.resourceUI;
-
         int index = 0;
         U.addAButton (index++, string.Format ("add a worker to {0}", name), delegate { addAWorker (); },
-            U.ui.populationUI.workerNum > 0 && resourceUI.enough (buildCost));
+            U.ui.populationUI.workerNum > 0 && U.ui.statisticUI.enough (buildCost));
         U.addAButton (index++, string.Format ("remove a worker from {0}", name), delegate { removeWorker (); }, workerNum > 0);
 
         foreach (WorkerBuildingCard upgradeCard in U.ui.getBuildingCards (type)) {
@@ -47,7 +45,7 @@ public class WorkerBuildingCard : BuildingCard {
             }
             U.addAButton (index++, string.Format ("upgrade {0} to {1}", name, upgradeCard.name),
                 delegate { upgradeWorker (upgradeCard); },
-                workerNum > 0 && resourceUI.enough (upgradeCard.buildCost.minus (buildCost)));
+                workerNum > 0 && U.ui.statisticUI.enough (upgradeCard.buildCost.minus (buildCost)));
         }
     }
 
@@ -63,10 +61,10 @@ public class WorkerBuildingCard : BuildingCard {
         card.workers.Enqueue (worker);
         card.updateWorkerNum (1);
 
-        U.ui.reduce (card.buildCost);
-        U.ui.add (buildCost);
-        U.ui.reduce (buildIncome);
-        U.ui.add (card.buildIncome);
+        U.ui.statisticUI.reduce (card.buildCost);
+        U.ui.statisticUI.add (buildCost);
+        U.ui.statisticUI.reduce (buildIncome);
+        U.ui.statisticUI.add (card.buildIncome);
         U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);
     }
@@ -76,7 +74,7 @@ public class WorkerBuildingCard : BuildingCard {
 
         this.updateWorkerNum (-1);
 
-        U.ui.reduce (buildIncome);
+        U.ui.statisticUI.reduce (buildIncome);
         U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);
     }
@@ -88,8 +86,8 @@ public class WorkerBuildingCard : BuildingCard {
 
         this.updateWorkerNum (1);
 
-        U.ui.reduce (buildCost);
-        U.ui.add (buildIncome);
+        U.ui.statisticUI.reduce (buildCost);
+        U.ui.statisticUI.add (buildIncome);
         U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);
     }

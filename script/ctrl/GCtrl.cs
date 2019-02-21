@@ -23,6 +23,7 @@ namespace testCC.Assets.script {
 		public int srcCardWidth = 130;
 		public int srcCardHeight = 162;
 		public int srcCardWidthGap = 7;
+		public string[] cardNames;
 
 		void Start () {
 			Debug.Log ("start---");
