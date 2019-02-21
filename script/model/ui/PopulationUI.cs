@@ -36,7 +36,7 @@ namespace testJava.script.model.ui {
         }
         public void addWorker (RawImage worker) {
             workers.Push (worker);
-            worker.transform.parent = this.ctrl.workerArea.transform;
+            worker.transform.SetParent (ctrl.workerArea.transform);
             worker.transform.DOLocalMove (new Vector3 (workerNum / 2 * 40, -workerNum % 2 * 40, 0), U.cardMoveSpeed);
             workerNum++;
         }

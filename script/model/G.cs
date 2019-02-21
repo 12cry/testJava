@@ -10,6 +10,8 @@ using testCC.Assets.script.model.card;
 using testJava.script.constant;
 using testJava.script.model.card;
 using UnityEngine;
+using UnityEngine.UI;
+
 namespace testJava.script.model {
     public class G {
         public GCtrl ctrl;
@@ -25,35 +27,56 @@ namespace testJava.script.model {
         string dir = "./Assets/data/";
         string cardDir = "./Assets/data/card/";
         public Dictionary<string, Dictionary<string, int>> conf;
+        public float cardWidth;
+        public float cardHeight;
+        public float cardWidthAndGap;
+        float scale;
+
+        public void init () {
+            rowCardCtrls = new CardCtrl[ctrl.rowCardLimitNum];
+            CanvasScaler cs = ctrl.uICtrl.GetComponent<CanvasScaler> ();
+            float screenWidth = cs.referenceResolution.x;
+            scale = Screen.width / screenWidth;
+            cardWidth = ctrl.srcCardWidth * scale;
+            cardHeight = ctrl.srcCardHeight * scale;
+            cardWidthAndGap = (ctrl.srcCardWidth + ctrl.srcCardWidthGap) * scale;
+
+            initCards ();
+            initConf ();
+        }
 
         public void addCards<T> (string fileName) where T : Card {
-            List<T> cards = JsonConvert.DeserializeObject<List<T>> (File.ReadAllText (cardDir + fileName + ".json", Encoding.UTF8));
+            string text = LoadFile ("data/card/" + fileName + ".json");
+            List<T> cards = JsonConvert.DeserializeObject<List<T>> (text);
             for (int i = 0; i < cards.Count; i++) {
                 allCards.Add (cards[i]);
             }
 
         }
+        public static string LoadFile (string filePath) {
+            string url = Application.streamingAssetsPath + "/" + filePath;
+#if UNITY_EDITOR
+            return File.ReadAllText (url);
+#elif UNITY_ANDROID
+            WWW www = new WWW (url);
+            while (!www.isDone) { }
+            return www.text;
+#endif
+        }
         public void initCards () {
             Type g = Type.GetType ("testJava.script.model.G");
             MethodInfo mi = g.GetMethod ("addCards");
-
             string ns = "testJava.script.model.card.";
-            DirectoryInfo dirInfo = new DirectoryInfo (cardDir);
-            FileInfo[] fis = dirInfo.GetFiles ("*.json");
-            foreach (FileInfo fi in fis) {
-                string cardName = fi.Name.Substring (0, fi.Name.IndexOf ("."));
+
+            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard" };
+            foreach (string cardName in cardNames) {
                 Type c = Type.GetType (ns + cardName);
                 mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
         }
         public void initConf () {
-            conf = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>> (File.ReadAllText (dir + "conf.json", Encoding.UTF8));
-        }
-        public void init () {
-            rowCardCtrls = new CardCtrl[ctrl.rowCardLimitNum];
-
-            initCards ();
-            initConf ();
+            string text = LoadFile ("data/conf.json");
+            conf = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, int>>> (text);
         }
         public void play () {
             playInit ();
@@ -128,7 +151,8 @@ namespace testJava.script.model {
                 if (cardCtrl == null) {
                     break;
                 }
-                tweener = cardCtrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + i * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardHeight / 2, 0), U.cardMoveSpeed);
+                tweener = cardCtrl.transform.DOMove (new Vector3 (cardWidth / 2 + i * cardWidthAndGap, Screen.height - cardHeight / 2, 0), U.cardMoveSpeed);
+                // tweener = cardCtrl.transform.DOLocalMove (new Vector3 (cardWidth / 2 + cardWidth * i - Screen.width * scale / 2, Screen.height / 2 - cardHeight / 2, 0), 1);
                 cardCtrl.card.takeCivil = 1 + i / 5;
                 cardCtrl.card.showIndex = i;
                 cardCtrl.card.show ();

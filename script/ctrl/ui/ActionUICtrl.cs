@@ -1,3 +1,4 @@
+using System;
 using testCC.Assets.script;
 using testJava.script.command;
 using testJava.script.constant;
@@ -29,6 +30,9 @@ namespace testJava.script.ctrl.ui {
         }
 
         public void pass () {
+
+            Debug.Log ("pass---");
+            Console.WriteLine ("ppppp---");
             G g = U.g;
             if (g.state == GState.OVER) {
                 return;

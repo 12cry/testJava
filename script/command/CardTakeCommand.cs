@@ -11,7 +11,7 @@ namespace testJava.script.command {
         }
         public override void undo () {
             U.g.handCardCtrls.Remove (card.ctrl);
-            card.ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + card.showIndex * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
+            // card.ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 + card.showIndex * U.cardWidth - Screen.width / 2, Screen.height / 2 - U.cardWidth / 2, 0), U.cardMoveSpeed);
             card.state = CardState.SHOWING;
             U.ui.actionUI.updateCivilRemainder (card.takeCivil);
 

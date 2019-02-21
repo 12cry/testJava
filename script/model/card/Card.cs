@@ -68,7 +68,8 @@ public abstract class Card {
 
     public void take () {
         U.g.handCardCtrls.Add (ctrl);
-        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardHeight / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
+        ctrl.transform.DOMove (new Vector3 (U.g.cardWidth / 2 + U.g.handCardCtrls.Count * 20, U.g.cardHeight / 2, 0), U.cardMoveSpeed);
+        // ctrl.transform.DOLocalMove (new Vector3 (U.g.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.g.cardHeight / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
 
         state = CardState.TAKED;
         U.ui.actionUI.updateCivilRemainder (-this.takeCivil);
@@ -98,7 +99,7 @@ public abstract class Card {
     public virtual void undoAction () {
         U.g.handCardCtrls.Add (ctrl);
         U.g.passCardCtrls.Remove (ctrl);
-        ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
+        // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
         state = CardState.ACTINGED;
         U.ui.actionUI.updateCivilRemainder (1);
     }

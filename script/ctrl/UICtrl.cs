@@ -23,7 +23,7 @@ namespace testCC.Assets.script.ctrl {
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
         public OrgUICtrl orgUICtrl;
-        public MilitaryUICtrl militaryUICtrl;
+        // public MilitaryUICtrl militaryUICtrl;
 
         public void init () {
             ui.ctrl = this;
@@ -47,8 +47,8 @@ namespace testCC.Assets.script.ctrl {
             cardViewUICtrl.init ();
             ui.cardViewUI = cardViewUICtrl.ui;
 
-            militaryUICtrl.init ();
-            ui.militaryUI = militaryUICtrl.ui;
+            // militaryUICtrl.init ();
+            // ui.militaryUI = militaryUICtrl.ui;
 
             ui.closeAllView ();
         }

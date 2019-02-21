@@ -53,7 +53,7 @@ public class WorkerBuildingCard : BuildingCard {
 
     public void updateWorkerNum (int value) {
         workerNum += value;
-        TextMesh[] t = gameObject.GetComponentsInChildren<TextMesh> ();
+        // TextMesh[] t = gameObject.GetComponentsInChildren<TextMesh> ();
         gameObject.GetComponentsInChildren<TextMesh> () [0].text = workerNum.ToString ();
     }
     public void upgradeWorker (WorkerBuildingCard card) {
@@ -83,7 +83,7 @@ public class WorkerBuildingCard : BuildingCard {
     public void addAWorker () {
         RawImage worker = U.ui.populationUI.getAWorker ();
         this.workers.Enqueue (worker);
-        worker.transform.parent = worker.transform.parent.parent;
+        worker.transform.SetParent (worker.transform.parent.parent);
         worker.transform.DOMove (U.g.ctrl.mainCamera.WorldToScreenPoint (gameObject.transform.position), U.cardMoveSpeed);
 
         this.updateWorkerNum (1);
