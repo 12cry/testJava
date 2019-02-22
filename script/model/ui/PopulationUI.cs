@@ -27,9 +27,14 @@ namespace testJava.script.model.ui {
         public void idleToWorker () {
             int fCost = 3 - (idleNum - 1) / 4;
             // if (!U.ui.statisticUI.updateFood (-fCost)) {
-            if (U.ui.statisticUI.food < -fCost) {
+            // if (U.ui.statisticUI.food < fCost) {
+            Statistic cost = new Statistic ();
+            cost.food = fCost;
+            if (!U.ui.statisticUI.enough (cost)) {
                 return;
             }
+            U.ui.statisticUI.reduce (cost);
+
             RawImage idle = idles.Pop ();
             idleNum -= 1;
             addWorker (idle);
@@ -38,7 +43,7 @@ namespace testJava.script.model.ui {
         public void addWorker (RawImage worker) {
             workers.Push (worker);
             worker.transform.SetParent (ctrl.workerArea.transform);
-            worker.transform.DOLocalMove (new Vector3 (workerNum / 2 * 40, -workerNum % 2 * 40, 0), U.cardMoveSpeed);
+            worker.transform.DOLocalMove (new Vector3 (workerNum / 2 * 40, -workerNum % 2 * 40, 0), U.config.cardMoveSpeed);
             workerNum++;
         }
 

@@ -1,3 +1,4 @@
+using testCC.Assets.script;
 using testJava.script.model.ui;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace testJava.script.ctrl.ui {
         public RawImage populationPrefab;
 
         public void init () {
+
             ui = new PopulationUI ();
             ui.ctrl = this;
             ui.init ();

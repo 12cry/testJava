@@ -35,10 +35,11 @@ public abstract class Card {
             return;
         }
 
-        Vector3 cardViewPosition = new Vector3 (0, 0, 0);
+        Vector3 cardViewPosition = new Vector3 (U.config.cardWidth * U.config.cardScale / 2 + 30, Screen.height / 2, 0);
         beforViewPosition = ctrl.transform.localPosition;
         U.currentCard = this;
-        ctrl.transform.DOLocalMove (cardViewPosition, U.cardMoveSpeed);
+        ctrl.transform.DOMove (cardViewPosition, U.config.cardMoveSpeed);
+        ctrl.transform.DOScale (new Vector3 (U.config.cardScale, U.config.cardScale, 0), U.config.cardMoveSpeed);
 
         U.ui.cardViewUI.view ();
         showViewButton ();
@@ -52,24 +53,25 @@ public abstract class Card {
         int index = 0;
         if (state == CardState.SHOWING) {
             if (civilRemainder >= takeCivil) {
-                U.showAButton (U.ui.cardViewUI.ctrl.bTakeCard, index++);
+                U.showAButton (U.ui.cardViewUI.bTakeCard, index++);
             }
         } else if (state == CardState.TAKED) {
             if (getActionAble ()) {
-                U.showAButton (U.ui.cardViewUI.ctrl.bActionCard, index++);
+                U.showAButton (U.ui.cardViewUI.bActionCard, index++);
             }
         } else if (state == CardState.ACTINGED) {
             displayActionButtons ();
         }
     }
     public void resetPosition () {
-        ctrl.transform.DOLocalMove (beforViewPosition, U.cardMoveSpeed);
+        ctrl.transform.DOLocalMove (beforViewPosition, U.config.cardMoveSpeed);
+        ctrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
     }
 
     public void take () {
         U.g.handCardCtrls.Add (ctrl);
-        ctrl.transform.DOMove (new Vector3 (U.g.cardWidth / 2 + U.g.handCardCtrls.Count * 20, U.g.cardHeight / 2, 0), U.cardMoveSpeed);
-        // ctrl.transform.DOLocalMove (new Vector3 (U.g.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.g.cardHeight / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
+        ctrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.g.handCardCtrls.Count * 20, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
+        ctrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
 
         state = CardState.TAKED;
         U.ui.actionUI.updateCivilRemainder (-this.takeCivil);
@@ -99,7 +101,7 @@ public abstract class Card {
     public virtual void undoAction () {
         U.g.handCardCtrls.Add (ctrl);
         U.g.passCardCtrls.Remove (ctrl);
-        // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.cardMoveSpeed);
+        // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.config.cardMoveSpeed);
         state = CardState.ACTINGED;
         U.ui.actionUI.updateCivilRemainder (1);
     }

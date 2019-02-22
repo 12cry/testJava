@@ -1,10 +1,10 @@
-using System;
 using System.Collections.Generic;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
 using testCC.Assets.script.model.card;
 using testJava.script.constant;
 using testJava.script.ctrl.ui;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -14,10 +14,28 @@ namespace testJava.script.model.ui {
     public class CardViewUI {
         public CardViewUICtrl ctrl;
         public ViewState state = ViewState.HIDE;
+        public Button bTakeCard;
+        public Button bActionCard;
+        public List<Button> buttons = new List<Button> ();
 
         CardType cardType;
         public void init () {
             closeView ();
+
+            bTakeCard = Object.Instantiate<Button> (ctrl.buttonParfab, ctrl.transform);
+            bTakeCard.GetComponentInChildren<TextMeshProUGUI> ().SetText ("take");
+            bTakeCard.onClick.AddListener (delegate { ctrl.takeCard (); });
+            bActionCard = Object.Instantiate<Button> (ctrl.buttonParfab, ctrl.transform);
+            bActionCard.GetComponentInChildren<TextMeshProUGUI> ().SetText ("action");
+            bActionCard.onClick.AddListener (delegate { ctrl.actionCard (); });
+
+            Button b = Object.Instantiate<Button> (ctrl.buttonParfab, ctrl.transform);
+            buttons.Add (b);
+            b = Object.Instantiate<Button> (ctrl.buttonParfab, ctrl.transform);
+            buttons.Add (b);
+            b = Object.Instantiate<Button> (ctrl.buttonParfab, ctrl.transform);
+            buttons.Add (b);
+
         }
         public void view () {
             state = ViewState.SHOW;
@@ -34,7 +52,7 @@ namespace testJava.script.model.ui {
 
         public void hideAllButton () {
             Button[] bb = ctrl.GetComponentsInChildren<Button> ();
-            Array.ForEach (bb, b => {
+            System.Array.ForEach (bb, b => {
                 b.transform.localPosition = new Vector3 (1000, 0, 0);
             });
         }

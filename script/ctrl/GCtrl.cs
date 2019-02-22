@@ -20,10 +20,6 @@ namespace testCC.Assets.script {
 		public int removeCardNum = 2;
 		public G g;
 		public UICtrl uICtrl;
-		public int srcCardWidth = 130;
-		public int srcCardHeight = 162;
-		public int srcCardWidthGap = 7;
-		public string[] cardNames;
 
 		void Start () {
 			Debug.Log ("start---");

@@ -11,14 +11,13 @@ namespace testJava.script.ctrl.ui {
         public CardViewUI ui;
 
         public Text desc;
-        public Button bTakeCard;
-        public Button bActionCard;
-        public List<Button> buttons;
+        public Button buttonParfab;
         public Image maskCardImage;
 
         public void init () {
             ui = new CardViewUI ();
             ui.ctrl = this;
+            ui.init ();
         }
 
         public void takeCard () {

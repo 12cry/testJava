@@ -82,7 +82,7 @@ public class WorkerBuildingCard : BuildingCard {
         RawImage worker = U.ui.populationUI.getAWorker ();
         this.workers.Enqueue (worker);
         worker.transform.SetParent (worker.transform.parent.parent);
-        worker.transform.DOMove (U.g.ctrl.mainCamera.WorldToScreenPoint (gameObject.transform.position), U.cardMoveSpeed);
+        worker.transform.DOMove (U.g.ctrl.mainCamera.WorldToScreenPoint (gameObject.transform.position), U.config.cardMoveSpeed);
 
         this.updateWorkerNum (1);
 

@@ -57,6 +57,7 @@ namespace testJava.script.model.ui {
 
             attack -= statistic.attack;
             defense -= statistic.defense;
+            refresh ();
         }
         public void add (Statistic statistic) {
             foodRaise += statistic.foodRaise;
@@ -71,9 +72,10 @@ namespace testJava.script.model.ui {
 
             attack += statistic.attack;
             defense += statistic.defense;
+            refresh ();
         }
         public bool enough (Statistic statistic) {
-            if (statistic.science > this.science || statistic.capacity > this.capacity) {
+            if (statistic.science > this.science || statistic.capacity > this.capacity || statistic.food > this.food) {
                 return false;
             }
             return true;

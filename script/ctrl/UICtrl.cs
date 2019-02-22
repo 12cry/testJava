@@ -3,6 +3,7 @@ using testJava.script.constant;
 using testJava.script.ctrl.ui;
 using testJava.script.model;
 using testJava.script.model.ui;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ namespace testCC.Assets.script.ctrl {
 
         public Image maskBuildingImage;
 
-        public Text textPrefab;
+        public TextMeshProUGUI textPrefab;
         public CardCtrl cardCtrlPrefab;
         public CardCtrl cardCtrlBackgroud;
         public Text cardNumText;
@@ -25,6 +26,17 @@ namespace testCC.Assets.script.ctrl {
         public ActionUICtrl actionUICtrl;
         public OrgUICtrl orgUICtrl;
         // public MilitaryUICtrl militaryUICtrl;
+        public void initTransform () {
+            var scale = U.config.scale;
+            var populationUICtrlRect = populationUICtrl.GetComponent<RectTransform> ().rect;
+            var warehouseUICtrlRect = warehouseUICtrl.GetComponent<RectTransform> ().rect;
+            var statisticUICtrlRect = statisticUICtrl.GetComponent<RectTransform> ().rect;
+            var actionUICtrlRect = actionUICtrl.GetComponent<RectTransform> ().rect;
+            populationUICtrl.transform.position = new Vector2 (populationUICtrlRect.width * scale / 2, U.config.cardHeight + populationUICtrlRect.height * scale / 2);
+            warehouseUICtrl.transform.position = new Vector2 ((populationUICtrlRect.width + warehouseUICtrlRect.width / 2 + 20) * scale, U.config.cardHeight + populationUICtrlRect.height * scale / 2);
+            statisticUICtrl.transform.position = new Vector2 (Screen.width / 2, (Screen.height - statisticUICtrlRect.height * scale / 2));
+            actionUICtrl.transform.position = new Vector2 (Screen.width - actionUICtrlRect.width * scale / 2, actionUICtrlRect.height * scale / 2);
+        }
 
         public void init () {
             ui.ctrl = this;
@@ -55,6 +67,7 @@ namespace testCC.Assets.script.ctrl {
             // ui.militaryUI = militaryUICtrl.ui;
 
             ui.closeAllView ();
+            initTransform ();
         }
 
         public void viewResourceBuliding () {

@@ -18,10 +18,10 @@ namespace testJava.script.model.ui {
             setCivil (8);
         }
         public void setUndoButtonAble (bool able) {
-            ctrl.undoButton.interactable = able;
+            // ctrl.undoButton.interactable = able;
         }
         public void setRedoButtonAble (bool able) {
-            ctrl.redoButton.interactable = able;
+            // ctrl.redoButton.interactable = able;
         }
         public void refreshCard () {
             foreach (CardCtrl cardCtrl in U.g.handCardCtrls) {
@@ -37,8 +37,8 @@ namespace testJava.script.model.ui {
 
             CommandCtrl.instant.redoCommands.Clear ();
             CommandCtrl.instant.undoCommands.Clear ();
-            setUndoButtonAble (false);
-            setRedoButtonAble (false);
+            // setUndoButtonAble (false);
+            // setRedoButtonAble (false);
         }
         public void updateCivilRemainder (int value) {
             this.civilRemainder += value;
