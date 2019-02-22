@@ -37,13 +37,6 @@ namespace testJava.script.model {
             }
             return cards;
         }
-        // public void reduce (Statistic statistic) {
-        //     statisticUI.reduce (statistic);
-        // }
-
-        // public void add (Statistic statistic) {
-        //     statisticUI.add (statistic);
-        // }
         public void viewBuildingCard (int cardType) {
 
             this.cardType = cardType;
@@ -54,6 +47,7 @@ namespace testJava.script.model {
             for (int i = 0; i < buildingCards.Count; i++) {
                 BuildingCard card = buildingCards[i];
                 card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
+                card.ctrl.gameObject.transform.localScale = new Vector2 (3, 3);
                 card.ctrl.gameObject.transform.SetAsLastSibling ();
             }
         }

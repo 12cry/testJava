@@ -25,6 +25,7 @@ public abstract class Card {
     public bool actionAble = true;
 
     public Vector3 beforViewPosition;
+    public Vector3 beforViewScale;
 
     public virtual void init () {
         render ();
@@ -36,10 +37,13 @@ public abstract class Card {
         }
 
         Vector3 cardViewPosition = new Vector3 (U.config.cardWidth * U.config.cardScale / 2 + 30, Screen.height / 2, 0);
+        Vector3 cardViewScale = new Vector3 (U.config.cardScale, U.config.cardScale, 0);
         beforViewPosition = ctrl.transform.localPosition;
+        beforViewScale = ctrl.transform.localScale;
+
         U.currentCard = this;
         ctrl.transform.DOMove (cardViewPosition, U.config.cardMoveSpeed);
-        ctrl.transform.DOScale (new Vector3 (U.config.cardScale, U.config.cardScale, 0), U.config.cardMoveSpeed);
+        ctrl.transform.DOScale (cardViewScale, U.config.cardMoveSpeed);
 
         U.ui.cardViewUI.view ();
         showViewButton ();
@@ -65,7 +69,7 @@ public abstract class Card {
     }
     public void resetPosition () {
         ctrl.transform.DOLocalMove (beforViewPosition, U.config.cardMoveSpeed);
-        ctrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
+        ctrl.transform.DOScale (beforViewScale, U.config.cardMoveSpeed);
     }
 
     public void take () {
