@@ -118,7 +118,9 @@ namespace testJava.script.model {
             showRowCards ();
 
             for (int i = 0; i < 2; i++) {
-
+                if (diplomacyCardCtrls.Count == 0) {
+                    break;
+                }
                 var cardCtrl = diplomacyCardCtrls.Dequeue ();
                 U.g.diplomacyHandCardCtrls.Add (cardCtrl);
                 cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.g.interiorHandCardCtrls.Count * 20 + 200, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
