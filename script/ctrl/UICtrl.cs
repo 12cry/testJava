@@ -12,20 +12,21 @@ namespace testCC.Assets.script.ctrl {
         public UI ui = new UI ();
 
         public Image maskBuildingImage;
-
-        public TextMeshProUGUI textPrefab;
-        public CardCtrl cardCtrlPrefab;
-        public CardCtrl cardCtrlBackgroud;
-        public Text cardNumText;
+        public Image maskCardImage;
 
         public WarehouseUICtrl warehouseUICtrl;
-        // public ResourceUICtrl resourceUICtrl;
         public StatisticUICtrl statisticUICtrl;
         public CardViewUICtrl cardViewUICtrl;
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
         public OrgUICtrl orgUICtrl;
         // public MilitaryUICtrl militaryUICtrl;
+
+        public TextMeshProUGUI textPrefab;
+        public CardCtrl cardCtrlPrefab;
+        public CardCtrl cardCtrlBackgroud;
+        public Text cardNumText;
+
         public void initTransform () {
             var scale = U.config.scale;
             var populationUICtrlRect = populationUICtrl.GetComponent<RectTransform> ().rect;
@@ -48,9 +49,6 @@ namespace testCC.Assets.script.ctrl {
             warehouseUICtrl.init ();
             ui.warehouseUI = warehouseUICtrl.ui;
 
-            // resourceUICtrl.init ();
-            // ui.resourceUI = resourceUICtrl.ui;
-
             statisticUICtrl.init ();
             ui.statisticUI = statisticUICtrl.ui;
 
@@ -71,6 +69,7 @@ namespace testCC.Assets.script.ctrl {
         }
 
         public void viewResourceBuliding () {
+            Debug.Log ("-------");
             ui.viewBuildingCard (CardType.RESOURCE_BULIDING);
         }
         public void viewMilitaryBuliding () {

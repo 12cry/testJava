@@ -4,7 +4,10 @@ using testCC.Assets.script;
 using testCC.Assets.script.model;
 using testJava.script.constant;
 using testJava.script.model;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class WorkerBuildingCard : BuildingCard {
@@ -21,6 +24,7 @@ public class WorkerBuildingCard : BuildingCard {
     public override void action () {
         gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
         gameObject.transform.localPosition = position;
+        U.AddTriggerEvent (gameObject, EventTriggerType.PointerClick, delegate { U.ui.viewBuildingCard (type); });
         U.ui.getBuildingCards (type).Add (this);
         this.updateWorkerNum (0);
 
@@ -51,8 +55,12 @@ public class WorkerBuildingCard : BuildingCard {
 
     public void updateWorkerNum (int value) {
         workerNum += value;
-        // TextMesh[] t = gameObject.GetComponentsInChildren<TextMesh> ();
-        gameObject.GetComponentsInChildren<TextMesh> () [0].text = workerNum.ToString ();
+        TextMeshPro[] t = gameObject.GetComponentsInChildren<TextMeshPro> ();
+        Debug.Log (t);
+        Debug.Log (t[0]);
+        Debug.Log (t[0].text);
+        t[0].SetText ("23");
+        // gameObject.GetComponentsInChildren<TextMeshPro> () [0].text = workerNum.ToString ();
     }
     public void upgradeWorker (WorkerBuildingCard card) {
         RawImage worker = this.workers.Dequeue ();

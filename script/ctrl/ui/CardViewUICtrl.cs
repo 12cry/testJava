@@ -12,7 +12,6 @@ namespace testJava.script.ctrl.ui {
 
         public Text desc;
         public Button buttonParfab;
-        public Image maskCardImage;
 
         public void init () {
             ui = new CardViewUI ();

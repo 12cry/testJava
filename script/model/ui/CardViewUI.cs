@@ -41,8 +41,8 @@ namespace testJava.script.model.ui {
             state = ViewState.SHOW;
             Card card = U.currentCard;
 
-            ctrl.maskCardImage.gameObject.SetActive (true);
-            ctrl.maskCardImage.transform.SetAsLastSibling ();
+            U.ui.ctrl.maskCardImage.gameObject.SetActive (true);
+            U.ui.ctrl.maskCardImage.transform.SetAsLastSibling ();
             ctrl.gameObject.SetActive (true);
             ctrl.transform.SetAsLastSibling ();
             card.ctrl.transform.SetAsLastSibling ();
@@ -59,7 +59,7 @@ namespace testJava.script.model.ui {
         public void closeView () {
             state = ViewState.HIDE;
             ctrl.gameObject.SetActive (false);
-            ctrl.maskCardImage.gameObject.SetActive (false);
+            U.ui.ctrl.maskCardImage.gameObject.SetActive (false);
             hideAllButton ();
         }
 

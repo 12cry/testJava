@@ -38,6 +38,7 @@ namespace testJava.script.model {
             MethodInfo mi = g.GetMethod ("addCards");
             string ns = "testJava.script.model.card.";
 
+            // string[] cardNames = new string[] { "WonderCard", "GovernmentCard", "MilitaryBuildingCard" };
             string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard" };
             foreach (string cardName in cardNames) {
                 Type c = Type.GetType (ns + cardName);
@@ -73,10 +74,14 @@ namespace testJava.script.model {
             for (int i = 0; i < allCards.Count; i++) {
                 cards.Insert (UnityEngine.Random.Range (0, i + 1), allCards[i]);
             }
-
+            float statisticUIHeight = U.ui.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
+            Vector2 v = new Vector2 (Screen.width - 100, Screen.height - statisticUIHeight / 2);
+            Vector2 s = new Vector2 (statisticUIHeight / U.config.cardHeight, statisticUIHeight / U.config.cardHeight);
             civilCardCtrls = new Queue<CardCtrl> ();
             cards.ForEach (card => {
-                CardCtrl newCtrdCtrl = UnityEngine.Object.Instantiate<CardCtrl> (U.ui.ctrl.cardCtrlPrefab, U.ui.ctrl.cardCtrlPrefab.transform.parent);
+                CardCtrl newCtrdCtrl = UnityEngine.Object.Instantiate<CardCtrl> (U.ui.ctrl.cardCtrlPrefab, U.ui.ctrl.transform);
+                newCtrdCtrl.transform.position = v;
+                newCtrdCtrl.transform.localScale = s;
                 newCtrdCtrl.card = card;
                 card.ctrl = newCtrdCtrl;
                 civilCardCtrls.Enqueue (newCtrdCtrl);
@@ -133,6 +138,7 @@ namespace testJava.script.model {
                 }
                 tweener = cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + i * U.config.cardWidthAndGap,
                     Screen.height - U.config.cardHeight / 2 - rect.height * U.config.scale, 0), U.config.cardMoveSpeed);
+                cardCtrl.transform.localScale = new Vector2 (1, 1);
                 cardCtrl.card.takeCivil = 1 + i / 5;
                 cardCtrl.card.showIndex = i;
                 cardCtrl.card.show ();
