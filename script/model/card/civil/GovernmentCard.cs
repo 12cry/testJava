@@ -1,7 +1,7 @@
 using testCC.Assets.script;
 
 namespace testJava.script.model.card {
-    public class GovernmentCard : Card {
+    public class GovernmentCard : InteriorCard {
         public int civil;
         public int military;
         public Statistic actionCost;

@@ -2,7 +2,7 @@ using testCC.Assets.script;
 using testJava.script.model;
 
 namespace testJava.script.model.card {
-    public class BonusCard : Card {
+    public class BonusCard : InteriorCard {
         public Statistic actionIncome;
 
         public override void init () {

@@ -61,16 +61,17 @@ namespace testJava.script.model {
             Type g = Type.GetType ("testJava.script.model.G");
             string ns = "testJava.script.model.card.";
 
-            MethodInfo mi = g.GetMethod ("addCards");
+            MethodInfo mi = g.GetMethod ("addInteriorCards");
             string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard" };
             foreach (string cardName in cardNames) {
                 Type c = Type.GetType (ns + cardName);
-                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName, interiorCards });
+                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
             cardNames = new string[] { "CityCard" };
+            mi = g.GetMethod ("addDiplomacyCards");
             foreach (string cardName in cardNames) {
                 Type c = Type.GetType (ns + cardName);
-                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName, diplomacyCards });
+                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
         }
         public void play () {
@@ -83,23 +84,48 @@ namespace testJava.script.model {
                 cards.Insert (UnityEngine.Random.Range (0, i + 1), interiorCards[i]);
             }
             float statisticUIHeight = U.ui.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
-            Vector2 v = new Vector2 (Screen.width - 100, Screen.height - statisticUIHeight / 2);
+            Vector2 p = new Vector2 (Screen.width - 100, Screen.height - statisticUIHeight / 2);
             Vector2 s = new Vector2 (statisticUIHeight / U.config.cardHeight, statisticUIHeight / U.config.cardHeight);
             interiorCardCtrls = new Queue<CardCtrl> ();
             cards.ForEach (card => {
                 CardCtrl newCtrdCtrl = UnityEngine.Object.Instantiate<CardCtrl> (U.ui.ctrl.cardCtrlPrefab, U.ui.ctrl.transform);
-                newCtrdCtrl.transform.position = v;
+                newCtrdCtrl.transform.position = p;
                 newCtrdCtrl.transform.localScale = s;
                 newCtrdCtrl.card = card;
                 card.ctrl = newCtrdCtrl;
                 interiorCardCtrls.Enqueue (newCtrdCtrl);
             });
-
             U.ui.ctrl.cardCtrlBackgroud.transform.SetAsLastSibling ();
+
+            cards = new List<Card> ();
+            for (int i = 0; i < diplomacyCards.Count; i++) {
+                cards.Insert (UnityEngine.Random.Range (0, i + 1), diplomacyCards[i]);
+            }
+            p = new Vector2 (Screen.width - 50, Screen.height - statisticUIHeight / 2);
+            diplomacyCardCtrls = new Queue<CardCtrl> ();
+            cards.ForEach (card => {
+                CardCtrl newCtrdCtrl = UnityEngine.Object.Instantiate<CardCtrl> (U.ui.ctrl.cardCtrlPrefab, U.ui.ctrl.transform);
+                newCtrdCtrl.transform.position = p;
+                newCtrdCtrl.transform.localScale = s;
+                newCtrdCtrl.card = card;
+                card.ctrl = newCtrdCtrl;
+                diplomacyCardCtrls.Enqueue (newCtrdCtrl);
+            });
+
         }
         public void deal () {
             computeRowCards ();
             showRowCards ();
+
+            for (int i = 0; i < 2; i++) {
+
+                var cardCtrl = diplomacyCardCtrls.Dequeue ();
+                U.g.diplomacyHandCardCtrls.Add (cardCtrl);
+                cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.g.interiorHandCardCtrls.Count * 20 + 200, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
+                cardCtrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
+                cardCtrl.card.state = CardState.INHAND;
+
+            }
         }
 
         public void computeRowCards () {
@@ -168,11 +194,20 @@ namespace testJava.script.model {
             return cardCtrl;
         }
 
-        public void addCards<T> (string fileName, List<Card> addCards) where T : Card {
+        public void addInteriorCards<T> (string fileName) where T : InteriorCard {
             string text = U.LoadFile ("data/card/" + fileName + ".json");
             List<T> cards = JsonConvert.DeserializeObject<List<T>> (text);
             for (int i = 0; i < cards.Count; i++) {
-                addCards.Add (cards[i]);
+                interiorCards.Add (cards[i]);
+            }
+
+        }
+
+        public void addDiplomacyCards<T> (string fileName) where T : DiplomacyCard {
+            string text = U.LoadFile ("data/card/" + fileName + ".json");
+            List<T> cards = JsonConvert.DeserializeObject<List<T>> (text);
+            for (int i = 0; i < cards.Count; i++) {
+                diplomacyCards.Add (cards[i]);
             }
 
         }

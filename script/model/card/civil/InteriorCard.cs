@@ -10,7 +10,7 @@ using testJava.script.model;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class InteriorCard : Card {
+public class InteriorCard : Card {
     public int takeCivil = 1;
 
     public override void showViewButton () {
