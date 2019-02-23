@@ -33,7 +33,7 @@ namespace testJava.script.model.card {
             U.setBuildIncomeText (ctrl, buildIncome);
         }
 
-        public override void displayActionButtons () {
+        public override void displayBuildButtons () {
 
             int capacity = 0;
             for (int i = 0; i < buildCosts.Length - stage; i++) {

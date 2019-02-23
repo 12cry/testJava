@@ -5,7 +5,7 @@ using testJava.script.constant;
 using testJava.script.model;
 using UnityEngine;
 
-public class BuildingCard : Card {
+public class BuildingCard : InteriorCard {
 
     public Statistic actionCost;
     public GameObject gameObject;

@@ -5,6 +5,9 @@ namespace testJava.script.model {
         public int srcCardWidthGap { get; set; }
         public int cardScale { get; set; }
 
+        public int rowCardLimitNum = 14;
+        public int removeCardNum = 3;
+
         public float cardWidth;
         public float cardHeight;
         public float cardWidthAndGap;

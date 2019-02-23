@@ -22,9 +22,6 @@ namespace testJava.script.model.ui {
         public void init () {
             closeView ();
 
-            bTakeCard = Object.Instantiate<Button> (ctrl.buttonParfab, ctrl.transform);
-            bTakeCard.GetComponentInChildren<TextMeshProUGUI> ().SetText ("take");
-            bTakeCard.onClick.AddListener (delegate { ctrl.takeCard (); });
             bActionCard = Object.Instantiate<Button> (ctrl.buttonParfab, ctrl.transform);
             bActionCard.GetComponentInChildren<TextMeshProUGUI> ().SetText ("action");
             bActionCard.onClick.AddListener (delegate { ctrl.actionCard (); });

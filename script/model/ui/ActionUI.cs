@@ -24,7 +24,7 @@ namespace testJava.script.model.ui {
             // ctrl.redoButton.interactable = able;
         }
         public void refreshCard () {
-            foreach (CardCtrl cardCtrl in U.g.handCardCtrls) {
+            foreach (CardCtrl cardCtrl in U.g.interiorHandCardCtrls) {
                 Card card = cardCtrl.card;
                 if (card is BonusCard) {
                     card.setActionAble (true);

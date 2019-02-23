@@ -16,8 +16,6 @@ namespace testCC.Assets.script {
 	public class GCtrl : MonoBehaviour {
 
 		public Camera mainCamera;
-		public int rowCardLimitNum = 5;
-		public int removeCardNum = 2;
 		public G g;
 		public UICtrl uICtrl;
 

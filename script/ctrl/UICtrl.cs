@@ -69,7 +69,6 @@ namespace testCC.Assets.script.ctrl {
         }
 
         public void viewResourceBuliding () {
-            Debug.Log ("-------");
             ui.viewBuildingCard (CardType.RESOURCE_BULIDING);
         }
         public void viewMilitaryBuliding () {

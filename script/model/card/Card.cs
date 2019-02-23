@@ -19,9 +19,7 @@ public abstract class Card {
     public string desc;
     public int type;
 
-    public CardState state = CardState.READY;
-    public int takeCivil = 1;
-    public int showIndex;
+    public CardState state = CardState.START;
     public bool actionAble = true;
 
     public Vector3 beforViewPosition;
@@ -49,53 +47,22 @@ public abstract class Card {
         showViewButton ();
     }
 
-    public void showViewButton () {
-        int civilRemainder = U.ui.actionUI.civilRemainder;
-        if (civilRemainder == 0) {
-            return;
-        }
-        int index = 0;
-        if (state == CardState.SHOWING) {
-            if (civilRemainder >= takeCivil) {
-                U.showAButton (U.ui.cardViewUI.bTakeCard, index++);
-            }
-        } else if (state == CardState.TAKED) {
+    public virtual void showViewButton () {
+        if (state == CardState.INHAND) {
             if (getActionAble ()) {
-                U.showAButton (U.ui.cardViewUI.bActionCard, index++);
+                U.showAButton (U.ui.cardViewUI.bActionCard, 0);
             }
-        } else if (state == CardState.ACTINGED) {
-            displayActionButtons ();
         }
     }
     public void resetPosition () {
         ctrl.transform.DOLocalMove (beforViewPosition, U.config.cardMoveSpeed);
         ctrl.transform.DOScale (beforViewScale, U.config.cardMoveSpeed);
     }
-
-    public void take () {
-        U.g.handCardCtrls.Add (ctrl);
-        ctrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.g.handCardCtrls.Count * 20, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
-        ctrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
-
-        state = CardState.TAKED;
-        U.ui.actionUI.updateCivilRemainder (-this.takeCivil);
-    }
-    public virtual void action () {
-        U.g.handCardCtrls.Remove (this.ctrl);
-        U.g.passCardCtrls.Add (this.ctrl);
-        U.hideCard (this.ctrl);
-
-        state = CardState.ACTINGED;
-        U.ui.actionUI.updateCivilRemainder (-1);
-    }
-    public void show () {
-        state = CardState.SHOWING;
-    }
+    public virtual void action () { }
     public virtual void render () {
         ctrl.cardNameText.text = name;
     }
 
-    public virtual void displayActionButtons () { }
     public virtual bool getActionAble () {
         return actionAble;
     }
@@ -103,10 +70,10 @@ public abstract class Card {
         this.actionAble = actionAble;
     }
     public virtual void undoAction () {
-        U.g.handCardCtrls.Add (ctrl);
-        U.g.passCardCtrls.Remove (ctrl);
-        // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.handCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.config.cardMoveSpeed);
-        state = CardState.ACTINGED;
+        U.g.interiorHandCardCtrls.Add (ctrl);
+        U.g.interiorPassCardCtrls.Remove (ctrl);
+        // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.interiorHandCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.config.cardMoveSpeed);
+        // state = CardState.ACTINGED;
         U.ui.actionUI.updateCivilRemainder (1);
     }
 

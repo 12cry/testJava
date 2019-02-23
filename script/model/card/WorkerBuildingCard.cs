@@ -36,7 +36,7 @@ public class WorkerBuildingCard : BuildingCard {
         U.setBuildIncomeText (ctrl, buildIncome);
     }
 
-    public override void displayActionButtons () {
+    public override void displayBuildButtons () {
 
         int index = 0;
         U.addAButton (index++, string.Format ("add a worker to {0}", name), delegate { addAWorker (); },

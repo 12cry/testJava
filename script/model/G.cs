@@ -16,35 +16,27 @@ namespace testJava.script.model {
     public class G {
         public GCtrl ctrl;
 
-        public Queue<CardCtrl> civilCardCtrls;
-        public CardCtrl[] rowCardCtrls;
-        public List<CardCtrl> handCardCtrls = new List<CardCtrl> ();
-        public List<CardCtrl> passCardCtrls = new List<CardCtrl> ();
+        List<InteriorCard> interiorCards = new List<InteriorCard> ();
+        Queue<CardCtrl> interiorCardCtrls;
+        CardCtrl[] rowCardCtrls;
+        public List<CardCtrl> interiorHandCardCtrls = new List<CardCtrl> ();
+        public List<CardCtrl> interiorPassCardCtrls = new List<CardCtrl> ();
 
-        List<Card> allCards = new List<Card> ();
+        List<DiplomacyCard> diplomacyCards = new List<DiplomacyCard> ();
+        Queue<CardCtrl> diplomacyCardCtrls;
+        public List<CardCtrl> diplomacyHandCardCtrls = new List<CardCtrl> ();
+        public List<CardCtrl> diplomacyPrepareCardCtrls = new List<CardCtrl> ();
+        public List<CardCtrl> diplomacyPassCardCtrls = new List<CardCtrl> ();
+
         public GState state;
 
         public Dictionary<string, Dictionary<string, int>> conf;
 
         public void init () {
-
-            rowCardCtrls = new CardCtrl[ctrl.rowCardLimitNum];
-
             initConf ();
             initCards ();
-        }
-        public void initCards () {
-            Type g = Type.GetType ("testJava.script.model.G");
-            MethodInfo mi = g.GetMethod ("addCards");
-            string ns = "testJava.script.model.card.";
 
-            // string[] cardNames = new string[] { "WonderCard", "GovernmentCard", "MilitaryBuildingCard" };
-            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard" };
-            foreach (string cardName in cardNames) {
-                Type c = Type.GetType (ns + cardName);
-
-                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
-            }
+            rowCardCtrls = new CardCtrl[U.config.rowCardLimitNum];
         }
         public void initConf () {
             string text = U.LoadFile ("data/conf.json");
@@ -65,51 +57,67 @@ namespace testJava.script.model {
             config.cardWidthAndGap = (config.srcCardWidth + config.srcCardWidthGap) * scale;
 
         }
+        public void initCards () {
+            Type g = Type.GetType ("testJava.script.model.G");
+            string ns = "testJava.script.model.card.";
+
+            MethodInfo mi = g.GetMethod ("addCards");
+            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard" };
+            foreach (string cardName in cardNames) {
+                Type c = Type.GetType (ns + cardName);
+                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName, interiorCards });
+            }
+            cardNames = new string[] { "CityCard" };
+            foreach (string cardName in cardNames) {
+                Type c = Type.GetType (ns + cardName);
+                mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName, diplomacyCards });
+            }
+        }
         public void play () {
             playInit ();
             deal ();
         }
         public void playInit () {
             List<Card> cards = new List<Card> ();
-            for (int i = 0; i < allCards.Count; i++) {
-                cards.Insert (UnityEngine.Random.Range (0, i + 1), allCards[i]);
+            for (int i = 0; i < interiorCards.Count; i++) {
+                cards.Insert (UnityEngine.Random.Range (0, i + 1), interiorCards[i]);
             }
             float statisticUIHeight = U.ui.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
             Vector2 v = new Vector2 (Screen.width - 100, Screen.height - statisticUIHeight / 2);
             Vector2 s = new Vector2 (statisticUIHeight / U.config.cardHeight, statisticUIHeight / U.config.cardHeight);
-            civilCardCtrls = new Queue<CardCtrl> ();
+            interiorCardCtrls = new Queue<CardCtrl> ();
             cards.ForEach (card => {
                 CardCtrl newCtrdCtrl = UnityEngine.Object.Instantiate<CardCtrl> (U.ui.ctrl.cardCtrlPrefab, U.ui.ctrl.transform);
                 newCtrdCtrl.transform.position = v;
                 newCtrdCtrl.transform.localScale = s;
                 newCtrdCtrl.card = card;
                 card.ctrl = newCtrdCtrl;
-                civilCardCtrls.Enqueue (newCtrdCtrl);
+                interiorCardCtrls.Enqueue (newCtrdCtrl);
             });
 
             U.ui.ctrl.cardCtrlBackgroud.transform.SetAsLastSibling ();
         }
         public void deal () {
-            computeCurrentCards ();
-            showCurrentCards ();
+            computeRowCards ();
+            showRowCards ();
         }
 
-        public void computeCurrentCards () {
+        public void computeRowCards () {
             CardCtrl cardCtrl;
 
             int index = 0;
 
-            for (int i = 0; i < ctrl.rowCardLimitNum; i++) {
+            for (int i = 0; i < U.config.rowCardLimitNum; i++) {
                 cardCtrl = rowCardCtrls[i];
                 if (cardCtrl == null) {
                     continue;
                 }
                 rowCardCtrls[i] = null;
-                if (cardCtrl.card.state != CardState.SHOWING) {
+                if (cardCtrl.card.state != CardState.INROW) {
                     continue;
                 }
 
-                if (i < ctrl.removeCardNum) {
+                if (i < U.config.removeCardNum) {
                     U.hideCard (cardCtrl);
                     continue;
                 }
@@ -117,7 +125,7 @@ namespace testJava.script.model {
                 rowCardCtrls[index++] = cardCtrl;
             }
 
-            for (int i = index; i < ctrl.rowCardLimitNum; i++) {
+            for (int i = index; i < U.config.rowCardLimitNum; i++) {
                 cardCtrl = getANewCard ();
                 if (cardCtrl == null) {
                     state = GState.OVER;
@@ -127,7 +135,7 @@ namespace testJava.script.model {
             }
 
         }
-        public void showCurrentCards () {
+        public void showRowCards () {
             Tween tweener = null;
             CardCtrl cardCtrl = null;
             var rect = ctrl.uICtrl.statisticUICtrl.GetComponent<RectTransform> ().rect;
@@ -139,9 +147,8 @@ namespace testJava.script.model {
                 tweener = cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + i * U.config.cardWidthAndGap,
                     Screen.height - U.config.cardHeight / 2 - rect.height * U.config.scale, 0), U.config.cardMoveSpeed);
                 cardCtrl.transform.localScale = new Vector2 (1, 1);
-                cardCtrl.card.takeCivil = 1 + i / 5;
-                cardCtrl.card.showIndex = i;
-                cardCtrl.card.show ();
+                ((InteriorCard) cardCtrl.card).takeCivil = 1 + i / 5;
+                cardCtrl.card.state = CardState.INROW;
 
             }
             if (tweener == null) {
@@ -150,22 +157,22 @@ namespace testJava.script.model {
             tweener.OnComplete (() => onCompleteShow (cardCtrl));
         }
         void onCompleteShow (CardCtrl cardCtrl) {
-            U.ui.ctrl.cardNumText.text = civilCardCtrls.Count.ToString ();
+            U.ui.ctrl.cardNumText.text = interiorCardCtrls.Count.ToString ();
         }
         CardCtrl getANewCard () {
-            if (civilCardCtrls.Count == 0) {
+            if (interiorCardCtrls.Count == 0) {
                 return null;
             }
-            CardCtrl cardCtrl = civilCardCtrls.Dequeue ();
+            CardCtrl cardCtrl = interiorCardCtrls.Dequeue ();
             cardCtrl.card.init ();
             return cardCtrl;
         }
 
-        public void addCards<T> (string fileName) where T : Card {
+        public void addCards<T> (string fileName, List<Card> addCards) where T : Card {
             string text = U.LoadFile ("data/card/" + fileName + ".json");
             List<T> cards = JsonConvert.DeserializeObject<List<T>> (text);
             for (int i = 0; i < cards.Count; i++) {
-                allCards.Add (cards[i]);
+                addCards.Add (cards[i]);
             }
 
         }
