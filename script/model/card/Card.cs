@@ -16,6 +16,7 @@ public abstract class Card {
     public int id;
     public string name;
     public int age;
+    public string image;
     public string desc;
     public int type;
 
@@ -61,6 +62,11 @@ public abstract class Card {
     public virtual void action () { }
     public virtual void render () {
         ctrl.cardNameText.text = name;
+
+        Texture s = Resources.Load (image) as Texture;
+        if (s != null) {
+            ctrl.image.texture = s;
+        }
     }
 
     public virtual bool getActionAble () {

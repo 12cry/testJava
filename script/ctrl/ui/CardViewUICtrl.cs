@@ -18,13 +18,6 @@ namespace testJava.script.ctrl.ui {
             ui.ctrl = this;
             ui.init ();
         }
-
-        // public void takeCard () {
-        //     U.currentCard.take ();
-        //     ui.closeView ();
-
-        //     CommandCtrl.instant.addCommand (new CardTakeCommand (U.currentCard));
-        // }
         public void actionCard () {
             U.currentCard.action ();
             ui.closeView ();

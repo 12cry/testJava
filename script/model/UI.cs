@@ -19,6 +19,7 @@ namespace testJava.script.model {
         public WarehouseUI warehouseUI;
         public OrgUI orgUI;
         public MilitaryUI militaryUI;
+        public CityCardUI cityCardUI;
 
         int cardType;
 

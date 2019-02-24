@@ -8,6 +8,7 @@ namespace testCC.Assets.script {
         public Card card;
         public TextMeshProUGUI cardNameText;
         public RawImage header;
+        public RawImage image;
         public RawImage footer;
 
         public void OnPointerClick (PointerEventData eventData) {

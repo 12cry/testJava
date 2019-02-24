@@ -12,7 +12,7 @@ namespace testJava.script.model.card {
             U.ui.actionUI.setCivil (civil);
             U.ui.actionUI.updateCivilRemainder (civil > U.ui.actionUI.civil?(civil - U.ui.actionUI.civil) : 0);
             U.ui.statisticUI.add (actionIncome);
-            U.ui.orgUI.setgovernment (iconPath);
+            U.ui.orgUI.setGovernment (iconPath);
             U.ui.statisticUI.reduce (actionCost);
             base.action ();
         }

@@ -44,6 +44,7 @@ namespace testJava.script.model.ui {
             this.civilRemainder += value;
             ctrl.civilRemainderText.text = this.civilRemainder.ToString ();
         }
+        public void updateDiplomacyRemainder (int value) { }
         public void setCivil (int value) {
             this.civil += value;
             ctrl.civilText.text = this.civil.ToString ();

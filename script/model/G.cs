@@ -6,7 +6,6 @@ using System.Text;
 using DG.Tweening;
 using Newtonsoft.Json;
 using testCC.Assets.script;
-using testCC.Assets.script.model.card;
 using testJava.script.constant;
 using testJava.script.model.card;
 using UnityEngine;
@@ -25,8 +24,8 @@ namespace testJava.script.model {
         List<DiplomacyCard> diplomacyCards = new List<DiplomacyCard> ();
         Queue<CardCtrl> diplomacyCardCtrls;
         public List<CardCtrl> diplomacyHandCardCtrls = new List<CardCtrl> ();
-        public List<CardCtrl> diplomacyPrepareCardCtrls = new List<CardCtrl> ();
         public List<CardCtrl> diplomacyPassCardCtrls = new List<CardCtrl> ();
+        public List<DiplomacyCard> diplomacyPrepareCards = new List<DiplomacyCard> ();
 
         public GState state;
 
@@ -62,7 +61,7 @@ namespace testJava.script.model {
             string ns = "testJava.script.model.card.";
 
             MethodInfo mi = g.GetMethod ("addInteriorCards");
-            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard" };
+            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard", "LeaderCard" };
             foreach (string cardName in cardNames) {
                 Type c = Type.GetType (ns + cardName);
                 mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
@@ -114,9 +113,14 @@ namespace testJava.script.model {
 
         }
         public void deal () {
+            dealInteriorCard ();
+            dealDiplomacyCard ();
+        }
+        public void dealInteriorCard () {
             computeRowCards ();
             showRowCards ();
-
+        }
+        public void dealDiplomacyCard () {
             for (int i = 0; i < 2; i++) {
                 if (diplomacyCardCtrls.Count == 0) {
                     break;
@@ -126,7 +130,7 @@ namespace testJava.script.model {
                 cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.g.interiorHandCardCtrls.Count * 20 + 200, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
                 cardCtrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
                 cardCtrl.card.state = CardState.INHAND;
-
+                cardCtrl.card.init ();
             }
         }
 

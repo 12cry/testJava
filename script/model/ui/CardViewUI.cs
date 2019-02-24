@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
-using testCC.Assets.script.model.card;
 using testJava.script.constant;
 using testJava.script.ctrl.ui;
 using TMPro;

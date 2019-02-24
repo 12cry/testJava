@@ -20,7 +20,7 @@ namespace testCC.Assets.script.ctrl {
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
         public OrgUICtrl orgUICtrl;
-        // public MilitaryUICtrl militaryUICtrl;
+        public CityCardUICtrl cityCardUICtrl;
 
         public TextMeshProUGUI textPrefab;
         public CardCtrl cardCtrlPrefab;
@@ -33,10 +33,14 @@ namespace testCC.Assets.script.ctrl {
             var warehouseUICtrlRect = warehouseUICtrl.GetComponent<RectTransform> ().rect;
             var statisticUICtrlRect = statisticUICtrl.GetComponent<RectTransform> ().rect;
             var actionUICtrlRect = actionUICtrl.GetComponent<RectTransform> ().rect;
+            var cardViewUICtrlRect = cardViewUICtrl.GetComponent<RectTransform> ().rect;
+            var cityCardUICtrlRect = cityCardUICtrl.GetComponent<RectTransform> ().rect;
             populationUICtrl.transform.position = new Vector2 (populationUICtrlRect.width * scale / 2, U.config.cardHeight + populationUICtrlRect.height * scale / 2);
             warehouseUICtrl.transform.position = new Vector2 ((populationUICtrlRect.width + warehouseUICtrlRect.width / 2 + 20) * scale, U.config.cardHeight + populationUICtrlRect.height * scale / 2);
             statisticUICtrl.transform.position = new Vector2 (Screen.width / 2, (Screen.height - statisticUICtrlRect.height * scale / 2));
             actionUICtrl.transform.position = new Vector2 (Screen.width - actionUICtrlRect.width * scale / 2, actionUICtrlRect.height * scale / 2);
+            cardViewUICtrl.transform.position = new Vector2 (Screen.width - cardViewUICtrlRect.width * scale / 2, Screen.height / 2);
+            cityCardUICtrl.transform.position = new Vector2 (Screen.width - cityCardUICtrlRect.width * scale / 2, Screen.height / 2);
         }
 
         public void init () {
@@ -61,8 +65,8 @@ namespace testCC.Assets.script.ctrl {
             cardViewUICtrl.init ();
             ui.cardViewUI = cardViewUICtrl.ui;
 
-            // militaryUICtrl.init ();
-            // ui.militaryUI = militaryUICtrl.ui;
+            cityCardUICtrl.init ();
+            ui.cityCardUI = cityCardUICtrl.ui;
 
             ui.closeAllView ();
             initTransform ();
