@@ -11,7 +11,6 @@ namespace testJava.script.model {
     public class UI {
         public UICtrl ctrl;
 
-        // public ResourceUI resourceUI;
         public StatisticUI statisticUI;
         public CardViewUI cardViewUI;
         public PopulationUI populationUI;

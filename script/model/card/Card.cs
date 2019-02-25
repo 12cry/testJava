@@ -60,6 +60,7 @@ public abstract class Card {
         ctrl.transform.DOLocalMove (beforViewPosition, U.config.cardMoveSpeed);
         ctrl.transform.DOScale (beforViewScale, U.config.cardMoveSpeed);
     }
+    public virtual void initAction () { }
     public virtual void action () { }
     public virtual void render () {
         ctrl.cardNameText.text = name;

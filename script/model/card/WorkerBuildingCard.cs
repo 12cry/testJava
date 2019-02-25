@@ -17,11 +17,20 @@ public class WorkerBuildingCard : BuildingCard {
     public Statistic buildCost;
     public Statistic buildIncome;
 
-    public Statistic realBuildCost;
+    public Statistic buildCostBackup;
     int workerNum;
-
     public Queue<RawImage> workers = new Queue<RawImage> ();
 
+    public override void init () {
+        base.init ();
+        buildCostBackup = buildCost;
+    }
+    public override void initAction () {
+        this.action ();
+
+        U.ui.populationUI.idleToWorker ();
+        addAWorker ();
+    }
     public override void action () {
         gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
         gameObject.transform.localPosition = position;
@@ -40,8 +49,8 @@ public class WorkerBuildingCard : BuildingCard {
     public override void displayBuildButtons () {
 
         int index = 0;
-        U.addAButton (index++, string.Format ("c:{0},add a worker to {1}", realBuildCost.capacity, name), delegate { addAWorker (); },
-            U.ui.populationUI.workerNum > 0 && U.ui.statisticUI.enough (realBuildCost));
+        U.addAButton (index++, string.Format ("c:{0},add a worker to {1}", buildCost.capacity, name), delegate { addAWorker (); },
+            U.ui.populationUI.workerNum > 0 && U.ui.statisticUI.enough (buildCost));
         U.addAButton (index++, string.Format ("remove a worker from {0}", name), delegate { removeWorker (); }, workerNum > 0);
 
         foreach (WorkerBuildingCard upgradeCard in U.ui.getBuildingCards (type)) {
@@ -50,7 +59,7 @@ public class WorkerBuildingCard : BuildingCard {
             }
             U.addAButton (index++, string.Format ("upgrade {0} to {1}", name, upgradeCard.name),
                 delegate { upgradeWorker (upgradeCard); },
-                workerNum > 0 && U.ui.statisticUI.enough (upgradeCard.realBuildCost.minus (realBuildCost)));
+                workerNum > 0 && U.ui.statisticUI.enough (upgradeCard.buildCost.minus (buildCost)));
         }
     }
 
@@ -67,8 +76,8 @@ public class WorkerBuildingCard : BuildingCard {
         card.workers.Enqueue (worker);
         card.updateWorkerNum (1);
 
-        U.ui.statisticUI.reduce (card.realBuildCost);
-        U.ui.statisticUI.add (realBuildCost);
+        U.ui.statisticUI.reduce (card.buildCost);
+        U.ui.statisticUI.add (buildCost);
         U.ui.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);
@@ -91,7 +100,7 @@ public class WorkerBuildingCard : BuildingCard {
 
         this.updateWorkerNum (1);
 
-        U.ui.statisticUI.reduce (realBuildCost);
+        U.ui.statisticUI.reduce (buildCost);
         U.ui.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
         U.ui.actionUI.updateCivilRemainder (-1);

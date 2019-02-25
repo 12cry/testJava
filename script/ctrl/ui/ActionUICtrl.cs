@@ -31,12 +31,11 @@ namespace testJava.script.ctrl.ui {
 
         public void pass () {
             Debug.Log ("pass---");
-            G g = U.g;
-            if (g.state == GState.OVER) {
+            if (U.g.state == GState.OVER) {
                 return;
             }
 
-            g.roundInit ();
+            U.g.roundInit ();
 
         }
     }

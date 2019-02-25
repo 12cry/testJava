@@ -10,6 +10,7 @@ using testJava.script.constant;
 using testJava.script.model.card;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace testJava.script.model {
     public class G {
@@ -29,6 +30,7 @@ namespace testJava.script.model {
 
         public GState state;
         public int leaderRountNum = 0;
+        public Queue<int> playerIds;
 
         public Dictionary<string, Dictionary<string, int>> conf;
 
@@ -81,10 +83,19 @@ namespace testJava.script.model {
             }
         }
         public void play () {
-            playInit ();
+            int playerNum = 2;
+            playerIds = new Queue<int> ();
+            playerIds.Enqueue (0);
+            for (int i = 1; i < playerNum; i++) {
+                playerIds.Enqueue (i);
+                Object.Instantiate (U.ui.ctrl.playerUICtrl, U.ui.ctrl.transform);
+            }
+
+            initInteriorCards ();
+            initDiplomacyCards ();
             roundInit ();
         }
-        public void playInit () {
+        public void initInteriorCards () {
             List<Card> cards = new List<Card> ();
             for (int i = 0; i < interiorCards.Count; i++) {
                 cards.Insert (UnityEngine.Random.Range (0, i + 1), interiorCards[i]);
@@ -101,25 +112,23 @@ namespace testJava.script.model {
                 card.ctrl = newCtrdCtrl;
                 card.init ();
                 if (card.isInit) {
-                    card.action ();
-                    if (card is WorkerBuildingCard) {
-                        U.ui.populationUI.idleToWorker ();
-                        WorkerBuildingCard card2 = (WorkerBuildingCard) card;
-                        card2.realBuildCost = new Statistic ();
-                        card2.addAWorker ();
-                        card2.realBuildCost = card2.buildCost;
-                    }
+                    card.initAction ();
                 } else {
                     interiorCardCtrls.Enqueue (newCtrdCtrl);
                 }
             });
             U.ui.ctrl.cardCtrlBackgroud.transform.SetAsLastSibling ();
 
-            cards = new List<Card> ();
+        }
+        public void initDiplomacyCards () {
+
+            List<Card> cards = new List<Card> ();
             for (int i = 0; i < diplomacyCards.Count; i++) {
                 cards.Insert (UnityEngine.Random.Range (0, i + 1), diplomacyCards[i]);
             }
-            p = new Vector2 (Screen.width - 50, Screen.height - statisticUIHeight / 2);
+            float statisticUIHeight = U.ui.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
+            Vector2 p = new Vector2 (Screen.width - 50, Screen.height - statisticUIHeight / 2);
+            Vector2 s = new Vector2 (statisticUIHeight / U.config.cardHeight, statisticUIHeight / U.config.cardHeight);
             diplomacyCardCtrls = new Queue<CardCtrl> ();
             cards.ForEach (card => {
                 CardCtrl newCtrdCtrl = UnityEngine.Object.Instantiate<CardCtrl> (U.ui.ctrl.cardCtrlPrefab, U.ui.ctrl.transform);
@@ -131,16 +140,20 @@ namespace testJava.script.model {
             });
 
         }
-        public void roundInit () {
+        void leaderHandle () {
             leaderRountNum++;
-            if (U.currentLeader == CardId.LEADER_MZD) {
-                WorkerBuildingCard card = (WorkerBuildingCard) U.ui.getBuildingCards (CardType.MILITARY_BUILDING).Find (c => c.id == CardId.WARRIOR);
-                if (leaderRountNum % 2 == 0) {
-                    card.realBuildCost = new Statistic ();
-                } else {
-                    card.realBuildCost = card.buildCost;
-                }
+            WorkerBuildingCard card = (WorkerBuildingCard) U.ui.getBuildingCards (CardType.MILITARY_BUILDING).Find (c => c.id == CardId.WARRIOR);
+            if (card == null) {
+                return;
             }
+            if (U.currentLeader == CardId.LEADER_MZD && leaderRountNum % 2 == 1) {
+                card.buildCost = new Statistic ();
+            } else {
+                card.buildCost = card.buildCostBackup;
+            }
+        }
+        public void roundInit () {
+            leaderHandle ();
             U.ui.actionUI.reset ();
             U.ui.statisticUI.evaluating ();
             refreshCard ();

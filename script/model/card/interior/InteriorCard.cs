@@ -49,9 +49,6 @@ public class InteriorCard : Card {
         state = CardState.END;
         U.ui.actionUI.updateCivilRemainder (-1);
     }
-    // public void show () {
-    //     state = CardState.SHOWING;
-    // }
 
     public virtual void displayBuildButtons () { }
 

@@ -14,6 +14,7 @@ namespace testCC.Assets.script.ctrl {
         public Image maskBuildingImage;
         public Image maskCardImage;
 
+        public PlayerUICtrl playerUICtrl;
         public WarehouseUICtrl warehouseUICtrl;
         public StatisticUICtrl statisticUICtrl;
         public CardViewUICtrl cardViewUICtrl;
