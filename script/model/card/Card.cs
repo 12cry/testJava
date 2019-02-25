@@ -19,6 +19,7 @@ public abstract class Card {
     public string image;
     public string desc;
     public int type;
+    public bool isInit;
 
     public CardState state = CardState.START;
     public bool actionAble = true;

@@ -4,6 +4,7 @@ using System.Threading;
 using DG.Tweening;
 using testCC.Assets.script;
 using testCC.Assets.script.model;
+using testJava.script.constant;
 using testJava.script.ctrl.ui;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,8 +27,9 @@ namespace testJava.script.model.ui {
 
         public void idleToWorker () {
             int fCost = 3 - (idleNum - 1) / 4;
-            // if (!U.ui.statisticUI.updateFood (-fCost)) {
-            // if (U.ui.statisticUI.food < fCost) {
+            if (U.currentLeader == CardId.LEADER_MZD) {
+                fCost -= 1;
+            }
             Statistic cost = new Statistic ();
             cost.food = fCost;
             if (!U.ui.statisticUI.enough (cost)) {

@@ -12,7 +12,7 @@ namespace testJava.script.model.ui {
         }
         public void appoint (LeaderCard card) {
             U.currentLeader = card.id;
-            Sprite s = Resources.Load ("mzd") as Sprite;
+            var s = Resources.Load<Sprite> (card.leaderImage);
             ctrl.leaderImage.sprite = s;
         }
     }

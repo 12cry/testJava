@@ -21,6 +21,7 @@ namespace testCC.Assets.script {
 
 		void Start () {
 			Debug.Log ("start---");
+
 			g = new G ();
 			g.ctrl = this;
 			g.init ();

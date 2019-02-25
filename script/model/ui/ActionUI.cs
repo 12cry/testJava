@@ -23,14 +23,6 @@ namespace testJava.script.model.ui {
         public void setRedoButtonAble (bool able) {
             // ctrl.redoButton.interactable = able;
         }
-        public void refreshCard () {
-            foreach (CardCtrl cardCtrl in U.g.interiorHandCardCtrls) {
-                Card card = cardCtrl.card;
-                if (card is BonusCard) {
-                    card.setActionAble (true);
-                }
-            }
-        }
         public void reset () {
             this.civilRemainder = this.civil;
             ctrl.civilRemainderText.text = this.civilRemainder.ToString ();

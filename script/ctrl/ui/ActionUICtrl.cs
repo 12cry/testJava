@@ -36,12 +36,7 @@ namespace testJava.script.ctrl.ui {
                 return;
             }
 
-            g.deal ();
-
-            ui.reset ();
-            ui.refreshCard ();
-
-            U.ui.statisticUI.evaluating ();
+            g.roundInit ();
 
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using testCC.Assets.script;
+using testJava.script.constant;
 using testJava.script.ctrl.ui;
 
 namespace testJava.script.model.ui {
@@ -55,8 +56,6 @@ namespace testJava.script.model.ui {
             science -= statistic.science;
             culture -= statistic.culture;
 
-            attack -= statistic.attack;
-            defense -= statistic.defense;
             refresh ();
         }
         public void add (Statistic statistic) {
@@ -70,8 +69,20 @@ namespace testJava.script.model.ui {
             science += statistic.science;
             culture += statistic.culture;
 
-            attack += statistic.attack;
-            defense += statistic.defense;
+            refresh ();
+        }
+        public void computeMilitaryStatistic () {
+            List<BuildingCard> cards = U.ui.getBuildingCards (CardType.MILITARY_BUILDING);
+            foreach (var card in cards) {
+                WorkerBuildingCard c = (WorkerBuildingCard) card;
+                attack = c.workers.Count * c.buildIncome.attack;
+                defense = c.workers.Count * c.buildIncome.defense;
+                if (U.currentLeader == CardId.LEADER_MZD) {
+                    if (c.id == CardId.WARRIOR) {
+                        defense += c.workers.Count / 2;
+                    }
+                }
+            }
             refresh ();
         }
         public bool enough (Statistic statistic) {

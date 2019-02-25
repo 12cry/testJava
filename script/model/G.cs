@@ -28,6 +28,7 @@ namespace testJava.script.model {
         public List<DiplomacyCard> diplomacyPrepareCards = new List<DiplomacyCard> ();
 
         public GState state;
+        public int leaderRountNum = 0;
 
         public Dictionary<string, Dictionary<string, int>> conf;
 
@@ -61,7 +62,13 @@ namespace testJava.script.model {
             string ns = "testJava.script.model.card.";
 
             MethodInfo mi = g.GetMethod ("addInteriorCards");
-            string[] cardNames = new string[] { "WonderCard", "ResourceBuildingCard", "GovernmentCard", "MilitaryBuildingCard", "LeaderCard" };
+            string[] cardNames = new string[] {
+                "WonderCard",
+                "ResourceBuildingCard",
+                "GovernmentCard",
+                "MilitaryBuildingCard",
+                "LeaderCard"
+            };
             foreach (string cardName in cardNames) {
                 Type c = Type.GetType (ns + cardName);
                 mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
@@ -75,7 +82,7 @@ namespace testJava.script.model {
         }
         public void play () {
             playInit ();
-            deal ();
+            roundInit ();
         }
         public void playInit () {
             List<Card> cards = new List<Card> ();
@@ -92,7 +99,19 @@ namespace testJava.script.model {
                 newCtrdCtrl.transform.localScale = s;
                 newCtrdCtrl.card = card;
                 card.ctrl = newCtrdCtrl;
-                interiorCardCtrls.Enqueue (newCtrdCtrl);
+                card.init ();
+                if (card.isInit) {
+                    card.action ();
+                    if (card is WorkerBuildingCard) {
+                        U.ui.populationUI.idleToWorker ();
+                        WorkerBuildingCard card2 = (WorkerBuildingCard) card;
+                        card2.realBuildCost = new Statistic ();
+                        card2.addAWorker ();
+                        card2.realBuildCost = card2.buildCost;
+                    }
+                } else {
+                    interiorCardCtrls.Enqueue (newCtrdCtrl);
+                }
             });
             U.ui.ctrl.cardCtrlBackgroud.transform.SetAsLastSibling ();
 
@@ -112,6 +131,31 @@ namespace testJava.script.model {
             });
 
         }
+        public void roundInit () {
+            leaderRountNum++;
+            if (U.currentLeader == CardId.LEADER_MZD) {
+                WorkerBuildingCard card = (WorkerBuildingCard) U.ui.getBuildingCards (CardType.MILITARY_BUILDING).Find (c => c.id == CardId.WARRIOR);
+                if (leaderRountNum % 2 == 0) {
+                    card.realBuildCost = new Statistic ();
+                } else {
+                    card.realBuildCost = card.buildCost;
+                }
+            }
+            U.ui.actionUI.reset ();
+            U.ui.statisticUI.evaluating ();
+            refreshCard ();
+
+            deal ();
+        }
+        public void refreshCard () {
+            foreach (CardCtrl cardCtrl in U.g.interiorHandCardCtrls) {
+                Card card = cardCtrl.card;
+                if (card is BonusCard) {
+                    card.setActionAble (true);
+                }
+            }
+        }
+
         public void deal () {
             dealInteriorCard ();
             dealDiplomacyCard ();
@@ -196,7 +240,6 @@ namespace testJava.script.model {
                 return null;
             }
             CardCtrl cardCtrl = interiorCardCtrls.Dequeue ();
-            cardCtrl.card.init ();
             return cardCtrl;
         }
 
