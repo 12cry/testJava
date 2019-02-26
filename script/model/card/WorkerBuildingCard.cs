@@ -28,11 +28,11 @@ public class WorkerBuildingCard : BuildingCard {
     public override void initAction () {
         this.action ();
 
-        U.ui.populationUI.idleToWorker ();
+        U.cpUI.populationUI.idleToWorker ();
         addAWorker ();
     }
     public override void action () {
-        gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
+        gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab, U.cpWorld.ctrl.transform);
         gameObject.transform.localPosition = position;
         U.AddTriggerEvent (gameObject, EventTriggerType.PointerClick, delegate { U.ui.viewBuildingCard (type); });
         U.ui.getBuildingCards (type).Add (this);
@@ -50,7 +50,7 @@ public class WorkerBuildingCard : BuildingCard {
 
         int index = 0;
         U.addAButton (index++, string.Format ("c:{0},add a worker to {1}", buildCost.capacity, name), delegate { addAWorker (); },
-            U.ui.populationUI.workerNum > 0 && U.ui.statisticUI.enough (buildCost));
+            U.cpUI.populationUI.workerNum > 0 && U.cpUI.statisticUI.enough (buildCost));
         U.addAButton (index++, string.Format ("remove a worker from {0}", name), delegate { removeWorker (); }, workerNum > 0);
 
         foreach (WorkerBuildingCard upgradeCard in U.ui.getBuildingCards (type)) {
@@ -59,7 +59,7 @@ public class WorkerBuildingCard : BuildingCard {
             }
             U.addAButton (index++, string.Format ("upgrade {0} to {1}", name, upgradeCard.name),
                 delegate { upgradeWorker (upgradeCard); },
-                workerNum > 0 && U.ui.statisticUI.enough (upgradeCard.buildCost.minus (buildCost)));
+                workerNum > 0 && U.cpUI.statisticUI.enough (upgradeCard.buildCost.minus (buildCost)));
         }
     }
 
@@ -76,34 +76,34 @@ public class WorkerBuildingCard : BuildingCard {
         card.workers.Enqueue (worker);
         card.updateWorkerNum (1);
 
-        U.ui.statisticUI.reduce (card.buildCost);
-        U.ui.statisticUI.add (buildCost);
-        U.ui.statisticUI.computeMilitaryStatistic ();
+        U.cpUI.statisticUI.reduce (card.buildCost);
+        U.cpUI.statisticUI.add (buildCost);
+        U.cpUI.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
-        U.ui.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateCivilRemainder (-1);
     }
     public void removeWorker () {
         RawImage worker = this.workers.Dequeue ();
-        U.ui.populationUI.addWorker (worker);
+        U.cpUI.populationUI.addWorker (worker);
 
         this.updateWorkerNum (-1);
 
-        U.ui.statisticUI.computeMilitaryStatistic ();
+        U.cpUI.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
-        U.ui.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateCivilRemainder (-1);
     }
     public void addAWorker () {
-        RawImage worker = U.ui.populationUI.getAWorker ();
+        RawImage worker = U.cpUI.populationUI.getAWorker ();
         this.workers.Enqueue (worker);
         worker.transform.SetParent (worker.transform.parent.parent);
         worker.transform.DOMove (U.g.ctrl.mainCamera.WorldToScreenPoint (gameObject.transform.position), U.config.cardMoveSpeed);
 
         this.updateWorkerNum (1);
 
-        U.ui.statisticUI.reduce (buildCost);
-        U.ui.statisticUI.computeMilitaryStatistic ();
+        U.cpUI.statisticUI.reduce (buildCost);
+        U.cpUI.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
-        U.ui.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateCivilRemainder (-1);
     }
 
 }

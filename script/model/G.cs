@@ -7,7 +7,10 @@ using DG.Tweening;
 using Newtonsoft.Json;
 using testCC.Assets.script;
 using testJava.script.constant;
+using testJava.script.ctrl;
+using testJava.script.ctrl.ui;
 using testJava.script.model.card;
+using testJava.script.model.ui;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -31,8 +34,10 @@ namespace testJava.script.model {
         public GState state;
         public int leaderRountNum = 0;
         public Queue<int> playerIds;
-
+        public Dictionary<int, PlayerUI> playerUIDic = new Dictionary<int, PlayerUI> ();
+        public Dictionary<int, PlayerWorld> playerWorldDic = new Dictionary<int, PlayerWorld> ();
         public Dictionary<string, Dictionary<string, int>> conf;
+        List<Card> isInitCards = new List<Card> ();
 
         public void init () {
             initConf ();
@@ -82,17 +87,45 @@ namespace testJava.script.model {
                 mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
         }
+        public void switchPlayer (int playerId) {
+            playerUIDic[playerId].ctrl.gameObject.SetActive (false);
+            playerWorldDic[playerId].ctrl.gameObject.SetActive (false);
+        }
         public void play () {
-            int playerNum = 2;
-            playerIds = new Queue<int> ();
-            playerIds.Enqueue (0);
-            for (int i = 1; i < playerNum; i++) {
-                playerIds.Enqueue (i);
-                Object.Instantiate (U.ui.ctrl.playerUICtrl, U.ui.ctrl.transform);
-            }
-
             initInteriorCards ();
             initDiplomacyCards ();
+
+            int playerNum = 2;
+            playerIds = new Queue<int> ();
+            for (int i = 1; i < playerNum; i++) {
+                playerIds.Enqueue (i);
+                PlayerUICtrl playerUICtrl = Object.Instantiate (U.ui.ctrl.playerUICtrl, U.ui.ctrl.transform);
+                playerUICtrl.init ();
+                U.cpUI = playerUICtrl.ui;
+                playerUIDic.Add (i, U.cpUI);
+
+                PlayerWorldCtrl playerWorldCtrl = Object.Instantiate (U.world.playerWorld.ctrl, U.world.ctrl.transform);
+                playerWorldCtrl.init ();
+                U.cpWorld = playerWorldCtrl.world;
+                playerWorldDic.Add (i, U.cpWorld);
+
+                foreach (var card in isInitCards) {
+                    card.initAction ();
+                }
+
+                switchPlayer (i);
+                U.ui.orgUI.addAPlayer (i);
+            }
+
+            playerIds.Enqueue (0);
+            U.cpUI = U.ui.playerUI;
+            playerUIDic.Add (0, U.cpUI);
+            U.cpWorld = U.world.playerWorld;
+            playerWorldDic.Add (0, U.cpWorld);
+            foreach (var card in isInitCards) {
+                card.initAction ();
+            }
+
             roundInit ();
         }
         public void initInteriorCards () {
@@ -100,7 +133,7 @@ namespace testJava.script.model {
             for (int i = 0; i < interiorCards.Count; i++) {
                 cards.Insert (UnityEngine.Random.Range (0, i + 1), interiorCards[i]);
             }
-            float statisticUIHeight = U.ui.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
+            float statisticUIHeight = U.ui.playerUI.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
             Vector2 p = new Vector2 (Screen.width - 100, Screen.height - statisticUIHeight / 2);
             Vector2 s = new Vector2 (statisticUIHeight / U.config.cardHeight, statisticUIHeight / U.config.cardHeight);
             interiorCardCtrls = new Queue<CardCtrl> ();
@@ -112,7 +145,7 @@ namespace testJava.script.model {
                 card.ctrl = newCtrdCtrl;
                 card.init ();
                 if (card.isInit) {
-                    card.initAction ();
+                    isInitCards.Add (card);
                 } else {
                     interiorCardCtrls.Enqueue (newCtrdCtrl);
                 }
@@ -126,7 +159,7 @@ namespace testJava.script.model {
             for (int i = 0; i < diplomacyCards.Count; i++) {
                 cards.Insert (UnityEngine.Random.Range (0, i + 1), diplomacyCards[i]);
             }
-            float statisticUIHeight = U.ui.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
+            float statisticUIHeight = U.ui.playerUI.statisticUI.ctrl.GetComponent<RectTransform> ().rect.height * U.config.scale;
             Vector2 p = new Vector2 (Screen.width - 50, Screen.height - statisticUIHeight / 2);
             Vector2 s = new Vector2 (statisticUIHeight / U.config.cardHeight, statisticUIHeight / U.config.cardHeight);
             diplomacyCardCtrls = new Queue<CardCtrl> ();
@@ -154,8 +187,8 @@ namespace testJava.script.model {
         }
         public void roundInit () {
             leaderHandle ();
-            U.ui.actionUI.reset ();
-            U.ui.statisticUI.evaluating ();
+            U.cpUI.actionUI.reset ();
+            U.cpUI.statisticUI.evaluating ();
             refreshCard ();
 
             deal ();
@@ -227,7 +260,7 @@ namespace testJava.script.model {
         public void showRowCards () {
             Tween tweener = null;
             CardCtrl cardCtrl = null;
-            var rect = ctrl.uICtrl.statisticUICtrl.GetComponent<RectTransform> ().rect;
+            var rect = U.cpUI.statisticUI.ctrl.GetComponent<RectTransform> ().rect;
             for (int i = 0; i < rowCardCtrls.Length; i++) {
                 cardCtrl = rowCardCtrls[i];
                 if (cardCtrl == null) {

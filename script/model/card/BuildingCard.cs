@@ -11,7 +11,7 @@ public class BuildingCard : InteriorCard {
     public GameObject gameObject;
 
     public override void action () {
-        U.ui.statisticUI.reduce (actionCost);
+        U.cpUI.statisticUI.reduce (actionCost);
         base.action ();
     }
     public override void render () {
@@ -19,7 +19,7 @@ public class BuildingCard : InteriorCard {
         U.setActionCostText (ctrl, actionCost);
     }
     public override bool getActionAble () {
-        if (U.ui.statisticUI.enough (actionCost)) {
+        if (U.cpUI.statisticUI.enough (actionCost)) {
             return true;
         }
         return false;
@@ -27,7 +27,7 @@ public class BuildingCard : InteriorCard {
     // public override void undoAction () {
     //     base.undoAction ();
     //     undoBuild ();
-    //     U.ui.resourceUI.addCost (actionCost);
+    //     U.ui.statisticUI.addCost (actionCost);
     // }
     // public void undoBuild () {
     //     Object.Destroy (building.gameObject);

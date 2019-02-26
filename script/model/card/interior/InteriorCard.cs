@@ -14,7 +14,7 @@ public class InteriorCard : Card {
     public int takeCivil = 1;
 
     public override void showViewButton () {
-        int civilRemainder = U.ui.actionUI.civilRemainder;
+        int civilRemainder = U.cpUI.actionUI.civilRemainder;
         if (civilRemainder == 0) {
             return;
         }
@@ -38,7 +38,7 @@ public class InteriorCard : Card {
         ctrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
 
         state = CardState.INHAND;
-        U.ui.actionUI.updateCivilRemainder (-this.takeCivil);
+        U.cpUI.actionUI.updateCivilRemainder (-this.takeCivil);
         U.ui.closeAllView ();
     }
     public override void action () {
@@ -47,7 +47,7 @@ public class InteriorCard : Card {
         U.hideCard (this.ctrl);
 
         state = CardState.END;
-        U.ui.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateCivilRemainder (-1);
     }
 
     public virtual void displayBuildButtons () { }

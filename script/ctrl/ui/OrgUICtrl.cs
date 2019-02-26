@@ -6,6 +6,7 @@ namespace testJava.script.ctrl.ui {
     public class OrgUICtrl : MonoBehaviour {
         public OrgUI ui;
 
+        public Image leaderMask;
         public Image leaderImage;
         public RawImage governmentImage;
 

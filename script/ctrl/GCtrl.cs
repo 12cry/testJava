@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using testCC.Assets.script;
 using testCC.Assets.script.ctrl;
 using testJava.script.constant;
+using testJava.script.ctrl;
 using testJava.script.model;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ namespace testCC.Assets.script {
 		public Camera mainCamera;
 		public G g;
 		public UICtrl uICtrl;
+		public WorldCtrl worldCtrl;
 
 		void Start () {
 			Debug.Log ("start---");
@@ -28,6 +30,7 @@ namespace testCC.Assets.script {
 			U.g = g;
 
 			uICtrl.init ();
+			worldCtrl.init ();
 
 			play ();
 		}

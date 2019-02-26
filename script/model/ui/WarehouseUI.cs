@@ -19,6 +19,8 @@ namespace testJava.script.model.ui {
                 warehouse.transform.localPosition = new Vector3 (i / 2 * 40, -i % 2 * 40, 0);
                 warehouses.Push (warehouse);
             }
+            removeWarehouse (U.g.conf["statisticUI"]["food"]);
+            removeWarehouse (U.g.conf["statisticUI"]["capacity"]);
         }
         public void updateWarehouse (int value) {
             if (value > 0) {

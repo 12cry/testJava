@@ -19,14 +19,14 @@ namespace testJava.script.model.ui {
         public int defense { get; set; }
 
         public void init () {
-            Dictionary<string, int> dic = U.g.conf["resourceUI"];
+            Dictionary<string, int> dic = U.g.conf["statisticUI"];
 
             foreach (var d in dic) {
                 this.GetType ().GetProperty (d.Key).SetValue (this, d.Value, null);
             }
             refresh ();
-            U.ui.warehouseUI.removeWarehouse (this.food);
-            U.ui.warehouseUI.removeWarehouse (this.capacity);
+            // U.cpUI.warehouseUI.removeWarehouse (this.food);
+            // U.cpUI.warehouseUI.removeWarehouse (this.capacity);
 
         }
         public void refresh () {
@@ -93,7 +93,7 @@ namespace testJava.script.model.ui {
         }
 
         void updateFood (int value) {
-            WarehouseUI warehouseUI = U.ui.warehouseUI;
+            WarehouseUI warehouseUI = U.cpUI.warehouseUI;
             if (warehouseUI.warehouseNum < value) {
                 value = warehouseUI.warehouseNum;
             }
@@ -102,7 +102,7 @@ namespace testJava.script.model.ui {
         }
 
         void updateCapacity (int value) {
-            WarehouseUI warehouseUI = U.ui.warehouseUI;
+            WarehouseUI warehouseUI = U.cpUI.warehouseUI;
             if (warehouseUI.warehouseNum < value) {
                 value = warehouseUI.warehouseNum;
             }

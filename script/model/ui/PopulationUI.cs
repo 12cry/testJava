@@ -32,15 +32,15 @@ namespace testJava.script.model.ui {
             }
             Statistic cost = new Statistic ();
             cost.food = fCost;
-            if (!U.ui.statisticUI.enough (cost)) {
+            if (!U.cpUI.statisticUI.enough (cost)) {
                 return;
             }
-            U.ui.statisticUI.reduce (cost);
+            U.cpUI.statisticUI.reduce (cost);
 
             RawImage idle = idles.Pop ();
             idleNum -= 1;
             addWorker (idle);
-            U.ui.actionUI.updateCivilRemainder (-1);
+            U.cpUI.actionUI.updateCivilRemainder (-1);
         }
         public void addWorker (RawImage worker) {
             workers.Push (worker);

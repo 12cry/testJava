@@ -18,19 +18,19 @@ namespace testJava.script.command {
         public void addCommand (Command command) {
             redoCommands.Clear ();
             undoCommands.Push (command);
-            U.ui.actionUI.setUndoButtonAble (true);
-            U.ui.actionUI.setRedoButtonAble (false);
+            // U.cpUI.actionUI.setUndoButtonAble (true);
+            // U.cpUI.actionUI.setRedoButtonAble (false);
         }
         public void addUndoCommand (Command command) {
             undoCommands.Push (command);
-            U.ui.actionUI.setUndoButtonAble (true);
-            U.ui.actionUI.setRedoButtonAble (redoCommands.Count != 0);
+            // U.cpUI.actionUI.setUndoButtonAble (true);
+            // U.cpUI.actionUI.setRedoButtonAble (redoCommands.Count != 0);
         }
 
         public void addRedoCommand (Command command) {
             redoCommands.Push (command);
-            U.ui.actionUI.setUndoButtonAble (undoCommands.Count != 0);
-            U.ui.actionUI.setRedoButtonAble (true);
+            // U.cpUI.actionUI.setUndoButtonAble (undoCommands.Count != 0);
+            // U.cpUI.actionUI.setRedoButtonAble (true);
         }
 
     }

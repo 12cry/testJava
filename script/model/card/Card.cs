@@ -82,7 +82,7 @@ public abstract class Card {
         U.g.interiorPassCardCtrls.Remove (ctrl);
         // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.interiorHandCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.config.cardMoveSpeed);
         // state = CardState.ACTINGED;
-        U.ui.actionUI.updateCivilRemainder (1);
+        // U.cpUI.actionUI.updateCivilRemainder (1);
     }
 
 }

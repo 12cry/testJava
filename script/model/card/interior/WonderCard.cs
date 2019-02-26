@@ -19,7 +19,7 @@ namespace testJava.script.model.card {
             U.ui.getBuildingCards (type).Add (this);
 
             for (int i = 0; i < buildCosts.Length; i++) {
-                RawImage stageImage = Object.Instantiate<RawImage> (U.ui.warehouseUI.ctrl.warehousePrefab, gameObject.transform);
+                RawImage stageImage = Object.Instantiate<RawImage> (U.cpUI.warehouseUI.ctrl.warehousePrefab, gameObject.transform);
                 stageImage.transform.position = new Vector3 (i * 20, 0, 0);
                 stageImages.Enqueue (stageImage);
             }
@@ -40,7 +40,7 @@ namespace testJava.script.model.card {
                 capacity += buildCosts[stage + i].capacity;
                 int stageNum = i + 1;
                 U.addAButton (i, string.Format ("build {0} stage with {1} civli use {2} c", i + 1, i + 1, capacity), delegate { buildStage (stageNum); },
-                    U.ui.statisticUI.capacity >= capacity && U.ui.actionUI.civilRemainder > i);
+                    U.cpUI.statisticUI.capacity >= capacity && U.cpUI.actionUI.civilRemainder > i);
             }
 
         }
@@ -51,19 +51,19 @@ namespace testJava.script.model.card {
                 capacity += buildCosts[stage + i].capacity;
                 // stageImages.Dequeue ();
             }
-            // U.ui.statisticUI.updateCapacity (-capacity);
+            // U.cpUI.statisticUI.updateCapacity (-capacity);
             Statistic buildCost = new Statistic ();
             buildCost.capacity = capacity;
-            U.ui.statisticUI.reduce (buildCost);
+            U.cpUI.statisticUI.reduce (buildCost);
 
             stage += stageNum;
-            U.ui.warehouseUI.updateWarehouse (-stageNum);
+            U.cpUI.warehouseUI.updateWarehouse (-stageNum);
             if (stage == buildCosts.Length) {
-                U.ui.warehouseUI.updateWarehouse (stage);
-                U.ui.statisticUI.add (buildIncome);
+                U.cpUI.warehouseUI.updateWarehouse (stage);
+                U.cpUI.statisticUI.add (buildIncome);
             }
 
-            U.ui.actionUI.updateCivilRemainder (-stageNum);
+            U.cpUI.actionUI.updateCivilRemainder (-stageNum);
             U.ui.closeAllView ();
         }
 

@@ -9,11 +9,11 @@ namespace testJava.script.model.card {
         public string iconPath;
 
         public override void action () {
-            U.ui.actionUI.setCivil (civil);
-            U.ui.actionUI.updateCivilRemainder (civil > U.ui.actionUI.civil?(civil - U.ui.actionUI.civil) : 0);
-            U.ui.statisticUI.add (actionIncome);
+            U.cpUI.actionUI.setCivil (civil);
+            U.cpUI.actionUI.updateCivilRemainder (civil > U.cpUI.actionUI.civil?(civil - U.cpUI.actionUI.civil) : 0);
+            U.cpUI.statisticUI.add (actionIncome);
             U.ui.orgUI.setGovernment (iconPath);
-            U.ui.statisticUI.reduce (actionCost);
+            U.cpUI.statisticUI.reduce (actionCost);
             base.action ();
         }
         public override void render () {

@@ -20,7 +20,7 @@ namespace testJava.script.model.card {
 
             U.g.diplomacyPrepareCards.Add (this);
             state = CardState.PREPARE;
-            U.ui.actionUI.updateDiplomacyRemainder (-1);
+            U.cpUI.actionUI.updateDiplomacyRemainder (-1);
 
         }
         public virtual void action2 () {

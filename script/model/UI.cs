@@ -11,11 +11,9 @@ namespace testJava.script.model {
     public class UI {
         public UICtrl ctrl;
 
-        public StatisticUI statisticUI;
+        public PlayerUI playerUI;
+
         public CardViewUI cardViewUI;
-        public PopulationUI populationUI;
-        public ActionUI actionUI;
-        public WarehouseUI warehouseUI;
         public OrgUI orgUI;
         public MilitaryUI militaryUI;
         public CityCardUI cityCardUI;
