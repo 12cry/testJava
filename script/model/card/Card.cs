@@ -77,12 +77,12 @@ public abstract class Card {
     public void setActionAble (bool actionAble) {
         this.actionAble = actionAble;
     }
-    public virtual void undoAction () {
-        U.g.interiorHandCardCtrls.Add (ctrl);
-        U.g.interiorPassCardCtrls.Remove (ctrl);
-        // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.interiorHandCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.config.cardMoveSpeed);
-        // state = CardState.ACTINGED;
-        // U.cpUI.actionUI.updateCivilRemainder (1);
-    }
+    // public virtual void undoAction () {
+    //     U.g.interiorHandCardCtrls.Add (ctrl);
+    //     U.g.interiorPassCardCtrls.Remove (ctrl);
+    // ctrl.transform.DOLocalMove (new Vector3 (U.cardWidth / 2 - Screen.width / 2 + U.g.interiorHandCardCtrls.Count * 20, U.cardWidth / 2 - Screen.height / 2, 0), U.config.cardMoveSpeed);
+    // state = CardState.ACTINGED;
+    // U.cpUI.actionUI.updateCivilRemainder (1);
+    // }
 
 }

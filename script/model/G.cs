@@ -22,7 +22,7 @@ namespace testJava.script.model {
         List<InteriorCard> interiorCards = new List<InteriorCard> ();
         Queue<CardCtrl> interiorCardCtrls;
         CardCtrl[] rowCardCtrls;
-        public List<CardCtrl> interiorHandCardCtrls = new List<CardCtrl> ();
+
         public List<CardCtrl> interiorPassCardCtrls = new List<CardCtrl> ();
 
         List<DiplomacyCard> diplomacyCards = new List<DiplomacyCard> ();
@@ -33,7 +33,8 @@ namespace testJava.script.model {
 
         public GState state;
         public int leaderRountNum = 0;
-        public Queue<int> playerIds;
+        public Queue<int> playerIdQueue;
+        public int[] playerIds;
         public Dictionary<int, PlayerUI> playerUIDic = new Dictionary<int, PlayerUI> ();
         public Dictionary<int, PlayerWorld> playerWorldDic = new Dictionary<int, PlayerWorld> ();
         public Dictionary<string, Dictionary<string, int>> conf;
@@ -87,18 +88,38 @@ namespace testJava.script.model {
                 mi.MakeGenericMethod (new Type[] { c }).Invoke (this, new object[] { cardName });
             }
         }
-        public void switchPlayer (int playerId) {
-            playerUIDic[playerId].ctrl.gameObject.SetActive (false);
-            playerWorldDic[playerId].ctrl.gameObject.SetActive (false);
+        public void nextPlayer () {
+            playerIdQueue.Enqueue (U.cpId);
+            int playerId = playerIdQueue.Dequeue ();
+            U.cpId = playerId;
+
+            switchPlayerUI (playerId);
+
+        }
+        public void switchPlayerUI (int playerId) {
+            bool active = false;
+            foreach (int id in playerIds) {
+                if (playerId == id) {
+                    active = true;
+                } else {
+                    active = false;
+                }
+                playerUIDic[id].ctrl.gameObject.SetActive (active);
+                playerWorldDic[id].ctrl.gameObject.SetActive (active);
+            }
+            U.cpUI = playerUIDic[playerId];
+            U.cpWorld = playerWorldDic[playerId];
         }
         public void play () {
             initInteriorCards ();
             initDiplomacyCards ();
 
             int playerNum = 2;
-            playerIds = new Queue<int> ();
+            playerIds = new int[playerNum];
+            playerIdQueue = new Queue<int> ();
             for (int i = 1; i < playerNum; i++) {
-                playerIds.Enqueue (i);
+                playerIds[i] = i;
+                playerIdQueue.Enqueue (i);
                 PlayerUICtrl playerUICtrl = Object.Instantiate (U.ui.ctrl.playerUICtrl, U.ui.ctrl.transform);
                 playerUICtrl.init ();
                 U.cpUI = playerUICtrl.ui;
@@ -106,6 +127,7 @@ namespace testJava.script.model {
 
                 PlayerWorldCtrl playerWorldCtrl = Object.Instantiate (U.world.playerWorld.ctrl, U.world.ctrl.transform);
                 playerWorldCtrl.init ();
+                playerWorldCtrl.name = "AI-" + i;
                 U.cpWorld = playerWorldCtrl.world;
                 playerWorldDic.Add (i, U.cpWorld);
 
@@ -113,19 +135,20 @@ namespace testJava.script.model {
                     card.initAction ();
                 }
 
-                switchPlayer (i);
                 U.ui.orgUI.addAPlayer (i);
             }
-
-            playerIds.Enqueue (0);
+            playerIds[0] = 0;
+            U.cpId = 0;
             U.cpUI = U.ui.playerUI;
             playerUIDic.Add (0, U.cpUI);
             U.cpWorld = U.world.playerWorld;
             playerWorldDic.Add (0, U.cpWorld);
+            U.ui.orgUI.addAPlayer (0);
             foreach (var card in isInitCards) {
                 card.initAction ();
             }
 
+            switchPlayerUI (0);
             roundInit ();
         }
         public void initInteriorCards () {
@@ -186,6 +209,7 @@ namespace testJava.script.model {
             }
         }
         public void roundInit () {
+
             leaderHandle ();
             U.cpUI.actionUI.reset ();
             U.cpUI.statisticUI.evaluating ();
@@ -194,7 +218,7 @@ namespace testJava.script.model {
             deal ();
         }
         public void refreshCard () {
-            foreach (CardCtrl cardCtrl in U.g.interiorHandCardCtrls) {
+            foreach (CardCtrl cardCtrl in U.cpUI.handCardUI.interiorHandCardCtrls) {
                 Card card = cardCtrl.card;
                 if (card is BonusCard) {
                     card.setActionAble (true);
@@ -217,7 +241,7 @@ namespace testJava.script.model {
                 }
                 var cardCtrl = diplomacyCardCtrls.Dequeue ();
                 U.g.diplomacyHandCardCtrls.Add (cardCtrl);
-                cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.g.interiorHandCardCtrls.Count * 20 + 200, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
+                cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.cpUI.handCardUI.interiorHandCardCtrls.Count * 20 + 200, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
                 cardCtrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
                 cardCtrl.card.state = CardState.INHAND;
                 cardCtrl.card.init ();

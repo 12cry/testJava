@@ -33,8 +33,9 @@ public class InteriorCard : Card {
     }
 
     public void take () {
-        U.g.interiorHandCardCtrls.Add (ctrl);
-        ctrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.g.interiorHandCardCtrls.Count * 20, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
+        U.cpUI.handCardUI.interiorHandCardCtrls.Add (ctrl);
+        ctrl.transform.parent = U.cpUI.handCardUI.ctrl.transform;
+        ctrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.cpUI.handCardUI.interiorHandCardCtrls.Count * 20, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
         ctrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
 
         state = CardState.INHAND;
@@ -42,7 +43,7 @@ public class InteriorCard : Card {
         U.ui.closeAllView ();
     }
     public override void action () {
-        U.g.interiorHandCardCtrls.Remove (this.ctrl);
+        U.cpUI.handCardUI.interiorHandCardCtrls.Remove (this.ctrl);
         U.g.interiorPassCardCtrls.Add (this.ctrl);
         U.hideCard (this.ctrl);
 

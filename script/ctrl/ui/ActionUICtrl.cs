@@ -34,7 +34,7 @@ namespace testJava.script.ctrl.ui {
             if (U.g.state == GState.OVER) {
                 return;
             }
-
+            U.g.nextPlayer ();
             U.g.roundInit ();
 
         }

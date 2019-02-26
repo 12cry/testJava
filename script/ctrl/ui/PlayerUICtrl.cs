@@ -10,6 +10,7 @@ namespace testJava.script.ctrl.ui {
         public StatisticUICtrl statisticUICtrl;
         public PopulationUICtrl populationUICtrl;
         public ActionUICtrl actionUICtrl;
+        public HandCardUICtrl handCardUICtrl;
         public void initTransform () {
             var scale = U.config.scale;
             var populationUICtrlRect = populationUICtrl.GetComponent<RectTransform> ().rect;
@@ -38,6 +39,8 @@ namespace testJava.script.ctrl.ui {
             actionUICtrl.init ();
             ui.actionUI = actionUICtrl.ui;
 
+            handCardUICtrl.init ();
+            ui.handCardUI = handCardUICtrl.ui;
             initTransform ();
         }
     }

@@ -10,7 +10,7 @@ namespace testJava.script.command {
             this.card = card;
         }
         public override void undo () {
-            card.undoAction ();
+            // card.undoAction ();
 
             base.undo ();
         }

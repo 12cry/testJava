@@ -2,6 +2,7 @@ using testCC.Assets.script;
 using testJava.script.ctrl.ui;
 using testJava.script.model.card;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace testJava.script.model.ui {
@@ -18,8 +19,8 @@ namespace testJava.script.model.ui {
         }
         public void addAPlayer (int playerId) {
             Image leaderMask = Object.Instantiate (ctrl.leaderMask, ctrl.transform);
-
-            leaderMask.transform.position = new Vector2 (leaderMask.transform.position.x, leaderMask.transform.position.y - 100);
+            leaderMask.transform.localPosition = new Vector2 (0, 300 - 200 * playerId);
+            U.AddTriggerEvent (leaderMask.gameObject, EventTriggerType.PointerClick, delegate { U.g.switchPlayerUI (playerId); });
         }
     }
 }
