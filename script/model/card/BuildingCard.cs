@@ -12,6 +12,7 @@ public class BuildingCard : InteriorCard {
 
     public override void action () {
         U.cpUI.statisticUI.reduce (actionCost);
+        ctrl.transform.parent = U.ui.ctrl.transform;
         base.action ();
     }
     public override void render () {

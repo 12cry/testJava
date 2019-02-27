@@ -72,7 +72,7 @@ namespace testJava.script.model.ui {
             refresh ();
         }
         public void computeMilitaryStatistic () {
-            List<BuildingCard> cards = U.ui.getBuildingCards (CardType.MILITARY_BUILDING);
+            List<BuildingCard> cards = U.cpUI.getBuildingCards (CardType.MILITARY_BUILDING);
             foreach (var card in cards) {
                 WorkerBuildingCard c = (WorkerBuildingCard) card;
                 attack = c.workers.Count * c.buildIncome.attack;

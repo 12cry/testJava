@@ -15,8 +15,8 @@ namespace testJava.script.model.card {
         public override void action () {
 
             gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab);
-            gameObject.transform.localPosition = new Vector3 (U.ui.getBuildingCards (type).Count, 0, 2);
-            U.ui.getBuildingCards (type).Add (this);
+            gameObject.transform.localPosition = new Vector3 (U.cpUI.getBuildingCards (type).Count, 0, 2);
+            U.cpUI.getBuildingCards (type).Add (this);
 
             for (int i = 0; i < buildCosts.Length; i++) {
                 RawImage stageImage = Object.Instantiate<RawImage> (U.cpUI.warehouseUI.ctrl.warehousePrefab, gameObject.transform);
@@ -40,7 +40,7 @@ namespace testJava.script.model.card {
                 capacity += buildCosts[stage + i].capacity;
                 int stageNum = i + 1;
                 U.addAButton (i, string.Format ("build {0} stage with {1} civli use {2} c", i + 1, i + 1, capacity), delegate { buildStage (stageNum); },
-                    U.cpUI.statisticUI.capacity >= capacity && U.cpUI.actionUI.civilRemainder > i);
+                    U.cpUI.statisticUI.capacity >= capacity && U.cpUI.actionUI.interiorRemainder > i);
             }
 
         }
@@ -63,7 +63,7 @@ namespace testJava.script.model.card {
                 U.cpUI.statisticUI.add (buildIncome);
             }
 
-            U.cpUI.actionUI.updateCivilRemainder (-stageNum);
+            U.cpUI.actionUI.updateInteriorRemainder (-stageNum);
             U.ui.closeAllView ();
         }
 

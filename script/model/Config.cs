@@ -13,6 +13,6 @@ namespace testJava.script.model {
         public float cardWidthAndGap;
         public float scale;
 
-        public float cardMoveSpeed = 0.1f;
+        public float cardMoveSpeed { get; set; }
     }
 }

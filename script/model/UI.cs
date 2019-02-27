@@ -19,29 +19,13 @@ namespace testJava.script.model {
         public CityCardUI cityCardUI;
 
         int cardType;
-
-        public List<BuildingCard> resourceWorkerBuildingCards = new List<BuildingCard> ();
-        public List<BuildingCard> militaryWorkerBuildingCards = new List<BuildingCard> ();
-        public List<BuildingCard> wonderBuildingCards = new List<BuildingCard> ();
-
-        public List<BuildingCard> getBuildingCards (int cardType) {
-            List<BuildingCard> cards = null;
-            if (cardType == CardType.WONDER) {
-                cards = wonderBuildingCards;
-            } else if (cardType == CardType.RESOURCE_BULIDING) {
-                cards = resourceWorkerBuildingCards;
-            } else if (cardType == CardType.MILITARY_BUILDING) {
-                cards = militaryWorkerBuildingCards;
-            }
-            return cards;
-        }
         public void viewBuildingCard (int cardType) {
 
             this.cardType = cardType;
 
             ctrl.maskBuildingImage.gameObject.SetActive (true);
             ctrl.maskBuildingImage.transform.SetAsLastSibling ();
-            List<BuildingCard> buildingCards = getBuildingCards (cardType);
+            List<BuildingCard> buildingCards = U.cpUI.getBuildingCards (cardType);
             for (int i = 0; i < buildingCards.Count; i++) {
                 BuildingCard card = buildingCards[i];
                 card.ctrl.gameObject.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
@@ -52,7 +36,7 @@ namespace testJava.script.model {
 
         public void closeViewBuildingCard () {
             ctrl.maskBuildingImage.gameObject.SetActive (false);
-            List<BuildingCard> buildingCards = getBuildingCards (cardType);
+            List<BuildingCard> buildingCards = U.cpUI.getBuildingCards (cardType);
             if (buildingCards == null) {
                 return;
             }

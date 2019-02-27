@@ -11,8 +11,8 @@ namespace testJava.script.ctrl.ui {
     public class ActionUICtrl : MonoBehaviour {
         public ActionUI ui;
 
-        public Text civilText;
-        public Text civilRemainderText;
+        public Text interiorText;
+        public Text interiorRemainderText;
 
         public Button undoButton;
         public Button redoButton;
@@ -35,7 +35,7 @@ namespace testJava.script.ctrl.ui {
                 return;
             }
             U.g.nextPlayer ();
-            U.g.roundInit ();
+            // U.g.roundInit ();
 
         }
     }

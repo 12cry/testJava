@@ -7,15 +7,15 @@ namespace testJava.script.model.ui {
     public class ActionUI {
         public ActionUICtrl ctrl;
 
-        public int civil;
-        public int civilRemainder;
+        public int interior;
+        public int interiorRemainder;
 
         public int military;
         public int militaryRemainder;
 
         public void init () {
-            updateCivilRemainder (8);
-            setCivil (8);
+            updateInteriorRemainder (8);
+            setInterior (8);
         }
         public void setUndoButtonAble (bool able) {
             // ctrl.undoButton.interactable = able;
@@ -24,22 +24,22 @@ namespace testJava.script.model.ui {
             // ctrl.redoButton.interactable = able;
         }
         public void reset () {
-            this.civilRemainder = this.civil;
-            ctrl.civilRemainderText.text = this.civilRemainder.ToString ();
+            this.interiorRemainder = this.interior;
+            ctrl.interiorRemainderText.text = this.interiorRemainder.ToString ();
 
             CommandCtrl.instant.redoCommands.Clear ();
             CommandCtrl.instant.undoCommands.Clear ();
             // setUndoButtonAble (false);
             // setRedoButtonAble (false);
         }
-        public void updateCivilRemainder (int value) {
-            this.civilRemainder += value;
-            ctrl.civilRemainderText.text = this.civilRemainder.ToString ();
+        public void updateInteriorRemainder (int value) {
+            this.interiorRemainder += value;
+            ctrl.interiorRemainderText.text = this.interiorRemainder.ToString ();
         }
         public void updateDiplomacyRemainder (int value) { }
-        public void setCivil (int value) {
-            this.civil += value;
-            ctrl.civilText.text = this.civil.ToString ();
+        public void setInterior (int value) {
+            this.interior += value;
+            ctrl.interiorText.text = this.interior.ToString ();
         }
 
     }

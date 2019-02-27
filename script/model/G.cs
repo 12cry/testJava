@@ -19,15 +19,15 @@ namespace testJava.script.model {
     public class G {
         public GCtrl ctrl;
 
+        public CardCtrl[] rowCardCtrls;
+
         List<InteriorCard> interiorCards = new List<InteriorCard> ();
         Queue<CardCtrl> interiorCardCtrls;
-        CardCtrl[] rowCardCtrls;
-
         public List<CardCtrl> interiorPassCardCtrls = new List<CardCtrl> ();
 
         List<DiplomacyCard> diplomacyCards = new List<DiplomacyCard> ();
         Queue<CardCtrl> diplomacyCardCtrls;
-        public List<CardCtrl> diplomacyHandCardCtrls = new List<CardCtrl> ();
+
         public List<CardCtrl> diplomacyPassCardCtrls = new List<CardCtrl> ();
         public List<DiplomacyCard> diplomacyPrepareCards = new List<DiplomacyCard> ();
 
@@ -40,6 +40,7 @@ namespace testJava.script.model {
         public Dictionary<string, Dictionary<string, int>> conf;
         List<Card> isInitCards = new List<Card> ();
 
+        AI ai = new AI ();
         public void init () {
             initConf ();
             initCards ();
@@ -94,7 +95,7 @@ namespace testJava.script.model {
             U.cpId = playerId;
 
             switchPlayerUI (playerId);
-
+            roundInit ();
         }
         public void switchPlayerUI (int playerId) {
             bool active = false;
@@ -198,7 +199,7 @@ namespace testJava.script.model {
         }
         void leaderHandle () {
             leaderRountNum++;
-            WorkerBuildingCard card = (WorkerBuildingCard) U.ui.getBuildingCards (CardType.MILITARY_BUILDING).Find (c => c.id == CardId.WARRIOR);
+            WorkerBuildingCard card = (WorkerBuildingCard) U.cpUI.getBuildingCards (CardType.MILITARY_BUILDING).Find (c => c.id == CardId.WARRIOR);
             if (card == null) {
                 return;
             }
@@ -240,7 +241,7 @@ namespace testJava.script.model {
                     break;
                 }
                 var cardCtrl = diplomacyCardCtrls.Dequeue ();
-                U.g.diplomacyHandCardCtrls.Add (cardCtrl);
+                U.cpUI.handCardUI.diplomacyHandCardCtrls.Add (cardCtrl);
                 cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + U.cpUI.handCardUI.interiorHandCardCtrls.Count * 20 + 200, U.config.cardHeight / 2, 0), U.config.cardMoveSpeed);
                 cardCtrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
                 cardCtrl.card.state = CardState.INHAND;
@@ -293,7 +294,7 @@ namespace testJava.script.model {
                 tweener = cardCtrl.transform.DOMove (new Vector3 (U.config.cardWidth / 2 + i * U.config.cardWidthAndGap,
                     Screen.height - U.config.cardHeight / 2 - rect.height * U.config.scale, 0), U.config.cardMoveSpeed);
                 cardCtrl.transform.localScale = new Vector2 (1, 1);
-                ((InteriorCard) cardCtrl.card).takeCivil = 1 + i / 5;
+                ((InteriorCard) cardCtrl.card).takeInterior = 1 + i / 5;
                 cardCtrl.card.state = CardState.INROW;
 
             }
@@ -304,6 +305,9 @@ namespace testJava.script.model {
         }
         void onCompleteShow (CardCtrl cardCtrl) {
             U.ui.ctrl.cardNumText.text = interiorCardCtrls.Count.ToString ();
+            if (U.cpId != 0) {
+                ai.run ();
+            }
         }
         CardCtrl getANewCard () {
             if (interiorCardCtrls.Count == 0) {

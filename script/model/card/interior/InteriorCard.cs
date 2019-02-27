@@ -11,15 +11,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class InteriorCard : Card {
-    public int takeCivil = 1;
+    public int takeInterior = 1;
 
     public override void showViewButton () {
-        int civilRemainder = U.cpUI.actionUI.civilRemainder;
-        if (civilRemainder == 0) {
+        int interiorRemainder = U.cpUI.actionUI.interiorRemainder;
+        if (interiorRemainder == 0) {
             return;
         }
         if (state == CardState.INROW) {
-            if (civilRemainder >= takeCivil) {
+            if (interiorRemainder >= takeInterior) {
                 U.addAButton (0, string.Format ("take card"), delegate { take (); }, true);
                 // U.showAButton (U.ui.cardViewUI.bTakeCard, 0);
             }
@@ -39,7 +39,7 @@ public class InteriorCard : Card {
         ctrl.transform.DOScale (new Vector3 (1, 1, 0), U.config.cardMoveSpeed);
 
         state = CardState.INHAND;
-        U.cpUI.actionUI.updateCivilRemainder (-this.takeCivil);
+        U.cpUI.actionUI.updateInteriorRemainder (-this.takeInterior);
         U.ui.closeAllView ();
     }
     public override void action () {
@@ -48,7 +48,7 @@ public class InteriorCard : Card {
         U.hideCard (this.ctrl);
 
         state = CardState.END;
-        U.cpUI.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateInteriorRemainder (-1);
     }
 
     public virtual void displayBuildButtons () { }

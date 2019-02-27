@@ -35,7 +35,7 @@ public class WorkerBuildingCard : BuildingCard {
         gameObject = Object.Instantiate<GameObject> (U.world.ctrl.farmPrefab, U.cpWorld.ctrl.transform);
         gameObject.transform.localPosition = position;
         U.AddTriggerEvent (gameObject, EventTriggerType.PointerClick, delegate { U.ui.viewBuildingCard (type); });
-        U.ui.getBuildingCards (type).Add (this);
+        U.cpUI.getBuildingCards (type).Add (this);
         this.updateWorkerNum (0);
 
         base.action ();
@@ -53,7 +53,7 @@ public class WorkerBuildingCard : BuildingCard {
             U.cpUI.populationUI.workerNum > 0 && U.cpUI.statisticUI.enough (buildCost));
         U.addAButton (index++, string.Format ("remove a worker from {0}", name), delegate { removeWorker (); }, workerNum > 0);
 
-        foreach (WorkerBuildingCard upgradeCard in U.ui.getBuildingCards (type)) {
+        foreach (WorkerBuildingCard upgradeCard in U.cpUI.getBuildingCards (type)) {
             if (upgradeCard.buildingType != buildingType || upgradeCard.level <= level) {
                 continue;
             }
@@ -80,7 +80,7 @@ public class WorkerBuildingCard : BuildingCard {
         U.cpUI.statisticUI.add (buildCost);
         U.cpUI.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
-        U.cpUI.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateInteriorRemainder (-1);
     }
     public void removeWorker () {
         RawImage worker = this.workers.Dequeue ();
@@ -90,7 +90,7 @@ public class WorkerBuildingCard : BuildingCard {
 
         U.cpUI.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
-        U.cpUI.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateInteriorRemainder (-1);
     }
     public void addAWorker () {
         RawImage worker = U.cpUI.populationUI.getAWorker ();
@@ -103,7 +103,7 @@ public class WorkerBuildingCard : BuildingCard {
         U.cpUI.statisticUI.reduce (buildCost);
         U.cpUI.statisticUI.computeMilitaryStatistic ();
         U.ui.closeAllView ();
-        U.cpUI.actionUI.updateCivilRemainder (-1);
+        U.cpUI.actionUI.updateInteriorRemainder (-1);
     }
 
 }

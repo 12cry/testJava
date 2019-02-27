@@ -50,7 +50,7 @@ namespace testCC.Assets.script.ctrl {
             cityCardUICtrl.init ();
             ui.cityCardUI = cityCardUICtrl.ui;
 
-            ui.closeAllView ();
+            // ui.closeAllView ();
             initTransform ();
         }
 
